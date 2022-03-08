@@ -2,14 +2,19 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { createRouter, createWebHistory } from "vue-router";
-
+import Fragment from "vue-fragment";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 import Home from "@/views/Home.vue";
 import Api from "@/views/Api.vue";
+import Cours from "@/views/Cours.vue";
 
 const routes = [
   { path: "/", component: Home },
   { path: "/api", component: Api },
+  { path: "/cours", component: Cours },
 ];
 
 // 3. Create the router instance and pass the `routes` option
@@ -20,4 +25,4 @@ const router = createRouter({
   routes: routes,
 });
 
-createApp(App).use(router).mount("#app");
+createApp(App).use(router).use(Fragment.Plugin).use(Toast).mount("#app");
