@@ -23,7 +23,7 @@ On pourra s’inspirer de [cet exemple](https://www.fib.upc.edu/en/studies/maste
 ### Mise en place du projet
 
 1.  Après avoir cloné le repo, accéder au dossier backend via un terminal de commande ([Cmder](https://cmder.net/) pour Windows par exemple).
-2.  Exécuter : `./mvnw spring-boot:run`. On pourra utiliser l'extensions Spring Boot Dashboard dans VS Code pour simplifier le lancement du serveur.
+2.  Exécuter : `./mvnw spring-boot:run` ou `mvn spring-boot:run`. On pourra utiliser l'extensions Spring Boot Dashboard dans VS Code pour simplifier le lancement du serveur.
 3.  Dans un nouveau terminal, accéder au dossier frontend.
-4.  Exécuter : `npm install` pour installer toutes les dépendances du projet. Puis, `npm run serv` pour lancer le serveur local.
+4.  Exécuter : `npm install` pour installer toutes les dépendances du projet. Puis, `npm run serve` pour lancer le serveur local.
 5.  Nous pouvons à présent accéder à l'application front via http://localhost:8080. Le serveur back est lancé sur le port 8989.
