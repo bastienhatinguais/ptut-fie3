@@ -16,7 +16,8 @@
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
