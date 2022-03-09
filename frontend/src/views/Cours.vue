@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>OUAIS OUAIS OUAIS C'EST L'AJOUT DE COURS</h1>
-    <FormulaireAjout></FormulaireAjout>
+    <FormulaireAjout class="mx-auto"></FormulaireAjout>
   </div>
 </template>
 

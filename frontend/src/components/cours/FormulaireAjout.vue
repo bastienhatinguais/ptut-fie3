@@ -1,5 +1,20 @@
 <template>
-  <form class="row g-2 needs-validation" @submit="ajouterCours">
+  <form
+    class="
+      row
+      g-2
+      needs-validation
+      container
+      px-3
+      shadow
+      p-3
+      mb-5
+      bg-body
+      rounded
+    "
+    @submit="ajouterCours"
+  >
+    <h3>Ajout d'un cours</h3>
     <!-- TITRE -->
     <div>
       <label for="validationTitre" class="form-label">Titre</label>
@@ -120,7 +135,7 @@
         v-model="cours.prerequis"
       ></textarea>
     </div>
-    <div class="col-12">
+    <div class="col-12 mx-auto">
       <button
         v-if="ajoutEnCours"
         class="btn btn-primary"
