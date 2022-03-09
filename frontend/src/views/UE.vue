@@ -2,7 +2,7 @@
   <div>
     <h1>UE</h1>
     <UECall></UECall>
-    </div>
+  </div>
 </template>
 
 <script setup>

@@ -10,10 +10,14 @@
       <router-link to="/api">Api</router-link>
       <br />
       <router-link to="/ue">UE</router-link>
+      <br />
+      <router-link to="/cours">Cours</router-link>
     </p>
     <!-- route outlet -->
     <!-- component matched by the route will render here -->
-    <router-view></router-view>
+    <div class="container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
