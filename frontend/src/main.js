@@ -6,10 +6,12 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Home from "@/views/Home.vue";
 import Api from "@/views/Api.vue";
+import UE from "@/views/UE.vue";
 
 const routes = [
   { path: "/", component: Home },
   { path: "/api", component: Api },
+  { path: "/ue", component: UE },
 ];
 
 // 3. Create the router instance and pass the `routes` option
