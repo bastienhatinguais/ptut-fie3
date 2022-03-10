@@ -23,7 +23,6 @@
         type="text"
         id="validationTitre"
         v-model="cours.titre"
-        required
       />
     </div>
 
@@ -198,8 +197,6 @@ function ajouterCours(e) {
       if (response.status == 201) {
         //reset valeurs du form
         Object.assign(cours, coursInitial);
-
-        afficherAlerte.value = true;
         toast.success("Le cours a bien été ajouté !", {
           timeout: 5000,
         });
@@ -207,6 +204,14 @@ function ajouterCours(e) {
         router.push("/cours");
       }
     })
-    .catch((e) => {});
+    .catch(function (error) {
+      ajoutEnCours.value = false;
+      toast.error(error, {
+        timeout: 5000,
+      });
+    })
+    .then(function (response) {
+      console.log(response);
+    });
 }
 </script>
