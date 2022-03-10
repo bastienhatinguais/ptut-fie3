@@ -1,5 +1,20 @@
 <template>
-  <form class="row g-2 needs-validation" @submit="ajouterCours">
+  <form
+    class="
+      row
+      g-2
+      needs-validation
+      container
+      px-3
+      shadow
+      p-3
+      mb-5
+      bg-body
+      rounded
+    "
+    @submit="ajouterCours"
+  >
+    <h3>Ajout d'un cours</h3>
     <!-- TITRE -->
     <div>
       <label for="validationTitre" class="form-label">Titre</label>
@@ -8,7 +23,6 @@
         type="text"
         id="validationTitre"
         v-model="cours.titre"
-        required
       />
     </div>
 
@@ -19,7 +33,7 @@
         type="number"
         class="form-control"
         id="validationCreditEcts"
-        v-model="cours.creditEcts"
+        v-model="cours.creditsEcts"
         required
       />
     </div>
@@ -120,7 +134,7 @@
         v-model="cours.prerequis"
       ></textarea>
     </div>
-    <div class="col-12">
+    <div class="col-12 mx-auto">
       <button
         v-if="ajoutEnCours"
         class="btn btn-primary"
@@ -143,10 +157,11 @@
 import { axiosApi } from "@/api/api";
 import { ref, reactive, onMounted, setup } from "vue";
 import { useToast } from "vue-toastification";
+import router from "@/router";
 
 const coursInitial = {
   titre: "",
-  creditEcts: 0,
+  creditsEcts: 0,
   responsable: 0,
   description: "",
   modalitesEvaluation: "",
@@ -161,7 +176,6 @@ let cours = reactive({ ...coursInitial });
 
 let personnels = ref([]);
 let afficherAlerte = ref(false);
-let dureeAlerte = 5000;
 let ajoutEnCours = ref(false);
 const toast = useToast();
 
@@ -183,13 +197,21 @@ function ajouterCours(e) {
       if (response.status == 201) {
         //reset valeurs du form
         Object.assign(cours, coursInitial);
-
-        afficherAlerte.value = true;
         toast.success("Le cours a bien été ajouté !", {
           timeout: 5000,
         });
+
+        router.push("/cours");
       }
     })
-    .catch((e) => {});
+    .catch(function (error) {
+      ajoutEnCours.value = false;
+      toast.error(error, {
+        timeout: 5000,
+      });
+    })
+    .then(function (response) {
+      console.log(response);
+    });
 }
 </script>
