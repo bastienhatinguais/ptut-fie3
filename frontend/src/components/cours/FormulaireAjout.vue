@@ -34,7 +34,7 @@
         type="number"
         class="form-control"
         id="validationCreditEcts"
-        v-model="cours.creditEcts"
+        v-model="cours.creditsEcts"
         required
       />
     </div>
@@ -158,10 +158,11 @@
 import { axiosApi } from "@/api/api";
 import { ref, reactive, onMounted, setup } from "vue";
 import { useToast } from "vue-toastification";
+import router from "@/router";
 
 const coursInitial = {
   titre: "",
-  creditEcts: 0,
+  creditsEcts: 0,
   responsable: 0,
   description: "",
   modalitesEvaluation: "",
@@ -176,7 +177,6 @@ let cours = reactive({ ...coursInitial });
 
 let personnels = ref([]);
 let afficherAlerte = ref(false);
-let dureeAlerte = 5000;
 let ajoutEnCours = ref(false);
 const toast = useToast();
 
@@ -203,6 +203,8 @@ function ajouterCours(e) {
         toast.success("Le cours a bien été ajouté !", {
           timeout: 5000,
         });
+
+        router.push("/cours");
       }
     })
     .catch((e) => {});
