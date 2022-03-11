@@ -1,5 +1,5 @@
 <template>
-  <table class="table table-striped">
+  <table class="table table-striped table-bordered text-center">
     <thead>
       <tr>
         <th>Titre</th>
@@ -11,7 +11,7 @@
       <tr v-for="(c, index) in cours" :key="index">
         <th scope="row">{{ c.titre }}</th>
         <td>{{ c.creditsEcts }}</td>
-        <td>
+        <td class="d-flex justify-content-center gap-3">
           <button
             type="button"
             class="btn btn-danger"
@@ -19,18 +19,35 @@
             data-bs-target="#test"
             @click="
               () => {
-                setCurrent(selfLinkToId(c._links.self.href));
+                setCurrentDeleteId(selfLinkToId(c._links.self.href));
               }
             "
           >
             <i class="bi bi-trash-fill"></i>
             Supprimer
           </button>
+
+          <button
+            type="button"
+            class="btn btn-warning text-white"
+            @click="
+              () => {
+                router.push(
+                  '/cours/' + selfLinkToId(c._links.self.href) + '/modifier'
+                );
+              }
+            "
+          >
+            <i class="bi bi-pencil-fill"></i> Modifier
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
-  <SupprimerModal id="test" @supprimer="supprimer">test</SupprimerModal>
+  <SupprimerModal id="test" @supprimer="supprimer"
+    >Voulez-vous vraiment supprimer ce cours ? Cette action sera
+    irréversible.</SupprimerModal
+  >
 </template>
 
 <script setup>
@@ -40,18 +57,18 @@ import { axiosApi } from "@/api/api";
 import { onMounted, ref } from "@vue/runtime-core";
 import { selfLinkToId } from "@/utils";
 import { useToast } from "vue-toastification";
+import router from "@/router";
 
 const toast = useToast();
 let cours = ref([]);
-let current = null;
+let currentDeleteId = null;
 
 onMounted(function () {
   recupererCours();
 });
 
-function setCurrent(id) {
-  current = id;
-  console.log(current);
+function setCurrentDeleteId(id) {
+  currentDeleteId = id;
 }
 
 function recupererCours() {
@@ -68,7 +85,7 @@ function recupererCours() {
 
 function supprimer() {
   axiosApi
-    .delete("cours/" + current)
+    .delete("cours/" + currentDeleteId)
     .then((response) => {
       toast.success("Le cours a bien été supprimé !", {
         timeout: 5000,

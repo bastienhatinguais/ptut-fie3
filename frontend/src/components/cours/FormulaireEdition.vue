@@ -12,9 +12,9 @@
       bg-body
       rounded
     "
-    @submit="ajouterCours"
+    @submit="modifierCours"
   >
-    <h3>Ajout d'un cours</h3>
+    <h3>Edition de cours {{ $route.params.id }}</h3>
     <!-- TITRE -->
     <div>
       <label for="validationTitre" class="form-label">Titre</label>
@@ -136,7 +136,7 @@
     </div>
     <div class="col-12 mx-auto">
       <button
-        v-if="ajoutEnCours"
+        v-if="modificationEnCours"
         class="btn btn-primary"
         type="button"
         disabled
@@ -146,18 +146,20 @@
           role="status"
           aria-hidden="true"
         ></span>
-        Ajout...
+        Modification...
       </button>
-      <button v-else class="btn btn-primary" type="submit">Ajouter</button>
+      <button v-else class="btn btn-primary" type="submit">Modifier</button>
     </div>
   </form>
 </template>
 
 <script setup>
 import { axiosApi } from "@/api/api";
-import { ref, reactive, onMounted, setup } from "vue";
+import { ref, reactive, onMounted, defineProps, getCurrentInstance } from "vue";
 import { useToast } from "vue-toastification";
 import router from "@/router";
+import { useRoute } from "vue-router";
+import { selfLinkToId, trimLink } from "@/utils";
 
 const coursInitial = {
   titre: "",
@@ -172,31 +174,54 @@ const coursInitial = {
   prerequis: "",
 };
 
-let cours = reactive({ ...coursInitial });
+const props = defineProps({ id: Number });
 
+let cours = reactive({ ...coursInitial });
 let personnels = ref([]);
-let ajoutEnCours = ref(false);
+let responsable = ref(null);
+let modificationEnCours = ref(false);
 const toast = useToast();
+const route = useRoute();
+
+let self = getCurrentInstance();
 
 onMounted(function () {
-  axiosApi.get("personnel").then((response) => {
-    personnels.value = response.data._embedded.personnel;
+  axiosApi.get("cours/" + route.params.id).then((response) => {
+    Object.assign(cours, response.data);
+    let responsableLink = response.data._links.responsable.href;
+
+    //Récupération du responsable du cours
+    axiosApi
+      .get(trimLink(responsableLink))
+      .then((res) => {
+        console.log(res);
+        cours.responsable = res.data._links.self.href;
+      })
+      .catch((e) => console.log(e));
   });
+
+  axiosApi
+    .get("personnel")
+    .then((response) => {
+      console.log(response.data);
+      personnels.value = response.data._embedded.personnel;
+    })
+    .catch((e) => console.log(e));
 });
 
-function ajouterCours(e) {
+function modifierCours(e) {
   e.preventDefault();
-  ajoutEnCours.value = true;
+  modificationEnCours.value = true;
   axiosApi
-    .post("cours", cours)
+    .put("cours/" + route.params.id, cours)
     .then(function (response) {
-      ajoutEnCours.value = false;
-
+      modificationEnCours.value = false;
+      console.log(response);
       //succès
-      if (response.status == 201) {
+      if (response.status == 200) {
         //reset valeurs du form
         Object.assign(cours, coursInitial);
-        toast.success("Le cours a bien été ajouté !", {
+        toast.success("Le cours a bien été modifié !", {
           timeout: 5000,
         });
 
@@ -204,13 +229,10 @@ function ajouterCours(e) {
       }
     })
     .catch(function (error) {
-      ajoutEnCours.value = false;
+      modificationEnCours.value = false;
       toast.error(error, {
         timeout: 5000,
       });
-    })
-    .then(function (response) {
-      console.log(response);
     });
 }
 </script>
