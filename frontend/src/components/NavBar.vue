@@ -9,7 +9,6 @@
           height="24"
           class="d-inline-block align-text-top"
         />
-        Bootstrap
       </a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -18,8 +17,28 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/api">Api</router-link>
         </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/cours">Cours</router-link>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Cours
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <router-link class="dropdown-item" to="/cours">Liste</router-link>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <router-link class="dropdown-item" to="/cours/ajouter"
+                >Ajouter</router-link
+              >
+            </li>
+          </ul>
         </li>
       </ul>
       <form class="d-flex">
