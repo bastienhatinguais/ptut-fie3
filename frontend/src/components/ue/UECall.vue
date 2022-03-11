@@ -18,10 +18,6 @@
       </tr>
       </tbody>
     </table>
-
-    <button @click="ajouterUE" type="button" class="btn btn-success">
-      Ajouter UE
-    </button>
   </div>
 </template>
 

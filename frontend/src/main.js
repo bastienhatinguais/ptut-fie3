@@ -1,13 +1,15 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import Api from "@/views/Api.vue";
-
 import UE from "@/views/UE.vue";
+import AjoutUE from "@/views/AjoutUE.vue";
 import Cours from "@/views/Cours.vue";
 
 
@@ -15,6 +17,7 @@ const routes = [
   { path: "/", component: Home },
   { path: "/api", component: Api },
   { path: "/ue", component: UE },
+  { path: "/ue/ajout", component: AjoutUE },
   { path: "/cours", component: Cours },
 ];
 
@@ -26,4 +29,4 @@ const router = createRouter({
   routes: routes,
 });
 
-createApp(App).use(router).use(Fragment.Plugin).use(Toast).mount("#app");
+createApp(App).use(router).use(Toast).mount("#app");

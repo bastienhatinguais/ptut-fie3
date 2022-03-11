@@ -27,6 +27,9 @@ public class UE {
     private String titre;
 
     @NonNull
+    private Integer creditEcts;
+
+    @NonNull
     @ManyToOne(optional = false) // obligatoire, la clé étrangère ne doit pas être nulle
     Semestre semestre;
 }
