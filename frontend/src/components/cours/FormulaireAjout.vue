@@ -175,7 +175,6 @@ const coursInitial = {
 let cours = reactive({ ...coursInitial });
 
 let personnels = ref([]);
-let afficherAlerte = ref(false);
 let ajoutEnCours = ref(false);
 const toast = useToast();
 
