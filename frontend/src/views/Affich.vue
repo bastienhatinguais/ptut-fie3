@@ -1,6 +1,7 @@
+<!--vue qui affiche la liste des cours, chacun etant clicable et renvoie vers sa page sp&cifique-->
 <template>
   <div>
-    <h3>ici on va afficher tous les cours qu'on a</h3>
+    <h3>Liste des cours</h3>
     <ul id="v-for-object" class="demo">
       <li v-for="(cour, index) in cours" v-bind:key="index">
          <a href= "/cours/{{selfLinkToId(cour._links.self.href)}}">{{cour.titre}}</a>
