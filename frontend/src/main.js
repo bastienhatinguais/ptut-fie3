@@ -18,7 +18,7 @@ const routes = [
     { path: "/api", component: Api },
     { path: "/cours/", component: Cours },
     { path: "/Affich", component: Affich },
-    { path: "/cours/:titre", component: Affichage }
+    { path: "/cours/:code", component: Affichage }
 ];
 
 // 3. Create the router instance and pass the `routes` option
