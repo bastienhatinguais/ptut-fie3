@@ -4,7 +4,7 @@
     <h3>Liste des cours</h3>
     <ul id="v-for-object" class="demo">
       <li v-for="(cour, index) in cours" v-bind:key="index">
-         <a href= "/cours/{{selfLinkToId(cour._links.self.href)}}">{{cour.titre}}</a>
+         <a :href="'/cours/' + selfLinkToId(cour._links.self.href)">{{cour.titre}}</a>
       </li>
     </ul>
   </div>
