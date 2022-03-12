@@ -1,18 +1,18 @@
 <template>
   <div>
     <h3>ici on va afficher tous les cours qu'on a</h3>
-  </div>
-  <div>
-    <ul class="iciliste">
-        <li v-for="(cour, index) in cours" :key="index">
-            {{ cour.titre }} {{selfLinkToId(cour._links.self.href)}}
-        </li>
+    <ul id="v-for-object" class="demo">
+      <li v-for="(cour, index) in cours" v-bind:key="index">
+          {{ value }}
+      </li>
     </ul>
   </div>
   <!-- >
-  <div class="liste" v-for="(cour, index) in cours" :key="index">
-    <router-link :to "{name : 'cours/id', params: {courId=selfLinkToId(cour._links.self.href)}}" class="dropdown-item">Home</router-link>
-  </div>
+
+        <div v-for="(cour, index) in cours" v-bind:key="index">
+      <a href="/cours/" + selfLinkToId(cour._links.self.href)>{{index}}. {{name}}</a>
+    </div>
+
   <!--> 
 </template>
 
