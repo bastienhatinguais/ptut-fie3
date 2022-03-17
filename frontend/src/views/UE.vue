@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>UE</h1>
-    <UECall></UECall>
-    <router-link to="/ue/ajout">
+    <ListeUE></ListeUE>
+    <router-link to="/ue/ajouter">
      <button type="button" class="btn btn-success">
       Ajouter UE
     </button>
@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import UECall from "@/components/ue/UECall.vue";
+import ListeUE from "@/components/ue/ListeUE.vue";
 
 
 </script>

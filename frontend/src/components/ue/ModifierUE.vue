@@ -1,5 +1,23 @@
+<!--FORMULAIRE MODIFICATION DES UE -->
+
 <template>
-  <form class="row g-2 needs-validation" @submit="ajouterUE">
+  <form
+    class="
+      row
+      g-2
+      needs-validation
+      container
+      px-3
+      shadow
+      p-3
+      mb-5
+      bg-body
+      rounded
+    "
+    @submit="ajouterUE"
+  >
+    <h2>Modifier un UE</h2>
+
     <!-- TITRE -->
     <div>
       <label for="validationTitre" class="form-label">Titre</label>
@@ -35,6 +53,7 @@
         required
       />
     </div>
+
     <!-- ANNEE -->
     <div>
       <label class="form-label">Année</label>
@@ -43,8 +62,13 @@
         aria-label="Choisissez l'année'"
         v-model="ue.annee"
       >
-        <option v-for="(annee, index) in annees" :key="index">
-          {{ annee.numero }}
+        <option
+          v-for="(annee, index) in annees"
+          :key="index"
+          :ref="annee.ref"
+          :value="annee._links.self.href"
+        >
+          {{ annee.intitule }}
         </option>
       </select>
     </div>
@@ -57,7 +81,12 @@
         aria-label="Choisissez le semestre'"
         v-model="ue.semestre"
       >
-        <option v-for="(semestre, index) in semestres" :key="index">
+        <option
+          v-for="(semestre, index) in semestres"
+          :key="index"
+          :ref="semestre.ref"
+          :value="semestre._links.self.href"
+        >
           {{ semestre.titre }}
         </option>
       </select>
@@ -66,12 +95,33 @@
     <!-- STATUT -->
     <div class="form-group">
       <label for="statut">Statut</label>
-      <textarea
-        class="form-control"
-        id="modalitesEvaluation"
-        rows="3"
-        v-model="cours.modalitesEvaluation"
-      ></textarea>
+      <select
+        class="form-select"
+        aria-label="Choisissez le statut'"
+        v-model="ue.statut"
+      >
+        <option v-for="(statut, index) in statuts" :key="index">
+          {{ statut.intitule }}
+        </option>
+      </select>
+    </div>
+    
+    <!-- BOUTON AJOUTER -->
+    <div class="col-12 mx-auto">
+      <button
+        v-if="ajoutEnCours"
+        class="btn btn-primary"
+        type="button"
+        disabled
+      >
+        <span
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        Ajout...
+      </button>
+      <button v-else class="btn btn-primary" type="submit">Ajouter</button>
     </div>
   </form>
 </template>
@@ -80,20 +130,23 @@
 import { axiosApi } from "@/api/api";
 import { ref, reactive, onMounted } from "vue";
 import { useToast } from "vue-toastification";
+import router from "@/router";
+
 
 const ueInitial = {
   titre: "",
-  code: 0,
+  code: "",
   creditEcts: 0,
   annee: "",
   semestre: "",
-  statut: 0,
+  statut: "",
 };
 
 let ue = reactive({ ...ueInitial });
 
 let annees = ref([]);
 let semestres = ref([]);
+let statuts = ref([]);
 
 let afficherAlerte = ref(false);
 //let dureeAlerte = 5000;
@@ -107,24 +160,39 @@ onMounted(function () {
   axiosApi.get("semestre").then((response) => {
     semestres.value = response.data._embedded.semestre;
   });
+  axiosApi.get("statut").then((response) => {
+    statuts.value = response.data._embedded.statut;
+  });
 });
 
 function ajouterUE(e) {
   e.preventDefault();
   ajoutEnCours.value = true;
-  axiosApi.post("ue", ue).then(function (response) {
-    ajoutEnCours.value = false;
+  console.log(ue);
+  axiosApi
+    .post("ue", ue)
+    .then(function (response) {
+      ajoutEnCours.value = false;
 
-    //succès
-    if (response.status == 201) {
-      //reset valeurs du form
-      Object.assign(ue, ueInitial);
+      //succès
+      if (response.status == 201) {
+        //reset valeurs du form
+        Object.assign(ue, ueInitial);
+        toast.success("L'UE a bien été ajouté !", {
+          timeout: 5000,
+        });
 
-      afficherAlerte.value = true;
-      toast.success("Le cours a bien été ajouté !", {
+        router.push("/ue");
+      }
+    })
+    .catch(function (error) {
+      ajoutEnCours.value = false;
+      toast.error(error, {
         timeout: 5000,
       });
-    }
-  });
+    })
+    .then(function (response) {
+      console.log(response);
+    });
 }
 </script>

@@ -1,7 +1,12 @@
 package com.ptut.syllabus.entity;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,9 +23,16 @@ import lombok.ToString;
 
 public class Annee {
     @Id
-    private Integer numero;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @NonNull
-    @OneToOne(optional = false) // obligatoire, la clé étrangère ne doit pas être nulle
+    private String intitule;
+
+    @NonNull
+    @ManyToOne(optional = false)
     Statut statut;
+
+    @OneToMany(mappedBy="annee") 
+    List<Semestre> semestre;
 }

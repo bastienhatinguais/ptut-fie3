@@ -1,6 +1,8 @@
 package com.ptut.syllabus.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -20,16 +22,18 @@ import lombok.ToString;
 public class UE {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @NonNull
     private String code;
 
     @NonNull
     private String titre;
 
-    @NonNull
     private Integer creditEcts;
 
     @NonNull
-    @ManyToOne(optional = false) // obligatoire, la clé étrangère ne doit pas être nulle
+    @ManyToOne(optional = false)
     Semestre semestre;
 }

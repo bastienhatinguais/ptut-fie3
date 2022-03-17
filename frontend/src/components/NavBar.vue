@@ -17,6 +17,9 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/api">Api</router-link>
         </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/ue">UE</router-link>
+        </li>
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
