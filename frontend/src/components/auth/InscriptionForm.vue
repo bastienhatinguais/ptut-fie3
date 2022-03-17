@@ -14,7 +14,7 @@
       <input
         type="text"
         class="form-control"
-        id="pseudo"
+        id="nom"
         v-model="utilisateur.nom"
         required
       />
@@ -30,11 +30,11 @@
       />
     </div>
     <div class="mb-3">
-      <label for="pseudo" class="form-label">Email</label>
+      <label for="email" class="form-label">Email</label>
       <input
-        type="text"
+        type="email"
         class="form-control"
-        id="pseudo"
+        id="email"
         v-model="utilisateur.email"
         required
       />
@@ -82,8 +82,8 @@ function authInscription(e) {
     .then(function (response) {
       erreur.value = false;
       console.log(response);
-      if (response.token) {
-        toast.success("L'utilisateur a bien été inscrit !", {
+      if (response) {
+        toast.success(response.message, {
           timeout: 5000,
         });
       }

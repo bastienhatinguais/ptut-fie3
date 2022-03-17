@@ -58,6 +58,7 @@ public class AuthentificationController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
+                userDetails.getNom(),
                 userDetails.getEmail(),
                 roles));
     }
@@ -72,10 +73,11 @@ public class AuthentificationController {
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Cet email est déjà utilisé !"));
+                    .body(new MessageResponse("Erreur: Cet email est déjà utilisé !"));
         }
+
         // Create new user's account
-        Utilisateur user = new Utilisateur(signUpRequest.getPseudo(),
+        Utilisateur user = new Utilisateur(signUpRequest.getNom(), signUpRequest.getPseudo(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getMotDePasse()));
         Set<String> strRoles = signUpRequest.getRole();
@@ -106,6 +108,6 @@ public class AuthentificationController {
         }
         user.setRoles(roles);
         userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès !"));
     }
 }

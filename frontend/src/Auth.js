@@ -6,8 +6,15 @@ export default class Auth {
 
   constructor() {
     let localUtilisateur = JSON.parse(localStorage.getItem("utilisateur"));
-    this.m_estConnecté = localUtilisateur ? true : false;
-    this.m_utilisateur = localUtilisateur ? localUtilisateur : {};
+    //utilisateur stocké non vide ?
+    this.m_estConnecté =
+      localUtilisateur && !Object.keys(localUtilisateur).length === 0
+        ? true
+        : false;
+    this.m_utilisateur =
+      localUtilisateur && !Object.keys(localUtilisateur).length === 0
+        ? localUtilisateur
+        : {};
   }
 
   getEstConnecté() {
@@ -20,6 +27,10 @@ export default class Auth {
 
   setEstConnecté(estConnecté) {
     this.m_estConnecté = estConnecté;
+    console.log({
+      utilisateur: this.getUtilisateur(),
+      estConnecté: this.getEstConnecté(),
+    });
   }
 
   setUtilisateur(utilisateur) {
@@ -40,7 +51,6 @@ export default class Auth {
         motDePasse: utilisateur.motDePasse,
       })
       .then((response) => {
-        console.log("coucou" + response);
         if (response.data.token) {
           self.setUtilisateur(response.data);
           self.setEstConnecté(true);
@@ -54,19 +64,23 @@ export default class Auth {
    * Permet de se déconnecter du compte
    */
   deconnexion() {
-    this.m_utilisateur = null;
-    this.m_estConnecté = false;
+    this.setUtilisateur({});
+    this.setEstConnecté(false);
   }
 
-  inscription(email, pseudo, motDePasse, roles) {
+  inscription(utilisateur) {
     return axiosApi
       .post("auth/inscription", {
-        email: email,
-        pseudo: pseudo,
-        motDePasse: motDePasse,
-        roles: roles,
+        email: utilisateur.email,
+        nom: utilisateur.nom,
+        pseudo: utilisateur.pseudo,
+        motDePasse: utilisateur.motDePasse,
+        roles: utilisateur.roles,
       })
-      .then((response) => console.log(response))
-      .catch((e) => console.log(e));
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      })
+      .catch((e) => console.log(e.response));
   }
 }

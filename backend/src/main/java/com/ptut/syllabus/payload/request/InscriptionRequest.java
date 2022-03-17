@@ -5,9 +5,14 @@ import java.util.Set;
 import javax.validation.constraints.*;
 
 import lombok.Data;
+import lombok.NonNull;
 
 @Data
 public class InscriptionRequest {
+    @NotBlank
+    @Size(min = 3, max = 40)
+    private String nom;
+
     @NotBlank
     @Size(min = 3, max = 20)
     private String pseudo;
@@ -22,36 +27,4 @@ public class InscriptionRequest {
     @NotBlank
     @Size(min = 6, max = 40)
     private String motDePasse;
-
-    public String getPseudo() {
-        return this.pseudo;
-    }
-
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMotDePasse() {
-        return motDePasse;
-    }
-
-    public void setPassword(String motDePasse) {
-        this.motDePasse = motDePasse;
-    }
-
-    public Set<String> getRole() {
-        return this.role;
-    }
-
-    public void setRole(Set<String> role) {
-        this.role = role;
-    }
 }

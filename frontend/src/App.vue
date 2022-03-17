@@ -15,6 +15,9 @@ import { axiosApi } from "@/api/api";
 let auth = reactive(new Auth());
 provide("auth", auth);
 
+/**
+ * Intercepte les requêtes pour ajouter le header d'identification
+ */
 axiosApi.interceptors.request.use(
   function (config) {
     console.log("stop ! ");
@@ -34,7 +37,7 @@ axiosApi.interceptors.request.use(
 );
 
 function getAuthorization() {
-  if (auth.getUtilisateur())
+  if (auth.getEstConnecté())
     return { Authorization: "Bearer " + auth.getUtilisateur().token };
   return {};
 }
