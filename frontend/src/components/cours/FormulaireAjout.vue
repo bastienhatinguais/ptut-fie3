@@ -154,10 +154,10 @@
 </template>
 
 <script setup>
-import { axiosApi } from "@/api/api";
-import { ref, reactive, onMounted, setup } from "vue";
+import { ref, reactive, onMounted, inject } from "vue";
 import { useToast } from "vue-toastification";
 import router from "@/router";
+import { axiosApi } from "@/api/api";
 
 const coursInitial = {
   titre: "",
@@ -179,6 +179,7 @@ let ajoutEnCours = ref(false);
 const toast = useToast();
 
 onMounted(function () {
+  console.log("get personnel");
   axiosApi.get("personnel").then((response) => {
     personnels.value = response.data._embedded.personnel;
   });

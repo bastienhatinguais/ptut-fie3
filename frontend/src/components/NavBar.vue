@@ -41,7 +41,7 @@
           </ul>
         </li>
       </ul>
-      <form class="d-flex">
+      <form class="d-flex me-2">
         <input
           class="form-control me-2"
           type="search"
@@ -50,11 +50,19 @@
         />
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+      <ConnexionButton v-if="!auth.getEstConnecté()"></ConnexionButton>
+      <DeconnexionButton v-else></DeconnexionButton>
     </div>
   </nav>
 </template>
 
 <script setup>
+import ConnexionButton from "@/components/auth/ConnexionButton.vue";
+import DeconnexionButton from "@/components/auth/DeconnexionButton.vue";
+
+import { inject, reactive, ref } from "vue";
+
+let auth = reactive(inject("auth"));
 </script>
 
 <style>
