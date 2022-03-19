@@ -58,8 +58,8 @@ public class AuthentificationController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getNom(),
                 userDetails.getEmail(),
+                userDetails.getNom(),
                 roles));
     }
 
