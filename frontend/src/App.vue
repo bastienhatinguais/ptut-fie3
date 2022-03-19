@@ -11,6 +11,7 @@ import Auth from "@/Auth";
 import { reactive } from "@vue/reactivity";
 import { provide } from "@vue/runtime-core";
 import { axiosApi } from "@/api/api";
+import router from "@/router";
 
 let auth = reactive(new Auth());
 provide("auth", auth);
@@ -41,5 +42,18 @@ function getAuthorization() {
     return { Authorization: "Bearer " + auth.getUtilisateur().token };
   return {};
 }
+
+router.beforeEach(async (to, from) => {
+  if (
+    // make sure the user is authenticated
+    !auth.getEstConnecté() &&
+    // ❗️ Avoid an infinite redirect
+    to.path !== "/" &&
+    to.path !== "/inscription"
+  ) {
+    // redirect the user to the login page
+    return { path: "/" };
+  }
+});
 </script>
 

@@ -1,5 +1,7 @@
 <template>
-  <button class="btn btn-primary" @click="deconnexion">Déconnexion</button>
+  <button class="btn btn-primary" @click="deconnexion">
+    <i class="bi bi-box-arrow-left"></i> Déconnexion
+  </button>
 </template>
 
 <script setup>
