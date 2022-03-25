@@ -46,11 +46,14 @@ public class Cours {
     @ColumnDefault("0")
     private int nbHeureTP;
 
+    @ColumnDefault("0")
+    private int nbHeureFOAD;
+
     private String description;
 
     private String objectifs;
 
-    private String prerequis;
+    private String planDuCours;
 
     private String competences;
 

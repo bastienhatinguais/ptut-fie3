@@ -82,7 +82,7 @@
 
     <!-- NB D'HEURES -->
     <div class="row gx-3 justify-content-around">
-      <div class="col-lg-4 col-md-12">
+      <div class="col-lg-3 col-md-12">
         <label for="nbHeureCM" class="form-label">Nombre d'heures CM</label>
         <input
           type="number"
@@ -92,7 +92,7 @@
           required
         />
       </div>
-      <div class="col-lg-4 col-md-12">
+      <div class="col-lg-3 col-md-12">
         <label for="nbHeureTD" class="form-label">Nombre d'heures TD</label>
         <input
           type="number"
@@ -102,7 +102,7 @@
           required
         />
       </div>
-      <div class="col-lg-4 col-md-12">
+      <div class="col-lg-3 col-md-12">
         <label for="nbHeureTP" class="form-label">Nombre d'heures TP</label>
         <input
           type="number"
@@ -110,6 +110,15 @@
           id="nbHeureTP"
           v-model="cours.nbHeureTP"
           required
+        />
+      </div>
+      <div class="col-lg-3 col-md-12">
+        <label for="nbHeureFOAD" class="form-label">Nombre d'heures FOAD</label>
+        <input
+          type="number"
+          class="form-control"
+          id="nbHeureFOAD"
+          v-model="cours.nbHeureFOAD"
         />
       </div>
     </div>
@@ -125,14 +134,25 @@
       ></textarea>
     </div>
 
-    <!-- PREREQUIS -->
+    <!-- COMPETENCES VISEES -->
     <div class="form-group">
-      <label for="prerequis">Prérequis</label>
+      <label for="competences">Compétences visées</label>
       <textarea
         class="form-control"
-        id="prerequis"
+        id="competences"
         rows="3"
-        v-model="cours.prerequis"
+        v-model="cours.competences"
+      ></textarea>
+    </div>
+
+    <!-- PLAN DU COURS -->
+    <div class="form-group">
+      <label for="planDuCours">Plan du cours</label>
+      <textarea
+        class="form-control"
+        id="planDuCours"
+        rows="3"
+        v-model="cours.planDuCours"
       ></textarea>
     </div>
     <div class="col-12 mx-auto">
@@ -168,8 +188,11 @@ const coursInitial = {
   nbHeureCM: 0,
   nbHeureTD: 0,
   nbHeureTP: 0,
+  nbHeureFOAD : 0,
   objectifs: "",
+  planDuCours : "",
   prerequis: "",
+  competences : "" ,
 };
 
 let cours = reactive({ ...coursInitial });
