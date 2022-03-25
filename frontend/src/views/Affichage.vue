@@ -8,7 +8,7 @@
           <a class="nav-link" href="#item-2">Resume</a>
           <a class="nav-link" href="#item-3">Objectifs</a>
           <!-- demande de defossez : doit pouvoir etre cache -->
-          <a class="nav-link" href="#item-4">Modaltes d'evaluation</a>
+          <a class="nav-link" href="#item-4">Modalites d'evaluation</a>
         </nav>
       </nav>
       <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
