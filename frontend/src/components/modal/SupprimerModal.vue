@@ -9,6 +9,21 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
+          <div
+            class="
+              icon-circle
+              rounded-circle
+              bg-danger
+              position-relative
+              d-flex
+              me-2
+            "
+          >
+            <i
+              class="h3 text-center text-white bi bi-trash-fill mx-auto my-auto"
+            ></i>
+          </div>
+
           <h5 class="modal-title text-center" :id="id + 'Label'">
             Êtes-vous sûr ?
           </h5>
@@ -20,10 +35,10 @@
           ></button>
         </div>
         <div class="modal-body"><slot></slot></div>
-        <div class="modal-footer">
+        <div class="modal-footer justify-content-center">
           <button
             type="button"
-            class="btn btn-secondary"
+            class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
             Annuler
@@ -50,3 +65,18 @@ const props = defineProps({
   action: Function,
 });
 </script>
+
+<style scoped>
+.modal-footer {
+  border-top: none;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.icon-circle {
+  width: 50px;
+  height: 50px;
+}
+</style>

@@ -5,10 +5,14 @@ import CoursAjouter from "@/views/cours/Ajouter.vue";
 import UE from "@/views/UE.vue";
 import UEAjouter from "@/views/ue/AjoutUE.vue";
 import UEModifier from "@/views/ue/ModificationUE.vue";
+import CoursModifier from "@/views/cours/Modifier.vue";
+import Inscription from "./views/Inscription.vue";
 
 export default [
   { path: "/", component: Home },
   { path: "/api", component: Api },
+  { path: "/inscription", component: Inscription },
+
   {
     path: "/cours",
     component: CoursListe,
@@ -30,5 +34,9 @@ export default [
     component: UEModifier,
     name: "modifier",
   },
-
+{
+    path: "/cours/:id/modifier",
+    component: CoursModifier,
+    props: true,
+  },
 ];
