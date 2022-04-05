@@ -21,6 +21,9 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/cours">Cours</router-link>
         </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/personnel">Personnel</router-link>
+        </li>
       </ul>
       <form class="d-flex">
         <input

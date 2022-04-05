@@ -9,11 +9,13 @@ import "vue-toastification/dist/index.css";
 import Home from "@/views/Home.vue";
 import Api from "@/views/Api.vue";
 import Cours from "@/views/Cours.vue";
+import Personnel from "@/views/Personnel.vue";
 
 const routes = [
   { path: "/", component: Home },
   { path: "/api", component: Api },
   { path: "/cours", component: Cours },
+  { path: "/personnel", component: Personnel}
 ];
 
 // 3. Create the router instance and pass the `routes` option
