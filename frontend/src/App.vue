@@ -21,7 +21,6 @@ provide("auth", auth);
  */
 axiosApi.interceptors.request.use(
   function (config) {
-    console.log("stop ! ");
     config.headers.common = Object.assign(
       {
         ...config.headers.common,
@@ -43,16 +42,23 @@ function getAuthorization() {
   return {};
 }
 
-router.beforeEach(async (to, from) => {
-  if (
-    // make sure the user is authenticated
-    !auth.getEstConnecté() &&
-    // ❗️ Avoid an infinite redirect
-    to.path !== "/" &&
-    to.path !== "/inscription"
-  ) {
-    // redirect the user to the login page
-    return { path: "/" };
+const PATHS_VISITEUR = ["/", "/api"];
+const PATHS_DIRECTEUR_ETUDES = ["/inscription"];
+
+router.beforeEach(async function (to, from) {
+  console.log(auth.getEstConnecté());
+  if (!auth.getEstConnecté()) {
+    if (!PATHS_VISITEUR.includes(to.path)) {
+      return { path: "/" };
+    }
+  } else {
+    let rolesUtilisateur = auth.getUtilisateur().roles;
+    if (
+      PATHS_DIRECTEUR_ETUDES.includes(to.path) &&
+      !rolesUtilisateur.includes("ROLE_DIRECTEUR_ETUDES")
+    ) {
+      return { path: "/non-autorise" };
+    }
   }
 });
 </script>
