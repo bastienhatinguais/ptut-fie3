@@ -66,7 +66,9 @@ export default class Auth {
   deconnexion() {
     this.setUtilisateur({});
     this.setEstConnecté(false);
-    router.go("/");
+
+    //redirection à l'accueil
+    router.push("/");
   }
 
   inscription(utilisateur) {
