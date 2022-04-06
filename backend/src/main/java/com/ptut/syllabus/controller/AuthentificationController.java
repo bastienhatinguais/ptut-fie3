@@ -82,27 +82,26 @@ public class AuthentificationController {
                 encoder.encode(signUpRequest.getMotDePasse()));
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByNom(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
+        if (strRoles != null) {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByNom(ERole.ROLE_ADMIN)
+                    case "directeur_etude":
+                        Role directeurEtudeRole = roleRepository.findByNom(ERole.ROLE_DIRECTEUR_ETUDES)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
+                        roles.add(directeurEtudeRole);
                         break;
-                    case "mod":
-                        Role modRole = roleRepository.findByNom(ERole.ROLE_MODERATOR)
+                    case "responsable_annee":
+                        Role responsableAnneeRole = roleRepository.findByNom(ERole.ROLE_RESPONSABLE_ANNEE)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(modRole);
+                        roles.add(responsableAnneeRole);
+                        break;
+                    case "responsable_cours":
+                        Role responsableCoursRole = roleRepository.findByNom(ERole.ROLE_RESPONSABLE_COURS)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(responsableCoursRole);
                         break;
                     default:
-                        Role userRole = roleRepository.findByNom(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
+
                 }
             });
         }

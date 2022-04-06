@@ -63,8 +63,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             // -- Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
             "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-resources/**",
+            "/webjars/**",
             // -- h2-console
             "/h2-console/**"
+    };
+
+    private static final String[] ACCES_DIRECTEUR_ETUDE = {
+            "/api/auth/inscription",
     };
 
     protected void configure(HttpSecurity http) throws Exception {
@@ -72,11 +79,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             http.cors().and().csrf().disable()
                     .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                    .authorizeRequests().antMatchers().permitAll()
+                    .authorizeRequests()
+                    .antMatchers(ACCES_DIRECTEUR_ETUDE).hasRole("DIRECTEUR_ETUDES")
                     .antMatchers(AUTH_WHITELIST).permitAll()
+                    .antMatchers().permitAll()
                     .anyRequest().authenticated();
             http.headers().frameOptions().disable();
             http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         }
     }
+
+    // .antMatchers(ACCES_DIRECTEUR_ETUDE).hasAnyRole("ADMIN")
+
 }
