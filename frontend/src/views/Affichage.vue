@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h1>{{ cours.titre }}</h1>
     <div class="bd-example">
       <div class="row">
@@ -12,6 +12,8 @@
               flex-column
               align-items-stretch
               p-3
+              position-sticky 
+              sticky-top
             "
           >
             <a class="navbar-brand" href="#">Sommaire</a>
