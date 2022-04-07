@@ -26,18 +26,6 @@
       />
     </div>
 
-    <!-- CREDITS ECTS -->
-    <div>
-      <label for="validationCreditEcts" class="form-label">Crédits ECTS</label>
-      <input
-        type="number"
-        class="form-control"
-        id="validationCreditEcts"
-        v-model="cours.creditsEcts"
-        required
-      />
-    </div>
-
     <!-- RESPONSABLE -->
     <div>
       <label class="form-label">Personnel responsable</label>
@@ -181,7 +169,6 @@ import { axiosApi } from "@/api/api";
 
 const coursInitial = {
   titre: "",
-  creditsEcts: 0,
   responsable: 0,
   description: "",
   modalitesEvaluation: "",

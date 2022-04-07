@@ -34,9 +34,6 @@ public class Cours {
     @NonNull
     private String titre;
 
-    @NonNull
-    private int creditsEcts;
-
     @ColumnDefault("0")
     private int nbHeureCM;
 
