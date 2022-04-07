@@ -1,53 +1,58 @@
 <template>
-  <table class="table table-striped table-bordered text-center">
-    <thead>
-      <tr>
-        <th>Titre</th>
-        <th>Crédits ECTS</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(c, index) in cours" :key="index">
-        <th scope="row">{{ c.titre }}</th>
-        <td>{{ c.creditsEcts }}</td>
-        <td class="d-flex justify-content-center gap-3">
-          <button
-            type="button"
-            class="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#test"
-            @click="
-              () => {
-                setCurrentDeleteId(selfLinkToId(c._links.self.href));
-              }
-            "
-          >
-            <i class="bi bi-trash-fill"></i>
-            Supprimer
-          </button>
+  <div>
+    <table class="table table-striped table-bordered text-center">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(c, index) in cours" :key="index">
+          <th scope="row">
+            <router-link :to="'/cours/' + selfLinkToId(c._links.self.href)">{{
+              c.titre
+            }}</router-link>
+          </th>
+          
+          <td class="d-flex justify-content-center gap-3">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-toggle="modal"
+              data-bs-target="#test"
+              @click="
+                () => {
+                  setCurrentDeleteId(selfLinkToId(c._links.self.href));
+                }
+              "
+            >
+              <i class="bi bi-trash-fill"></i>
+              Supprimer
+            </button>
 
-          <button
-            type="button"
-            class="btn btn-warning text-white"
-            @click="
-              () => {
-                router.push(
-                  '/cours/' + selfLinkToId(c._links.self.href) + '/modifier'
-                );
-              }
-            "
-          >
-            <i class="bi bi-pencil-fill"></i> Modifier
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <SupprimerModal id="test" @supprimer="supprimer"
-    >Voulez-vous vraiment supprimer ce cours ? Cette action sera
-    irréversible.</SupprimerModal
-  >
+            <button
+              type="button"
+              class="btn btn-warning text-white"
+              @click="
+                () => {
+                  router.push(
+                    '/cours/' + selfLinkToId(c._links.self.href) + '/modifier'
+                  );
+                }
+              "
+            >
+              <i class="bi bi-pencil-fill"></i> Modifier
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <SupprimerModal id="test" @supprimer="supprimer"
+      >Voulez-vous vraiment supprimer ce cours ? Cette action sera
+      irréversible.</SupprimerModal
+    >
+  </div>
 </template>
 
 <script setup>
