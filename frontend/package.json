@@ -14,9 +14,14 @@
     "bootstrap-icons": "^1.8.1",
     "core-js": "^3.8.3",
     "jquery": "^3.6.0",
+    "next-vue-storage-watcher": "0.0.7",
     "popper.js": "^1.16.1",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.13"
+    "vue-cookies-reactive": "^2.1.1",
+    "vue-reactive-storage": "git+https://github.com/ropbla9/vue-reactive-storage.git",
+    "vue-router": "^4.0.13",
+    "vue-toastification": "^2.0.0-rc.5",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -26,8 +31,7 @@
     "@vue/cli-service": "~5.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "vue-fragment": "^1.5.2"
+    "eslint-plugin-vue": "^8.0.3"
   },
   "eslintConfig": {
     "root": true,

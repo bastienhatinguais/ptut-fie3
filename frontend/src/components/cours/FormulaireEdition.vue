@@ -12,9 +12,9 @@
       bg-body
       rounded
     "
-    @submit="ajouterCours"
+    @submit="modifierCours"
   >
-    <h3>Ajout d'un cours</h3>
+    <h3>Edition de cours {{ $route.params.id }}</h3>
     <!-- TITRE -->
     <div>
       <label for="validationTitre" class="form-label">Titre</label>
@@ -81,7 +81,7 @@
 
     <!-- NB D'HEURES -->
     <div class="row gx-3 justify-content-around">
-      <div class="col-lg-3 col-md-12">
+      <div class="col-lg-4 col-md-12">
         <label for="nbHeureCM" class="form-label">Nombre d'heures CM</label>
         <input
           type="number"
@@ -91,7 +91,7 @@
           required
         />
       </div>
-      <div class="col-lg-3 col-md-12">
+      <div class="col-lg-4 col-md-12">
         <label for="nbHeureTD" class="form-label">Nombre d'heures TD</label>
         <input
           type="number"
@@ -101,7 +101,7 @@
           required
         />
       </div>
-      <div class="col-lg-3 col-md-12">
+      <div class="col-lg-4 col-md-12">
         <label for="nbHeureTP" class="form-label">Nombre d'heures TP</label>
         <input
           type="number"
@@ -109,15 +109,6 @@
           id="nbHeureTP"
           v-model="cours.nbHeureTP"
           required
-        />
-      </div>
-      <div class="col-lg-3 col-md-12">
-        <label for="nbHeureFOAD" class="form-label">Nombre d'heures FOAD</label>
-        <input
-          type="number"
-          class="form-control"
-          id="nbHeureFOAD"
-          v-model="cours.nbHeureFOAD"
         />
       </div>
     </div>
@@ -133,30 +124,19 @@
       ></textarea>
     </div>
 
-    <!-- COMPETENCES VISEES -->
+    <!-- PREREQUIS -->
     <div class="form-group">
-      <label for="competences">Compétences visées</label>
+      <label for="prerequis">Prérequis</label>
       <textarea
         class="form-control"
-        id="competences"
+        id="prerequis"
         rows="3"
-        v-model="cours.competences"
-      ></textarea>
-    </div>
-
-    <!-- PLAN DU COURS -->
-    <div class="form-group">
-      <label for="planDuCours">Plan du cours</label>
-      <textarea
-        class="form-control"
-        id="planDuCours"
-        rows="3"
-        v-model="cours.planDuCours"
+        v-model="cours.prerequis"
       ></textarea>
     </div>
     <div class="col-12 mx-auto">
       <button
-        v-if="ajoutEnCours"
+        v-if="modificationEnCours"
         class="btn btn-primary"
         type="button"
         disabled
@@ -166,18 +146,20 @@
           role="status"
           aria-hidden="true"
         ></span>
-        Ajout...
+        Modification...
       </button>
-      <button v-else class="btn btn-primary" type="submit">Ajouter</button>
+      <button v-else class="btn btn-primary" type="submit">Modifier</button>
     </div>
   </form>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, inject } from "vue";
+import { axiosApi } from "@/api/api";
+import { ref, reactive, onMounted, defineProps, getCurrentInstance } from "vue";
 import { useToast } from "vue-toastification";
 import router from "@/router";
-import { axiosApi } from "@/api/api";
+import { useRoute } from "vue-router";
+import { selfLinkToId, trimLink } from "@/utils";
 
 const coursInitial = {
   titre: "",
@@ -188,39 +170,58 @@ const coursInitial = {
   nbHeureCM: 0,
   nbHeureTD: 0,
   nbHeureTP: 0,
-  nbHeureFOAD : 0,
   objectifs: "",
-  planDuCours : "",
   prerequis: "",
-  competences : "" ,
 };
 
-let cours = reactive({ ...coursInitial });
+const props = defineProps({ id: Number });
 
+let cours = reactive({ ...coursInitial });
 let personnels = ref([]);
-let ajoutEnCours = ref(false);
+let responsable = ref(null);
+let modificationEnCours = ref(false);
 const toast = useToast();
+const route = useRoute();
+
+let self = getCurrentInstance();
 
 onMounted(function () {
-  console.log("get personnel");
-  axiosApi.get("personnel").then((response) => {
-    personnels.value = response.data._embedded.personnel;
+  axiosApi.get("cours/" + route.params.id).then((response) => {
+    Object.assign(cours, response.data);
+    let responsableLink = response.data._links.responsable.href;
+
+    //Récupération du responsable du cours
+    axiosApi
+      .get(trimLink(responsableLink))
+      .then((res) => {
+        console.log(res);
+        cours.responsable = res.data._links.self.href;
+      })
+      .catch((e) => console.log(e));
   });
+
+  axiosApi
+    .get("personnel")
+    .then((response) => {
+      console.log(response.data);
+      personnels.value = response.data._embedded.personnel;
+    })
+    .catch((e) => console.log(e));
 });
 
-function ajouterCours(e) {
+function modifierCours(e) {
   e.preventDefault();
-  ajoutEnCours.value = true;
+  modificationEnCours.value = true;
   axiosApi
-    .post("cours", cours)
+    .put("cours/" + route.params.id, cours)
     .then(function (response) {
-      ajoutEnCours.value = false;
-
+      modificationEnCours.value = false;
+      console.log(response);
       //succès
-      if (response.status == 201) {
+      if (response.status == 200) {
         //reset valeurs du form
         Object.assign(cours, coursInitial);
-        toast.success("Le cours a bien été ajouté !", {
+        toast.success("Le cours a bien été modifié !", {
           timeout: 5000,
         });
 
@@ -228,13 +229,10 @@ function ajouterCours(e) {
       }
     })
     .catch(function (error) {
-      ajoutEnCours.value = false;
+      modificationEnCours.value = false;
       toast.error(error, {
         timeout: 5000,
       });
-    })
-    .then(function (response) {
-      console.log(response);
     });
 }
 </script>
