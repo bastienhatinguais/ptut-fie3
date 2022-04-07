@@ -68,6 +68,7 @@
         class="form-select"
         aria-label="Choisissez les cours associés au personnel :"
         v-model="personnel.responsableDesCours"
+        multiple = "true"
       >
         <option
           v-for="(cour, index) in cours"
@@ -87,7 +88,12 @@
         class="form-select"
         aria-label="Choisissez les cours dispensés par le personnel :"
         v-model="personnel.donneLesCours"
+        
+        multiple
+        style =""
       >
+      
+
         <option
           v-for="(cour, index) in cours"
           :key="index"
@@ -96,23 +102,30 @@
         >
           {{ cour.titre }}
         </option>
+
+      
       </select>
     </div>
       <button class="btn btn-primary" type="submit">Ajouter</button>
   </form>
 </template>
 
+
+
+
 <script setup>
 import { axiosApi } from "@/api/api";
 import { ref, reactive, onMounted, setup } from "vue";
 import { useToast } from "vue-toastification";
 
+
+
 const personnelInitial = {
   nom: "",
   prenom: "",
   estDirecteur: false,
-  responsableDesCours: "",
-  donneLesCours: "",
+  responsableDesCours: [],
+  donneLesCours: [],
 };
 
 let personnel = reactive({ ...personnelInitial });
@@ -134,7 +147,7 @@ function ajouterPersonnel(e) {
   e.preventDefault();
   ajoutEnCours.value = true;
   axiosApi
-    .post("personnels", personnel)
+    .post("personnel", personnel)
     .then(function (response) {
       ajoutEnCours.value = false;
 
