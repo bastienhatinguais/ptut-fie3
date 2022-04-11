@@ -39,6 +39,25 @@
       />
     </div>
 
+    <!-- UE -->
+    <div>
+      <label class="form-label">UE</label>
+      <select
+        class="form-select"
+        aria-label="Choisissez l'UE'"
+        v-model="cours.ue"
+      >
+        <option
+          v-for="(ue, index) in lesUE"
+          :key="index"
+          :ref="ue.ref"
+          :value="ue._links.self.href"
+        >
+          {{ ue.titre }}
+        </option>
+      </select>
+    </div>
+
     <!-- RESPONSABLE -->
     <div>
       <label class="form-label">Personnel responsable</label>
@@ -163,6 +182,7 @@ import { axiosApi } from "@/api/api";
 const coursInitial = {
   titre: "",
   creditsEcts: 0,
+  ue:"",
   responsable: 0,
   description: "",
   modalitesEvaluation: "",
@@ -175,6 +195,7 @@ const coursInitial = {
 
 let cours = reactive({ ...coursInitial });
 
+let lesUE = ref([]);
 let personnels = ref([]);
 let ajoutEnCours = ref(false);
 const toast = useToast();
@@ -184,11 +205,15 @@ onMounted(function () {
   axiosApi.get("personnel").then((response) => {
     personnels.value = response.data._embedded.personnel;
   });
+  axiosApi.get("ue").then((response) => {
+    lesUE.value = response.data._embedded.ue;
+  });
 });
 
 function ajouterCours(e) {
   e.preventDefault();
   ajoutEnCours.value = true;
+  console.log(cours);
   axiosApi
     .post("cours", cours)
     .then(function (response) {

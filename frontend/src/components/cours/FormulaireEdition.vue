@@ -38,6 +38,25 @@
       />
     </div>
 
+    <!-- UE -->
+    <div>
+      <label class="form-label">UE</label>
+      <select
+        class="form-select"
+        aria-label="Choisissez l'UE'"
+        v-model="cours.ue"
+      >
+        <option
+          v-for="(ue, index) in lesUE"
+          :key="index"
+          :ref="ue.ref"
+          :value="ue._links.self.href"
+        >
+          {{ ue.titre }}
+        </option>
+      </select>
+    </div>
+
     <!-- RESPONSABLE -->
     <div>
       <label class="form-label">Personnel responsable</label>
@@ -164,6 +183,7 @@ import { selfLinkToId, trimLink } from "@/utils";
 const coursInitial = {
   titre: "",
   creditsEcts: 0,
+  ue:"",
   responsable: 0,
   description: "",
   modalitesEvaluation: "",
@@ -178,6 +198,7 @@ const props = defineProps({ id: Number });
 
 let cours = reactive({ ...coursInitial });
 let personnels = ref([]);
+let lesUE = ref([]);
 let responsable = ref(null);
 let modificationEnCours = ref(false);
 const toast = useToast();
@@ -189,6 +210,7 @@ onMounted(function () {
   axiosApi.get("cours/" + route.params.id).then((response) => {
     Object.assign(cours, response.data);
     let responsableLink = response.data._links.responsable.href;
+    let ueLink = response.data._links.ue.href;
 
     //Récupération du responsable du cours
     axiosApi
@@ -198,6 +220,15 @@ onMounted(function () {
         cours.responsable = res.data._links.self.href;
       })
       .catch((e) => console.log(e));
+
+      //Récupération du responsable du cours
+    axiosApi
+      .get(trimLink(ueLink))
+      .then((res) => {
+        console.log(res);
+        cours.ue = res.data._links.self.href;
+      })
+      .catch((e) => console.log(e));
   });
 
   axiosApi
@@ -205,6 +236,14 @@ onMounted(function () {
     .then((response) => {
       console.log(response.data);
       personnels.value = response.data._embedded.personnel;
+    })
+    .catch((e) => console.log(e));
+
+    axiosApi
+    .get("ue")
+    .then((response) => {
+      console.log(response.data);
+      lesUE.value = response.data._embedded.ue;
     })
     .catch((e) => console.log(e));
 });

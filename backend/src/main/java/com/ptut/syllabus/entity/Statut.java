@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,5 +27,6 @@ public class Statut {
     private String intitule;
 
     @OneToMany(mappedBy="statut") 
-    List<Annee> annee;
+    @JsonIgnoreProperties({"statut"})
+    private List<Annee> annee;
 }

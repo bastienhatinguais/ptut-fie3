@@ -7,6 +7,10 @@ import UEAjouter from "@/views/ue/AjoutUE.vue";
 import UEModifier from "@/views/ue/ModificationUE.vue";
 import CoursModifier from "@/views/cours/Modifier.vue";
 import Inscription from "./views/Inscription.vue";
+import Annees from "@/views/Annee.vue";
+import ListeUEParSemestre from "@/views/ue/ListeUEParSemestre.vue";
+
+
 
 export default [
   { path: "/", component: Home },
@@ -16,6 +20,7 @@ export default [
   {
     path: "/cours",
     component: CoursListe,
+    name : "cours",
   },
   {
     path: "/cours/ajouter",
@@ -26,9 +31,14 @@ export default [
     component: UE,
   },
   {
+    path: "/ue/:id",
+    component: ListeUEParSemestre,
+  },
+  {
     path: "/ue/ajouter",
     component: UEAjouter,
   },
+  
   {
     path: "/ue/modifier/:id",
     component: UEModifier,
@@ -38,5 +48,9 @@ export default [
     path: "/cours/:id/modifier",
     component: CoursModifier,
     props: true,
+  },
+  {
+    path: "/annee",
+    component: Annees,
   },
 ];

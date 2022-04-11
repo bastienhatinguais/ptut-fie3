@@ -14,9 +14,9 @@
       bg-body
       rounded
     "
-    @submit="ajouterUE"
+    @submit="modifierUE"
   >
-    <h2>Modifier un UE</h2>
+    <h2>Modifier une UE</h2>
 
     <!-- TITRE -->
     <div>
@@ -105,8 +105,8 @@
         </option>
       </select>
     </div>
-    
-    <!-- BOUTON AJOUTER -->
+
+    <!-- BOUTON MODIFIER -->
     <div class="col-12 mx-auto">
       <button
         v-if="ajoutEnCours"
@@ -119,19 +119,21 @@
           role="status"
           aria-hidden="true"
         ></span>
-        Ajout...
+        Modification...
       </button>
-      <button v-else class="btn btn-primary" type="submit">Ajouter</button>
+      <button v-else class="btn btn-primary" type="submit">Modifier</button>
     </div>
   </form>
 </template>
 
+
 <script setup>
 import { axiosApi } from "@/api/api";
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, defineProps, getCurrentInstance } from "vue";
 import { useToast } from "vue-toastification";
 import router from "@/router";
-
+import { useRoute } from "vue-router";
+import { selfLinkToId, trimLink } from "@/utils";
 
 const ueInitial = {
   titre: "",
@@ -151,34 +153,44 @@ let statuts = ref([]);
 let afficherAlerte = ref(false);
 //let dureeAlerte = 5000;
 let ajoutEnCours = ref(false);
+let modificationEnCours = ref(false);
+let self = getCurrentInstance();
 const toast = useToast();
+const route = useRoute();
 
 onMounted(function () {
-  axiosApi.get("annee").then((response) => {
-    annees.value = response.data._embedded.annee;
-  });
-  axiosApi.get("semestre").then((response) => {
-    semestres.value = response.data._embedded.semestre;
-  });
-  axiosApi.get("statut").then((response) => {
-    statuts.value = response.data._embedded.statut;
+  axiosApi.get("ueAnneeSemestre/" + route.params.id).then((response) => {
+    Object.assign(ue, response.data);
+    console.log(Object.assign(ue, response.data));
+    ue.annee=response.data.semestre.annee;
+    ue.semestre=response.data.semestre;
+    ue.statut=response.data.semestre.annee.statut;
+    
+    axiosApi.get("annee").then((response) => {
+      annees.value = response.data._embedded.annee;
+    });
+    axiosApi.get("semestre").then((response) => {
+      semestres.value = response.data._embedded.semestre;
+    });
+    axiosApi.get("statut").then((response) => {
+      statuts.value = response.data._embedded.statut;
+    });
   });
 });
 
-function ajouterUE(e) {
+function modifierUE(e) {
   e.preventDefault();
-  ajoutEnCours.value = true;
-  console.log(ue);
+  modificationEnCours.value = true;
   axiosApi
-    .post("ue", ue)
+    .put("ue/" + route.params.id, ue)
     .then(function (response) {
-      ajoutEnCours.value = false;
-
+      modificationEnCours.value = false;
+      console.log(response);
       //succès
-      if (response.status == 201) {
+      if (response.status == 200) {
         //reset valeurs du form
         Object.assign(ue, ueInitial);
-        toast.success("L'UE a bien été ajouté !", {
+        toast.success("Le cours a bien été modifié !", {
           timeout: 5000,
         });
 
@@ -186,13 +198,10 @@ function ajouterUE(e) {
       }
     })
     .catch(function (error) {
-      ajoutEnCours.value = false;
+      modificationEnCours.value = false;
       toast.error(error, {
         timeout: 5000,
       });
-    })
-    .then(function (response) {
-      console.log(response);
     });
 }
 </script>

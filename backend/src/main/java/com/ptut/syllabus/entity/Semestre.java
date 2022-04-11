@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +23,6 @@ import lombok.ToString;
 // cf. https://examples.javacodegeeks.com/spring-boot-with-lombok/
 @Getter @Setter @NoArgsConstructor @RequiredArgsConstructor @ToString
 @Entity // Une entité JPA
-
-
 public class Semestre {
     
     @Id
@@ -33,9 +34,11 @@ public class Semestre {
 
     @NonNull
     @ManyToOne(optional = false) 
-    Annee annee;
+    @JsonIgnoreProperties({"semestre"})
+    private Annee annee;
 
-    @OneToMany(mappedBy = "semestre")
-    List<UE> ue;
+    @ManyToMany(mappedBy = "semestre")
+    @JsonIgnoreProperties({"semestre"})
+    private List<UE> ue;
 
 }

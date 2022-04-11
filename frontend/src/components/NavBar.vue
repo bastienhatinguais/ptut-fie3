@@ -18,6 +18,9 @@
           <router-link class="nav-link" to="/api">Api</router-link>
         </li>
         <li class="nav-item">
+          <router-link class="nav-link" to="/annee">Année</router-link>
+        </li>
+        <li class="nav-item">
           <router-link class="nav-link" to="/ue">UE</router-link>
         </li>
         <li class="nav-item dropdown" v-if="auth.getEstConnecté()">
