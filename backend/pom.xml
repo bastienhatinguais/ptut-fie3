@@ -11,7 +11,7 @@
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>PTUT FIE3</name>
-	<description>Application de gestion de syllabus pour ISIS</description>
+	<description>Application de gestion de syllabus pour ISIS (PTUT)</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
