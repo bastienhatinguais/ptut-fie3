@@ -9,13 +9,12 @@ import CoursModifier from "@/views/cours/Modifier.vue";
 import Inscription from "./views/Inscription.vue";
 import Annees from "@/views/Annee.vue";
 import ListeUEParSemestre from "@/views/ue/ListeUEParSemestre.vue";
-
-
+import CoursAffichage from "@/views/cours/Affichage.vue";
 
 export default [
-  { path: "/", component: Home },
-  { path: "/api", component: Api },
-  { path: "/inscription", component: Inscription },
+    { path: "/", component: Home },
+    { path: "/api", component: Api },
+    { path: "/inscription", component: Inscription },
 
   {
     path: "/cours",
@@ -25,6 +24,11 @@ export default [
   {
     path: "/cours/ajouter",
     component: CoursAjouter,
+  },
+  { 
+    path: "/cours/:id", 
+    component: CoursAffichage, 
+    props: true 
   },
   {
     path: "/ue",

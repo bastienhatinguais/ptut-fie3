@@ -26,18 +26,6 @@
       />
     </div>
 
-    <!-- CREDITS ECTS -->
-    <div>
-      <label for="validationCreditEcts" class="form-label">Crédits ECTS</label>
-      <input
-        type="number"
-        class="form-control"
-        id="validationCreditEcts"
-        v-model="cours.creditsEcts"
-        required
-      />
-    </div>
-
     <!-- UE -->
     <div>
       <label class="form-label">UE</label>
