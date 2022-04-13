@@ -239,6 +239,7 @@ onMounted(function () {
 function modifierCours(e) {
   e.preventDefault();
   modificationEnCours.value = true;
+  console.log(cours)
   axiosApi
     .put("cours/" + route.params.id, cours)
     .then(function (response) {

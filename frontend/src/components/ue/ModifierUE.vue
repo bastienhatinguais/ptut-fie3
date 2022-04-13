@@ -135,6 +135,7 @@ import { useToast } from "vue-toastification";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import { selfLinkToId, trimLink } from "@/utils";
+import config from "@/config.js";
 
 const ueInitial = {
   titre: "",
@@ -162,11 +163,14 @@ const route = useRoute();
 onMounted(function () {
   axiosApi.get("ueAnneeSemestre/" + route.params.id).then((response) => {
     Object.assign(ue, response.data);
-    console.log(Object.assign(ue, response.data));
     ue.annee=response.data.semestre.annee;
+    ue.annee= config.urlBackend + "/api/annee/" + ue.annee.id;
     ue.semestre=response.data.semestre;
+    ue.semestre= config.urlBackend + "/api/semestre/" + ue.semestre.id;
     ue.statut=response.data.semestre.annee.statut;
-    
+    console.log(ue);
+    afficherSemestres()
+
     axiosApi.get("annee").then((response) => {
       annees.value = response.data._embedded.annee;
     });
@@ -178,6 +182,7 @@ function afficherSemestres(e){
   axiosApi.get("annee/" +selfLinkToId(ue.annee)+ "/semestre").then((response) => {
     console.log(ue.annee);
     semestres.value = response.data._embedded.semestre;
+    console.log(semestres.value);
   });
 }
 
