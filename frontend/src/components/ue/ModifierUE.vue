@@ -61,6 +61,7 @@
         class="form-select"
         aria-label="Choisissez l'année'"
         v-model="ue.annee"
+        @change="afficherSemestres($e) ,choisirLeStatut($e)"
       >
         <option
           v-for="(annee, index) in annees"
@@ -93,12 +94,12 @@
     </div>
 
     <!-- STATUT -->
-    <div class="form-group">
+    <div class="form-group" hidden>
       <label for="statut">Statut</label>
       <select
         class="form-select"
         aria-label="Choisissez le statut'"
-        v-model="ue.statut"
+        v-model="ue.statut"  
       >
         <option v-for="(statut, index) in statuts" :key="index">
           {{ statut.intitule }}
@@ -169,14 +170,25 @@ onMounted(function () {
     axiosApi.get("annee").then((response) => {
       annees.value = response.data._embedded.annee;
     });
-    axiosApi.get("semestre").then((response) => {
-      semestres.value = response.data._embedded.semestre;
-    });
-    axiosApi.get("statut").then((response) => {
-      statuts.value = response.data._embedded.statut;
-    });
   });
 });
+
+//Afficher les semestres selon l'année choisie
+function afficherSemestres(e){
+  axiosApi.get("annee/" +selfLinkToId(ue.annee)+ "/semestre").then((response) => {
+    console.log(ue.annee);
+    semestres.value = response.data._embedded.semestre;
+  });
+}
+
+//Choisir le statut selon l'année choisie
+function choisirLeStatut(e){
+  axiosApi.get("annee/" +selfLinkToId(ue.annee)+ "/statut").then((response) => {
+    console.log(response);
+    ue.statut = response.data;
+    console.log(ue.statut);
+  });
+}
 
 function modifierUE(e) {
   e.preventDefault();

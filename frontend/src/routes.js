@@ -31,8 +31,9 @@ export default [
     component: UE,
   },
   {
-    path: "/ue/:id",
+    path: "/ue/:statut/:id",
     component: ListeUEParSemestre,
+    name: 'listeParSemestre',
   },
   {
     path: "/ue/ajouter",
@@ -52,5 +53,6 @@ export default [
   {
     path: "/annee",
     component: Annees,
+    name: 'annee',
   },
 ];

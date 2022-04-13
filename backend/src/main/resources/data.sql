@@ -3,18 +3,18 @@ INSERT INTO personnel (nom, prenom) VALUES
   ('lolo', 'cocu');
 
 INSERT INTO statut (intitule) VALUES
-('Apprenti'),
-('Etudiant');
+('apprenti'),
+('etudiant');
 
 INSERT INTO annee (intitule, statut_id) VALUES
-('FIE1', SELECT id FROM statut WHERE intitule = 'Etudiant'),
-('FIE2', SELECT id FROM statut WHERE intitule = 'Etudiant'),
-('FIE3', SELECT id FROM statut WHERE intitule = 'Etudiant'),
-('FIA3', SELECT id FROM statut WHERE intitule = 'Apprenti'),
-('FIE4', SELECT id FROM statut WHERE intitule = 'Etudiant'),
-('FIA4', SELECT id FROM statut WHERE intitule = 'Apprenti'),
-('FIE5', SELECT id FROM statut WHERE intitule = 'Etudiant'),
-('FIA5', SELECT id FROM statut WHERE intitule = 'Apprenti');
+('FIE1', SELECT id FROM statut WHERE intitule = 'etudiant'),
+('FIE2', SELECT id FROM statut WHERE intitule = 'etudiant'),
+('FIE3', SELECT id FROM statut WHERE intitule = 'etudiant'),
+('FIA3', SELECT id FROM statut WHERE intitule = 'apprenti'),
+('FIE4', SELECT id FROM statut WHERE intitule = 'etudiant'),
+('FIA4', SELECT id FROM statut WHERE intitule = 'apprenti'),
+('FIE5', SELECT id FROM statut WHERE intitule = 'etudiant'),
+('FIA5', SELECT id FROM statut WHERE intitule = 'apprenti');
 
 INSERT INTO semestre (titre, annee_id) VALUES
 ('1', SELECT id FROM annee WHERE annee.intitule = 'FIE1'),

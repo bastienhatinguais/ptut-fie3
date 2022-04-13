@@ -163,9 +163,6 @@ onMounted(function () {
   axiosApi.get("annee").then((response) => {
     annees.value = response.data._embedded.annee;
   });
-  axiosApi.get("statut").then((response) => {
-    statuts.value = response.data._embedded.statut;
-  });
 });
 
 //Afficher les semestres selon l'année choisie

@@ -1,7 +1,24 @@
 <template>
-
-  <!-- AFFICHAGE LISTE DES UE -->
   <div class="container">
+    <!-- BREADCRUMB -->
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <router-link
+            :to="{
+              name: 'annee',
+            }"
+            >Accueil</router-link
+          >
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{route.params.annee}}</li>
+        <li class="breadcrumb-item active" aria-current="page">Semestre {{route.params.id}}</li>
+      </ol>
+    </nav>
+
+    <!-- AFFICHAGE LISTE DES UE -->
+
     <table class="table table-hover">
       <thead>
         <tr>
@@ -12,7 +29,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="(ue, code) in lesUE"
+          v-for="(ue, code) in lesUEDuSemestre"
           :key="code"
           @click="
             () => {
@@ -84,15 +101,19 @@
 </template>
 
 <script setup>
-import { axiosApi } from "@/api/api.js";
-import { onMounted, ref } from "vue";
+import { axiosApi } from "@/api/api";
+import { ref, reactive, onMounted, defineProps, getCurrentInstance } from "vue";
 import { useToast } from "vue-toastification";
-import { selfLinkToId } from "@/utils";
+import router from "@/router";
+import { useRoute } from "vue-router";
+import { selfLinkToId, trimLink } from "@/utils";
 
 const toast = useToast();
 let lesUE = ref([]);
 let lesCours = ref([]);
 let current = null;
+const route = useRoute();
+let lesUEDuSemestre = ref([]);
 
 onMounted(function () {
   chercherUE();
@@ -107,9 +128,16 @@ function setCurrent(id) {
 }
 
 function chercherUE() {
-  axiosApi.get(`ue`).then((response) => {
+  axiosApi.get("semestre/" + route.params.id + "/ue").then((response) => {
+    console.log(route.params.id);
     lesUE.value = response.data._embedded.ue;
     console.log(lesUE.value);
+    for (let ue in lesUE.value) {
+      if (ue.statut == route.params.statut) {
+        lesUEDuSemestre.value += ue;
+      }
+    }
+    console.log(lesUEDuSemestre.value);
   });
 }
 
