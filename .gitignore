@@ -179,3 +179,5 @@ dist
 # Serverless Webpack directories
 .webpack/
 
+package-lock.json
+package-lock.json

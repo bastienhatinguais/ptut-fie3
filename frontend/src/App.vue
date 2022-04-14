@@ -1,27 +1,59 @@
 <template>
-  <div>
-    <h1>Hello App!</h1>
-    <p>
-      <!-- use the router-link component for navigation. -->
-      <!-- specify the link by passing the `to` prop. -->
-      <!-- `<router-link>` will render an `<a>` tag with the correct `href` attribute -->
-      <router-link to="/">Accueil</router-link>
-      <br />
-      <router-link to="/api">Api</router-link>
-    </p>
-    <!-- route outlet -->
-    <!-- component matched by the route will render here -->
+  <NavBar></NavBar>
+  <div class="mt-4">
     <router-view></router-view>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<script setup>
+import NavBar from "@/components/NavBar.vue";
+import Auth from "@/Auth";
+import { reactive } from "@vue/reactivity";
+import { provide } from "@vue/runtime-core";
+import { axiosApi } from "@/api/api";
+import router from "@/router";
+
+let auth = reactive(new Auth());
+provide("auth", auth);
+
+/**
+ * Intercepte les requêtes pour ajouter le header d'identification
+ */
+axiosApi.interceptors.request.use(
+  function (config) {
+    console.log("stop ! ");
+    config.headers.common = Object.assign(
+      {
+        ...config.headers.common,
+      },
+      getAuthorization()
+    );
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
+
+function getAuthorization() {
+  if (auth.getEstConnecté())
+    return { Authorization: "Bearer " + auth.getUtilisateur().token };
+  return {};
 }
-</style>
+
+router.beforeEach(async (to, from) => {
+  if (
+    // make sure the user is authenticated
+    !auth.getEstConnecté() &&
+    // ❗️ Avoid an infinite redirect
+    to.path !== "/" &&
+    to.path !== "/inscription"
+  ) {
+    // redirect the user to the login page
+    return { path: "/" };
+  }
+});
+</script>
+
