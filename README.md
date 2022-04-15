@@ -27,3 +27,6 @@ On pourra s’inspirer de [cet exemple](https://www.fib.upc.edu/en/studies/maste
 3.  Dans un nouveau terminal, accéder au dossier frontend.
 4.  Exécuter : `npm install` pour installer toutes les dépendances du projet. Puis, `npm run serve` pour lancer le serveur local.
 5.  Nous pouvons à présent accéder à l'application front via http://localhost:8080. Le serveur back est lancé sur le port 8989.
+
+
+Pour acceder à l'API : http://localhost:8989/swagger-ui/#/
