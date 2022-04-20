@@ -171,7 +171,7 @@ import { selfLinkToId, trimLink } from "@/utils";
 const coursInitial = {
   titre: "",
   creditsEcts: 0,
-  ue:"",
+  ue: "",
   responsable: 0,
   description: "",
   modalitesEvaluation: "",
@@ -209,7 +209,7 @@ onMounted(function () {
       })
       .catch((e) => console.log(e));
 
-      //Récupération du responsable du cours
+    //Récupération du responsable du cours
     axiosApi
       .get(trimLink(ueLink))
       .then((res) => {
@@ -227,7 +227,7 @@ onMounted(function () {
     })
     .catch((e) => console.log(e));
 
-    axiosApi
+  axiosApi
     .get("ue")
     .then((response) => {
       console.log(response.data);
@@ -239,9 +239,9 @@ onMounted(function () {
 function modifierCours(e) {
   e.preventDefault();
   modificationEnCours.value = true;
-  console.log(cours)
+  console.log(cours);
   axiosApi
-    .put("cours/" + route.params.id, cours)
+    .patch("cours/" + route.params.id, cours)
     .then(function (response) {
       modificationEnCours.value = false;
       console.log(response);

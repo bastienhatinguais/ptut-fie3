@@ -1,4 +1,5 @@
 package com.ptut.syllabus.entity;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -21,10 +22,14 @@ import lombok.ToString;
 // Un exemple d'entité
 // On utilise Lombok pour auto-générer getter / setter / toString...
 // cf. https://examples.javacodegeeks.com/spring-boot-with-lombok/
-@Getter @Setter @NoArgsConstructor @RequiredArgsConstructor @ToString
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@ToString
 @Entity // Une entité JPA
 public class Semestre {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -32,13 +37,12 @@ public class Semestre {
     @NonNull
     private String titre;
 
-    @NonNull
-    @ManyToOne(optional = false) 
-    @JsonIgnoreProperties({"semestre"})
+    @ManyToOne(optional = false)
+    @JsonIgnoreProperties({ "semestre" })
     private Annee annee;
 
     @ManyToMany(mappedBy = "semestre")
-    @JsonIgnoreProperties({"semestre"})
+    @JsonIgnoreProperties({ "semestre" })
     private List<UE> ue;
 
 }
