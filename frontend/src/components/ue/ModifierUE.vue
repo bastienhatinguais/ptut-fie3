@@ -61,7 +61,7 @@
         class="form-select"
         aria-label="Choisissez l'année'"
         v-model="ue.annee"
-        @change="afficherSemestres($e) ,choisirLeStatut($e)"
+        @change="afficherSemestres($e), choisirLeStatut($e)"
       >
         <option
           v-for="(annee, index) in annees"
@@ -99,7 +99,7 @@
       <select
         class="form-select"
         aria-label="Choisissez le statut'"
-        v-model="ue.statut"  
+        v-model="ue.statut"
       >
         <option v-for="(statut, index) in statuts" :key="index">
           {{ statut.intitule }}
@@ -163,13 +163,13 @@ const route = useRoute();
 onMounted(function () {
   axiosApi.get("ueAnneeSemestre/" + route.params.id).then((response) => {
     Object.assign(ue, response.data);
-    ue.annee=response.data.semestre.annee;
-    ue.annee= config.urlBackend + "/api/annee/" + ue.annee.id;
-    ue.semestre=response.data.semestre;
-    ue.semestre= config.urlBackend + "/api/semestre/" + ue.semestre.id;
-    ue.statut=response.data.semestre.annee.statut;
+    ue.annee = response.data.semestre.annee;
+    ue.annee = config.urlBackend + "/api/annee/" + ue.annee.id;
+    ue.semestre = response.data.semestre;
+    ue.semestre = config.urlBackend + "/api/semestre/" + ue.semestre.id;
+    ue.statut = response.data.semestre.annee.statut;
     console.log(ue);
-    afficherSemestres()
+    afficherSemestres();
 
     axiosApi.get("annee").then((response) => {
       annees.value = response.data._embedded.annee;
@@ -178,28 +178,33 @@ onMounted(function () {
 });
 
 //Afficher les semestres selon l'année choisie
-function afficherSemestres(e){
-  axiosApi.get("annee/" +selfLinkToId(ue.annee)+ "/semestre").then((response) => {
-    console.log(ue.annee);
-    semestres.value = response.data._embedded.semestre;
-    console.log(semestres.value);
-  });
+function afficherSemestres(e) {
+  axiosApi
+    .get("annee/" + selfLinkToId(ue.annee) + "/semestre")
+    .then((response) => {
+      console.log(ue.annee);
+      semestres.value = response.data._embedded.semestre;
+      console.log(semestres.value);
+    });
 }
 
 //Choisir le statut selon l'année choisie
-function choisirLeStatut(e){
-  axiosApi.get("annee/" +selfLinkToId(ue.annee)+ "/statut").then((response) => {
-    console.log(response);
-    ue.statut = response.data;
-    console.log(ue.statut);
-  });
+function choisirLeStatut(e) {
+  axiosApi
+    .get("annee/" + selfLinkToId(ue.annee) + "/statut")
+    .then((response) => {
+      console.log(response);
+      ue.statut = response.data;
+      console.log(ue.statut);
+    });
 }
 
 function modifierUE(e) {
   e.preventDefault();
   modificationEnCours.value = true;
+  console.log(ue);
   axiosApi
-    .put("ue/" + route.params.id, ue)
+    .patch("ue/" + route.params.id, ue)
     .then(function (response) {
       modificationEnCours.value = false;
       console.log(response);
