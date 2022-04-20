@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -47,15 +48,12 @@ public class UE {
     @JsonIgnoreProperties({ "ue" })
     private Semestre semestre;
 
-    @OneToMany
+    @ManyToMany
     @JsonIgnoreProperties({ "ue" })
     private Set<Cours> cours;
 
     @ManyToOne
     @NonNull
-    @JsonIgnoreProperties({"responsableDUE"})
+    @JsonIgnoreProperties({ "responsableDUE" })
     private Personnel responsable;
 }
-
-
-

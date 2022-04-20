@@ -39,9 +39,9 @@ INSERT INTO ue (code, titre, semestre_id, responsable_code) VALUES
 ('JAVA9', 'java', SELECT id FROM semestre WHERE titre = '1', SELECT code FROM personnel WHERE code = '2');
 
 
-INSERT INTO cours(titre,  nb_HeureCM, nb_HeureTD, nb_HeureTP, nb_HeureFOAD, description, objectifs, plan_Du_Cours, competences, modalites_Evaluation, responsable_code, ue_id) VALUES
-  ('maths', '4', '5', '5', '0', 'cours de maths trop super on adore ça en plus', 'le but c est de faire des maths youpi', '1 deux 3 quatre', 'le theoreme de pythagore c est deja pas mal', 'un qcm pitié', '2', SELECT id FROM ue WHERE ue.code = 'INFO2'),
-  ('chinois', '4', '5', '5', '0', 'Un jolie cours de chinois :)', 'Parler chinois', '1 deux 3 quatre', 'chinois', 'un qcm', '2', SELECT id FROM ue WHERE ue.code = 'INFO2');
+INSERT INTO cours(titre,  nb_HeureCM, nb_HeureTD, nb_HeureTP, nb_HeureFOAD, description, objectifs, plan_Du_Cours, competences, modalites_Evaluation, responsable_code) VALUES
+  ('maths', '4', '5', '5', '0', 'cours de maths trop super on adore ça en plus', 'le but c est de faire des maths youpi', '1 deux 3 quatre', 'le theoreme de pythagore c est deja pas mal', 'un qcm pitié', '2'),
+  ('chinois', '4', '5', '5', '0', 'Un jolie cours de chinois :)', 'Parler chinois', '1 deux 3 quatre', 'chinois', 'un qcm', '2');
 
 INSERT INTO ue_cours(ue_id, cours_code) VALUES
 (1, 1),
