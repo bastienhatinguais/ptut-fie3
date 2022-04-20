@@ -38,15 +38,26 @@
               {{ cours.responsable.prenom }}
             </h5>
             <hr />
-            <h6 v-if="cours.ue">UE : {{ cours.ue.code }} (mettre un lien)</h6>
-            <h6 v-else>UE : Aucune</h6>
-
-            <h6 v-if="cours.ue && cours.ue.semestre">
-              Annee :
-              {{ cours.ue.semestre.annee.intitule }}
-              Semestre :
-              {{ cours.ue.semestre.titre }}
+            
+              <h6 v-if="cours.ue && cours.ue.semestre">
+                <router-link class="link-dark" 
+                :to="{
+                    name: 'listeParSemestre',
+                    params: { id: cours.ue.semestre.id, 
+                    statut: cours.ue.semestre.annee.statut.intitule, 
+                    annee: cours.ue.semestre.annee.intitule },
+                  }"
+                  >
+                {{ cours.ue.semestre.annee.intitule }}
+                , semestre
+                {{ cours.ue.semestre.titre }}
+                </router-link>
+              </h6>
+            
+            <h6 v-if="cours.ue">
+              UE : {{ cours.ue.titre }} ({{ cours.ue.code }})
             </h6>
+            <h6 v-else>UE : Aucune</h6>
             <hr />
             <h6>Détail des heures</h6>
             <table class="table">
