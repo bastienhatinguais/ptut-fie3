@@ -101,7 +101,6 @@
 </template>
 
 <script setup>
-import { selfLinkToId } from "@/utils";
 import { ref, onMounted, reactive } from "vue";
 import { axiosApi } from "@/api/api";
 import { useRoute } from "vue-router";
@@ -110,7 +109,7 @@ const route = useRoute();
 let cours = reactive({});
 
 onMounted(function () {
-  axiosApi.get("coursUeSemestre/1").then((response) => {
+  axiosApi.get("coursUeSemestre/" + route.params.id).then((response) => {
     Object.assign(cours, response.data);
     console.log(cours);
   });
