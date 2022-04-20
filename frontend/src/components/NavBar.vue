@@ -5,57 +5,19 @@
         <img
           src="@/assets/logo.png"
           alt=""
-          width="30"
-          height="24"
+          width="70"
+          height="60"
           class="d-inline-block align-text-top"
         />
       </a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <router-link class="nav-link" to="/">Accueil</router-link>
+          <router-link class="nav-link" to="/annee">Accueil</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/api">Api</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/annee">Année</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/ue">UE</router-link>
-        </li>
-        <li class="nav-item dropdown" v-if="auth.getEstConnecté()">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Cours
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li>
-              <router-link class="dropdown-item" to="/cours">Liste</router-link>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <router-link class="dropdown-item" to="/cours/ajouter"
-                >Ajouter</router-link
-              >
-            </li>
-          </ul>
+          <!--<router-link class="nav-link" to="/personnel">Personnel</router-link>-->
         </li>
       </ul>
-      <form class="d-flex me-2">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
       <ConnexionButton v-if="!auth.getEstConnecté()"></ConnexionButton>
       <div class="nav-item dropdown me-3" v-else>
         <a
