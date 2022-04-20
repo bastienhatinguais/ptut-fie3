@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-light bg-light navbar-expand-lg">
+  <nav class="navbar navbar-custom navbar-expand-lg border-bottom border-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img
@@ -12,12 +12,20 @@
       </a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <router-link class="nav-link" to="/annee">Accueil</router-link>
+          <router-link class="nav-link light" to="/annee">Accueil</router-link>
         </li>
         <li class="nav-item">
           <!--<router-link class="nav-link" to="/personnel">Personnel</router-link>-->
         </li>
       </ul>
+      <div>
+        <img src="@/assets/image-ISIS.png"
+          top="-100"          
+          width="110"
+          height="70"
+          class="d-inline-block align-text-top"
+          />
+      </div>
       <ConnexionButton v-if="!auth.getEstConnecté()"></ConnexionButton>
       <div class="nav-item dropdown me-3" v-else>
         <a
@@ -28,7 +36,7 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          <span class="text-primary me-2"
+          <span class="text-light me-2"
             ><i class="bi bi-person-circle"></i>
             {{ auth.getUtilisateur().nom }}</span
           >
@@ -42,6 +50,7 @@
         </ul>
       </div>
     </div>
+    
   </nav>
 </template>
 
@@ -59,4 +68,15 @@ console.log(auth.getUtilisateur());
 .navbar-expand-lg .navbar-nav {
   flex-direction: row;
 }
+.navbar-custom{
+  background-color: #283593;
+}
+
+/* Modify brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text, 
+.navbar-custom .nav-link{
+    color: white;
+}
+
 </style>

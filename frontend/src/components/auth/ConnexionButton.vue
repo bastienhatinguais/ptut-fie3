@@ -1,6 +1,6 @@
 <template>
   <div class="position-relative">
-    <button type="button" class="btn btn-outline-primary" @click="triggerForm">
+    <button type="button" class="btn btn-outline-light" @click="triggerForm">
       <i class="bi bi-box-arrow-in-right"></i>
       Connexion
     </button>
