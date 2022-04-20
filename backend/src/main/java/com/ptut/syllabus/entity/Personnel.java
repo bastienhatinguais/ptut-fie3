@@ -8,6 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -34,8 +40,17 @@ public class Personnel {
     private String prenom;
 
     @OneToMany(mappedBy = "responsable")
+
+    @JsonIgnoreProperties({ "responsable", "cours" })
+    @JsonIgnore
     private Set<Cours> responsableDesCours;
 
+    @OneToMany(mappedBy = "responsable")
+    @JsonIgnore
+    private Set<UE> responsableDUE;
+
     @ManyToMany(mappedBy = "intervenants")
+    @JsonIgnore
+    @JsonIgnoreProperties({ "intervenants", "cours" })
     private Set<Cours> donneLesCours;
 }

@@ -79,7 +79,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 6, statut: 'etudiant', annee:'FIE3' },
+                    params: { id: 7, statut: 'etudiant', annee:'FIE3' },
                   }"
                   >Semestre 6</router-link
                 >
@@ -92,7 +92,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 7, statut: 'etudiant', annee:'FIE4' },
+                    params: { id: 9, statut: 'etudiant', annee:'FIE4' },
                   }"
                   >Semestre 7</router-link
                 >
@@ -102,7 +102,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 8, statut: 'etudiant', annee:'FIE4' },
+                    params: { id: 11, statut: 'etudiant', annee:'FIE4' },
                   }"
                   >Semestre 8</router-link
                 >
@@ -115,7 +115,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 9, statut: 'etudiant', annee:'FIE5' },
+                    params: { id: 13, statut: 'etudiant', annee:'FIE5' },
                   }"
                   >Semestre 9</router-link
                 >
@@ -125,7 +125,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 10, statut: 'etudiant', annee:'FIE5' },
+                    params: { id: 15, statut: 'etudiant', annee:'FIE5' },
                   }"
                   >Semestre 10</router-link
                 >
@@ -145,7 +145,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 5, statut: 'apprenti', annee:'FIA3' },
+                    params: { id: 6, statut: 'apprenti', annee:'FIA3' },
                   }"
                   >Semestre 5</router-link
                 >
@@ -155,7 +155,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 6, statut: 'apprenti', annee:'FIA3' },
+                    params: { id: 8, statut: 'apprenti', annee:'FIA3' },
                   }"
                   >Semestre 6</router-link
                 >
@@ -168,7 +168,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 7, statut: 'apprenti', annee:'FIA4' },
+                    params: { id: 10, statut: 'apprenti', annee:'FIA4' },
                   }"
                   >Semestre 7</router-link
                 >
@@ -178,7 +178,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 8, statut: 'apprenti', annee:'FIA4' },
+                    params: { id: 12, statut: 'apprenti', annee:'FIA4' },
                   }"
                   >Semestre 8</router-link
                 >
@@ -191,7 +191,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 9, statut: 'apprenti', annee:'FIA5' },
+                    params: { id: 14, statut: 'apprenti', annee:'FIA5' },
                   }"
                   >Semestre 9</router-link
                 >
@@ -201,7 +201,7 @@
                   class="link-dark"
                   :to="{
                     name: 'listeParSemestre',
-                    params: { id: 10, statut: 'apprenti', annee:'FIA5' },
+                    params: { id: 16, statut: 'apprenti', annee:'FIA5' },
                   }"
                   >Semestre 10</router-link
                 >

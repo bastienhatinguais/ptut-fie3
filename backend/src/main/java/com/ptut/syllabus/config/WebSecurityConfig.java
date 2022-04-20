@@ -79,6 +79,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated();
             http.headers().frameOptions().disable();
             http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        } else {
+            http.headers().frameOptions().disable();
+            http.cors().and().csrf().disable()
+                    .exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
         }
     }
 }

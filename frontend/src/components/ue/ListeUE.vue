@@ -1,5 +1,4 @@
 <template>
-
   <!-- AFFICHAGE LISTE DES UE -->
   <div class="container">
     <table class="table table-hover">
@@ -14,17 +13,21 @@
         <tr
           v-for="(ue, code) in lesUE"
           :key="code"
-          @click="
-            () => {
-              setCurrent(selfLinkToId(ue._links.self.href));
-              recupererCours();
-            }
-          "
           data-toggle="collapse"
           data-target="#accordion"
         >
           <td id="code">{{ ue.code }}</td>
-          <td id="titre">{{ ue.titre }}</td>
+          <td
+            id="titre"
+            @click="
+              () => {
+                setCurrent(selfLinkToId(ue._links.self.href));
+                recupererCours();
+              }
+            "
+          >
+            {{ ue.titre }}
+          </td>
           <td id="creditEcts">{{ ue.creditEcts }}</td>
           <td>
             <!-- BOUTON SUPPRIMER -->
@@ -128,8 +131,8 @@ function supprimer() {
 }
 
 function recupererCours() {
-  axiosApi.get("ue/" + current + "/cours").then((response) => {
-    console.log(response);
+  axiosApi.get("ue/" +current+"/cours")
+  .then((response) => {
     lesCours.value = response.data._embedded.cours;
     console.log(lesCours.value);
   });

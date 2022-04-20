@@ -130,13 +130,7 @@ function setCurrent(id) {
 function chercherUE() {
   axiosApi.get("semestre/" + route.params.id + "/ue").then((response) => {
     console.log(route.params.id);
-    lesUE.value = response.data._embedded.ue;
-    console.log(lesUE.value);
-    for (let ue in lesUE.value) {
-      if (ue.statut == route.params.statut) {
-        lesUEDuSemestre.value += ue;
-      }
-    }
+    lesUEDuSemestre.value = response.data._embedded.ue;
     console.log(lesUEDuSemestre.value);
   });
 }

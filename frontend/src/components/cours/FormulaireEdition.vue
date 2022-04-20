@@ -14,7 +14,7 @@
     "
     @submit="modifierCours"
   >
-    <h3>Edition de cours {{ $route.params.id }}</h3>
+    <h3>Edition du cours {{ $route.params.id }}</h3>
     <!-- TITRE -->
     <div>
       <label for="validationTitre" class="form-label">Titre</label>
@@ -88,7 +88,7 @@
 
     <!-- NB D'HEURES -->
     <div class="row gx-3 justify-content-around">
-      <div class="col-lg-4 col-md-12">
+      <div class="col-lg-3   col-md-12">
         <label for="nbHeureCM" class="form-label">Nombre d'heures CM</label>
         <input
           type="number"
@@ -98,7 +98,7 @@
           required
         />
       </div>
-      <div class="col-lg-4 col-md-12">
+      <div class="col-lg-3 col-md-12">
         <label for="nbHeureTD" class="form-label">Nombre d'heures TD</label>
         <input
           type="number"
@@ -108,7 +108,7 @@
           required
         />
       </div>
-      <div class="col-lg-4 col-md-12">
+      <div class="col-lg-3 col-md-12">
         <label for="nbHeureTP" class="form-label">Nombre d'heures TP</label>
         <input
           type="number"
@@ -116,6 +116,15 @@
           id="nbHeureTP"
           v-model="cours.nbHeureTP"
           required
+        />
+      </div>
+       <div class="col-lg-3 col-md-12">
+        <label for="nbHeureFOAD" class="form-label">Nombre d'heures FOAD</label>
+        <input
+          type="number"
+          class="form-control"
+          id="nbHeureFOAD"
+          v-model="cours.nbHeureFOAD"
         />
       </div>
     </div>
@@ -131,14 +140,25 @@
       ></textarea>
     </div>
 
-    <!-- PREREQUIS -->
+    <!-- COMPETENCES VISEES -->
     <div class="form-group">
-      <label for="prerequis">Prérequis</label>
+      <label for="competences">Compétences visées</label>
       <textarea
         class="form-control"
-        id="prerequis"
+        id="competences"
         rows="3"
-        v-model="cours.prerequis"
+        v-model="cours.competences"
+      ></textarea>
+    </div>
+
+    <!-- PLAN DU COURS -->
+    <div class="form-group">
+      <label for="plan">Plan du cours</label>
+      <textarea
+        class="form-control"
+        id="plan"
+        rows="3"
+        v-model="cours.planDuCours"
       ></textarea>
     </div>
     <div class="col-12 mx-auto">
@@ -171,7 +191,7 @@ import { selfLinkToId, trimLink } from "@/utils";
 const coursInitial = {
   titre: "",
   creditsEcts: 0,
-  ue:"",
+  ue: "",
   responsable: 0,
   description: "",
   modalitesEvaluation: "",
@@ -209,7 +229,7 @@ onMounted(function () {
       })
       .catch((e) => console.log(e));
 
-      //Récupération du responsable du cours
+    //Récupération du responsable du cours
     axiosApi
       .get(trimLink(ueLink))
       .then((res) => {
@@ -227,7 +247,7 @@ onMounted(function () {
     })
     .catch((e) => console.log(e));
 
-    axiosApi
+  axiosApi
     .get("ue")
     .then((response) => {
       console.log(response.data);
@@ -239,9 +259,9 @@ onMounted(function () {
 function modifierCours(e) {
   e.preventDefault();
   modificationEnCours.value = true;
-  console.log(cours)
+  console.log(cours);
   axiosApi
-    .put("cours/" + route.params.id, cours)
+    .patch("cours/" + route.params.id, cours)
     .then(function (response) {
       modificationEnCours.value = false;
       console.log(response);

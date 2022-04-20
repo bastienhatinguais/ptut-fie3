@@ -61,7 +61,7 @@
         class="form-select"
         aria-label="Choisissez l'année'"
         v-model="ue.annee"
-        @change="afficherSemestres($e) ,choisirLeStatut($e)"
+        @change="afficherSemestres($e), choisirLeStatut($e)"
       >
         <option
           v-for="(annee, index) in annees"
@@ -99,10 +99,29 @@
       <select
         class="form-select"
         aria-label="Choisissez le statut'"
-        v-model="ue.statut"  
+        v-model="ue.statut"
       >
         <option v-for="(statut, index) in statuts" :key="index">
           {{ statut.intitule }}
+        </option>
+      </select>
+    </div>
+
+    <!-- RESPONSABLE -->
+    <div>
+      <label class="form-label">Personnel responsable</label>
+      <select
+        class="form-select"
+        aria-label="Choisissez le personnel responsable de l'ue"
+        v-model="ue.responsable"
+      >
+        <option
+          v-for="(responsable, index) in responsables"
+          :key="index"
+          :ref="responsable.ref"
+          :value="responsable._links.self.href"
+        >
+          {{ responsable.nom }} {{ responsable.prenom }}
         </option>
       </select>
     </div>
@@ -137,20 +156,12 @@ import { useRoute } from "vue-router";
 import { selfLinkToId, trimLink } from "@/utils";
 import config from "@/config.js";
 
-const ueInitial = {
-  titre: "",
-  code: "",
-  creditEcts: 0,
-  annee: "",
-  semestre: "",
-  statut: "",
-};
-
-let ue = reactive({ ...ueInitial });
+let ue = reactive({});
 
 let annees = ref([]);
 let semestres = ref([]);
 let statuts = ref([]);
+let responsables = ref([]);
 
 let afficherAlerte = ref(false);
 //let dureeAlerte = 5000;
@@ -161,52 +172,75 @@ const toast = useToast();
 const route = useRoute();
 
 onMounted(function () {
+  console.log(route.params.id);
+
   axiosApi.get("ueAnneeSemestre/" + route.params.id).then((response) => {
+    delete response.data.cours;
+
+    console.log(response.data);
     Object.assign(ue, response.data);
-    ue.annee=response.data.semestre.annee;
-    ue.annee= config.urlBackend + "/api/annee/" + ue.annee.id;
-    ue.semestre=response.data.semestre;
-    ue.semestre= config.urlBackend + "/api/semestre/" + ue.semestre.id;
-    ue.statut=response.data.semestre.annee.statut;
-    console.log(ue);
-    afficherSemestres()
+
+    ue.annee = response.data.semestre.annee;
+    //récupérer l'adresse de l'année
+    ue.annee = config.urlBackend + "/api/annee/" + ue.annee.id;
+
+    ue.semestre = response.data.semestre;
+    //récupérer l'adresse du semestre
+    ue.semestre = config.urlBackend + "/api/semestre/" + ue.semestre.id;
+
+    //ue.statut = response.data.semestre.annee.statut;
+
+    ue.responsable = response.data.responsable;
+    console.log(response.data);
+    //récupérer l'adresse du responsable
+    ue.responsable =
+      config.urlBackend + "/api/personnel/" + ue.responsable.code;
+
+    afficherSemestres();
 
     axiosApi.get("annee").then((response) => {
       annees.value = response.data._embedded.annee;
+    });
+    axiosApi.get("personnel").then((response) => {
+      responsables.value = response.data._embedded.personnel;
     });
   });
 });
 
 //Afficher les semestres selon l'année choisie
-function afficherSemestres(e){
-  axiosApi.get("annee/" +selfLinkToId(ue.annee)+ "/semestre").then((response) => {
-    console.log(ue.annee);
-    semestres.value = response.data._embedded.semestre;
-    console.log(semestres.value);
-  });
+function afficherSemestres(e) {
+  axiosApi
+    .get("annee/" + selfLinkToId(ue.annee) + "/semestre")
+    .then((response) => {
+      console.log(ue.annee);
+      semestres.value = response.data._embedded.semestre;
+      console.log(semestres.value);
+    });
 }
 
 //Choisir le statut selon l'année choisie
-function choisirLeStatut(e){
-  axiosApi.get("annee/" +selfLinkToId(ue.annee)+ "/statut").then((response) => {
-    console.log(response);
-    ue.statut = response.data;
-    console.log(ue.statut);
-  });
+function choisirLeStatut(e) {
+  axiosApi
+    .get("annee/" + selfLinkToId(ue.annee) + "/statut")
+    .then((response) => {
+      console.log(response);
+      ue.statut = response.data;
+      console.log(ue.statut);
+    });
 }
 
 function modifierUE(e) {
   e.preventDefault();
   modificationEnCours.value = true;
+  console.log(ue);
   axiosApi
-    .put("ue/" + route.params.id, ue)
+    .patch("ue/" + route.params.id, ue)
     .then(function (response) {
       modificationEnCours.value = false;
       console.log(response);
       //succès
       if (response.status == 200) {
         //reset valeurs du form
-        Object.assign(ue, ueInitial);
         toast.success("Le cours a bien été modifié !", {
           timeout: 5000,
         });
