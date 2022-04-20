@@ -79,4 +79,12 @@ console.log(auth.getUtilisateur());
     color: white;
 }
 
+<<<<<<< Updated upstream
+=======
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #FF8183;
+}
+
+>>>>>>> Stashed changes
 </style>
