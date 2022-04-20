@@ -12,6 +12,9 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.ColumnDefault;
 
 import lombok.Getter;
@@ -37,14 +40,17 @@ public class Personnel {
     private String prenom;
 
     @OneToMany(mappedBy = "responsable")
-    @JsonIgnoreProperties({"cours"})
+
+    @JsonIgnoreProperties({ "responsable", "cours" })
+    @JsonIgnore
     private Set<Cours> responsableDesCours;
 
     @OneToMany(mappedBy = "responsable")
-    @JsonIgnoreProperties({"ue"})
+    @JsonIgnore
     private Set<UE> responsableDUE;
 
     @ManyToMany(mappedBy = "intervenants")
-    @JsonIgnoreProperties({"cours"})
+    @JsonIgnore
+    @JsonIgnoreProperties({ "intervenants", "cours" })
     private Set<Cours> donneLesCours;
 }

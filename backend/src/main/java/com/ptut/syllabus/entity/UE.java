@@ -21,18 +21,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-<<<<<<<HEAD=======
-// Un exemple d'entité
-// On utilise Lombok pour auto-générer getter / setter / toString...
-// cf. https://examples.javacodegeeks.com/spring-boot-with-lombok/
->>>>>>>UE.modifBastien
-
 @Getter
 @Setter
+
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
-@Entity // Une entité JPA
+@Entity // Une entité J
+
 public class UE {
 
     @Id
@@ -60,4 +56,6 @@ public class UE {
     @JsonIgnoreProperties({"responsableDUE"})
     private Personnel responsable;
 }
-  
+
+
+
