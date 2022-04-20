@@ -8,7 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
@@ -18,12 +20,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-// Un exemple d'entité
-// On utilise Lombok pour auto-générer getter / setter / toString...
-// cf. https://examples.javacodegeeks.com/spring-boot-with-lombok/
-@Getter @Setter @NoArgsConstructor @RequiredArgsConstructor @ToString
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@ToString
 @Entity // Une entité JPA
-
 public class UE {
 
     @Id
@@ -44,6 +46,11 @@ public class UE {
     private Semestre semestre;
 
     @OneToMany
-    @JsonIgnoreProperties({"ue"})
+    @JsonIgnoreProperties({"cours"})
     private Set<Cours> cours;
+
+    @ManyToOne
+    @NonNull
+    @JsonIgnoreProperties({"responsableDUE"})
+    private Personnel responsable;
 }

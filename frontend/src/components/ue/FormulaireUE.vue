@@ -107,6 +107,25 @@
       </select>
     </div>
 
+    <!-- RESPONSABLE -->
+    <div>
+      <label class="form-label">Personnel responsable</label>
+      <select
+        class="form-select"
+        aria-label="Choisissez le personnel responsable de l'ue"
+        v-model="ue.responsable"
+      >
+        <option
+          v-for="(personnel, index) in personnels"
+          :key="index"
+          :ref="personnel.ref"
+          :value="personnel._links.self.href"
+        >
+          {{ personnel.nom }} {{ personnel.prenom }}
+        </option>
+      </select>
+    </div>
+
     <!-- BOUTON AJOUTER -->
     <div class="col-12 mx-auto">
       <button
@@ -143,6 +162,7 @@ const ueInitial = {
   annee: "",
   semestre: "",
   statut: "",
+  responsable: "",
 };
 
 let ue = reactive({ ...ueInitial });
@@ -150,6 +170,7 @@ let ue = reactive({ ...ueInitial });
 let annees = ref([]);
 let semestres = ref([]);
 let statuts = ref([]);
+let personnels = ref([]);
 
 let afficherAlerte = ref(false);
 //let dureeAlerte = 5000;
@@ -162,6 +183,9 @@ const toast = useToast();
 onMounted(function () {
   axiosApi.get("annee").then((response) => {
     annees.value = response.data._embedded.annee;
+  });
+  axiosApi.get("personnel").then((response) => {
+    personnels.value = response.data._embedded.personnel;
   });
 });
 

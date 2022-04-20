@@ -107,6 +107,25 @@
       </select>
     </div>
 
+    <!-- RESPONSABLE -->
+    <div>
+      <label class="form-label">Personnel responsable</label>
+      <select
+        class="form-select"
+        aria-label="Choisissez le personnel responsable de l'ue"
+        v-model="ue.responsable"
+      >
+        <option
+          v-for="(responsable, index) in responsables"
+          :key="index"
+          :ref="responsable.ref"
+          :value="responsable._links.self.href"
+        >
+          {{ responsable.nom }} {{ responsable.prenom }}
+        </option>
+      </select>
+    </div>
+
     <!-- BOUTON MODIFIER -->
     <div class="col-12 mx-auto">
       <button
@@ -144,6 +163,7 @@ const ueInitial = {
   annee: "",
   semestre: "",
   statut: "",
+  responsable:"",
 };
 
 let ue = reactive({ ...ueInitial });
@@ -151,6 +171,7 @@ let ue = reactive({ ...ueInitial });
 let annees = ref([]);
 let semestres = ref([]);
 let statuts = ref([]);
+let responsables = ref([]);
 
 let afficherAlerte = ref(false);
 //let dureeAlerte = 5000;
@@ -163,17 +184,30 @@ const route = useRoute();
 onMounted(function () {
   axiosApi.get("ueAnneeSemestre/" + route.params.id).then((response) => {
     Object.assign(ue, response.data);
+
     ue.annee=response.data.semestre.annee;
+    //récupérer l'adresse de l'année
     ue.annee= config.urlBackend + "/api/annee/" + ue.annee.id;
+
     ue.semestre=response.data.semestre;
+    //récupérer l'adresse du semestre
     ue.semestre= config.urlBackend + "/api/semestre/" + ue.semestre.id;
+
     ue.statut=response.data.semestre.annee.statut;
-    console.log(ue);
+
+    ue.responsable=response.data.responsable;
+    console.log(response.data);
+    //récupérer l'adresse du responsable
+    ue.responsable= config.urlBackend + "/api/personnel/" + ue.responsable.code;
+    
     afficherSemestres()
 
     axiosApi.get("annee").then((response) => {
       annees.value = response.data._embedded.annee;
     });
+    axiosApi.get("personnel").then((response) => {
+    responsables.value = response.data._embedded.personnel;
+  });
   });
 });
 
