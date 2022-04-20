@@ -58,13 +58,15 @@ public class Cours {
 
     @ManyToOne
     @NonNull
+    @JsonIgnoreProperties({ "responsableDesCours" })
     private Personnel responsable;
 
     @ManyToMany
+    @JsonIgnoreProperties({ "donneLesCours" })
     private Set<Personnel> intervenants;
 
     @ManyToOne
-    @JsonIgnoreProperties({"cours"})
+    @JsonIgnoreProperties({ "cours" })
     private UE ue;
 
 }
