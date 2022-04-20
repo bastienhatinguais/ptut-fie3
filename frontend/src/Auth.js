@@ -1,4 +1,5 @@
-import { axiosApi, setToken, deleteToken } from "./api/api";
+import { axiosApi } from "./api/api";
+import router from "@/router";
 
 export default class Auth {
   m_estConnecté;
@@ -7,14 +8,13 @@ export default class Auth {
   constructor() {
     let localUtilisateur = JSON.parse(localStorage.getItem("utilisateur"));
     //utilisateur stocké non vide ?
-    this.m_estConnecté =
-      localUtilisateur && !Object.keys(localUtilisateur).length === 0
-        ? true
-        : false;
-    this.m_utilisateur =
-      localUtilisateur && !Object.keys(localUtilisateur).length === 0
-        ? localUtilisateur
-        : {};
+    if (localUtilisateur && Object.keys(localUtilisateur).length !== 0) {
+      this.m_estConnecté = true;
+      this.m_utilisateur = localUtilisateur;
+    } else {
+      this.m_estConnecté = false;
+      this.m_utilisateur = {};
+    }
   }
 
   getEstConnecté() {
@@ -66,6 +66,9 @@ export default class Auth {
   deconnexion() {
     this.setUtilisateur({});
     this.setEstConnecté(false);
+
+    //redirection à l'accueil
+    router.push("/");
   }
 
   inscription(utilisateur) {
