@@ -12,7 +12,7 @@
               flex-column
               align-items-stretch
               p-3
-              position-sticky 
+              position-sticky
               sticky-top
             "
           >
@@ -34,11 +34,19 @@
           >
             <h4 id="item-1" style="color: #0d6efd">Points clefs</h4>
             <h5 v-if="cours.responsable">
-              Professeur en charge : {{ cours.responsable.nom }} {{ cours.responsable.prenom }}
+              Professeur en charge : {{ cours.responsable.nom }}
+              {{ cours.responsable.prenom }}
             </h5>
             <hr />
-            <h6>UE concernee : (à implémenter)</h6>
-            <h6>Semestre concerne : (a implémenter)</h6>
+            <h6 v-if="cours.ue">UE : {{ cours.ue.code }} (mettre un lien)</h6>
+            <h6 v-else>UE : Aucune</h6>
+
+            <h6 v-if="cours.ue && cours.ue.semestre">
+              Annee :
+              {{ cours.ue.semestre.annee.intitule }}
+              Semestre :
+              {{ cours.ue.semestre.titre }}
+            </h6>
             <hr />
             <h6>Détail des heures</h6>
             <table class="table">
@@ -67,17 +75,17 @@
                 </tr>
               </tbody>
             </table>
-            <hr/> 
+            <hr />
             <h4 id="item-2" style="color: #0d6efd">Objectifs</h4>
             <p>{{ cours.objectifs }}</p>
-            
+
             <!-- demande de defossez : doit pouvoir etre cache -->
-            <h4>Competences visees</h4>
+            <h4>Competences visées</h4>
             <p>{{ cours.competences }}</p>
-            <hr/>
+            <hr />
             <h4 id="item-3" style="color: #0d6efd">Description</h4>
-            <p>{{ cours.description }}</p> 
-            
+            <p>{{ cours.description }}</p>
+
             <!-- demande de defossez : doit pouvoir etre cache -->
             <h4>Plan du cours</h4>
             <p>{{ cours.planDuCours }}</p>
@@ -85,7 +93,6 @@
             <!-- demande de defossez : doit pouvoir etre cache -->
             <h4>Modalites d'evaluation</h4>
             <p>{{ cours.modalitesEvaluation }}</p>
-            
           </div>
         </div>
       </div>
@@ -103,12 +110,9 @@ const route = useRoute();
 let cours = reactive({});
 
 onMounted(function () {
-  axiosApi.get("cours/" + route.params.id).then((response) => {
+  axiosApi.get("coursUeSemestre/1").then((response) => {
     Object.assign(cours, response.data);
     console.log(cours);
-  });
-  axiosApi("cours/" + route.params.id + "/responsable").then((response) => {
-    cours.responsable = response.data;
   });
 });
 </script>
