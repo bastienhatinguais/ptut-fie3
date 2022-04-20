@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ListeUEParSemestre class="mx-auto"></ListeUEParSemestre>
+    <ListeUEVisiteur class="mx-auto"></ListeUEVisiteur>
   </div>
 </template>
 
 <script setup>
-import ListeUEParSemestre from "@/components/ue/ListeUEParSemestre.vue";
+import ListeUEVisiteur from "@/components/ue/ListeUEVisiteur";
 </script>
