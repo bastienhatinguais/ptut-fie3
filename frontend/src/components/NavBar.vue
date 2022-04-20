@@ -79,4 +79,9 @@ console.log(auth.getUtilisateur());
     color: white;
 }
 
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    color: #FF8183;
+}
+
 </style>
