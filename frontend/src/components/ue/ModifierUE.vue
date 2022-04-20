@@ -137,16 +137,7 @@ import { useRoute } from "vue-router";
 import { selfLinkToId, trimLink } from "@/utils";
 import config from "@/config.js";
 
-const ueInitial = {
-  titre: "",
-  code: "",
-  creditEcts: 0,
-  annee: "",
-  semestre: "",
-  statut: "",
-};
-
-let ue = reactive({ ...ueInitial });
+let ue = reactive({});
 
 let annees = ref([]);
 let semestres = ref([]);
@@ -161,14 +152,26 @@ const toast = useToast();
 const route = useRoute();
 
 onMounted(function () {
+  console.log(route.params.id);
+
   axiosApi.get("ueAnneeSemestre/" + route.params.id).then((response) => {
+    delete response.data.cours;
+
+    console.log(response.data);
     Object.assign(ue, response.data);
     ue.annee = response.data.semestre.annee;
     ue.annee = config.urlBackend + "/api/annee/" + ue.annee.id;
     ue.semestre = response.data.semestre;
     ue.semestre = config.urlBackend + "/api/semestre/" + ue.semestre.id;
-    ue.statut = response.data.semestre.annee.statut;
-    console.log(ue);
+
+    //ue.statut = response.data.semestre.annee.statut;
+
+    ue.responsable = response.data.responsable;
+    console.log(response.data);
+    //récupérer l'adresse du responsable
+    ue.responsable =
+      config.urlBackend + "/api/personnel/" + ue.responsable.code;
+
     afficherSemestres();
 
     axiosApi.get("annee").then((response) => {
@@ -211,7 +214,6 @@ function modifierUE(e) {
       //succès
       if (response.status == 200) {
         //reset valeurs du form
-        Object.assign(ue, ueInitial);
         toast.success("Le cours a bien été modifié !", {
           timeout: 5000,
         });
