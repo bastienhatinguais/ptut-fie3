@@ -66,8 +66,8 @@ public class Cours {
     @JsonIgnoreProperties({ "donneLesCours" })
     private Set<Personnel> intervenants;
 
-    @ManyToOne
+    @ManyToMany
     @JsonIgnoreProperties({ "cours" })
-    private UE ue;
+    private Set<UE> ue;
 
 }

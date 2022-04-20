@@ -184,7 +184,6 @@ import router from "@/router";
 import { useRoute } from "vue-router";
 import { selfLinkToId, trimLink } from "@/utils";
 import config from "@/config.js";
-import axios from "axios";
 
 let ue = reactive({});
 

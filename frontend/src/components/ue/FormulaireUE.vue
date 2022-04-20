@@ -61,7 +61,7 @@
         class="form-select"
         aria-label="Choisissez l'année'"
         v-model="ue.annee"
-        @change="afficherSemestres($e) ,choisirLeStatut($e)"
+        @change="afficherSemestres($e), choisirLeStatut($e)"
       >
         <option
           v-for="(annee, index) in annees"
@@ -99,7 +99,7 @@
       <select
         class="form-select"
         aria-label="Choisissez le statut'"
-        v-model="ue.statut"  
+        v-model="ue.statut"
       >
         <option v-for="(statut, index) in statuts" :key="index">
           {{ statut.intitule }}
@@ -126,6 +126,35 @@
       </select>
     </div>
 
+    <!-- COURS-->
+    <div class="form-group">
+      <label class="form-label">Cours :</label>
+      <form class="d-flex">
+        <input
+          class="form-control me-2 mb-2"
+          type="search"
+          placeholder="Filtre..."
+          aria-label="Search"
+          v-model="recherche"
+        />
+      </form>
+      <div class="list-group" v-if="cours">
+        <label
+          class="list-group-item"
+          v-for="(c, index) in coursFiltre"
+          :key="index"
+        >
+          <input
+            class="form-check-input me-1"
+            type="checkbox"
+            v-if="c._links"
+            :value="c._links.self.href"
+            v-model="ue.cours"
+          />
+          {{ c.titre }}
+        </label>
+      </div>
+    </div>
     <!-- BOUTON AJOUTER -->
     <div class="col-12 mx-auto">
       <button
@@ -150,7 +179,7 @@
 
 <script setup>
 import { axiosApi } from "@/api/api";
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import { useToast } from "vue-toastification";
 import router from "@/router";
 import { selfLinkToId } from "@/utils";
@@ -163,6 +192,7 @@ const ueInitial = {
   semestre: "",
   statut: "",
   responsable: "",
+  cours: [],
 };
 
 let ue = reactive({ ...ueInitial });
@@ -171,11 +201,17 @@ let annees = ref([]);
 let semestres = ref([]);
 let statuts = ref([]);
 let personnels = ref([]);
-
-let afficherAlerte = ref(false);
-//let dureeAlerte = 5000;
+let cours = ref([]);
+let coursFiltre = ref([]);
+let recherche = ref("");
 let ajoutEnCours = ref(false);
 const toast = useToast();
+
+watch(recherche, () => {
+  coursFiltre.value = cours.value.filter((c) =>
+    c.titre.includes(recherche.value)
+  );
+});
 
 /**
  * Au chargerment de la page on récupère les années et les statuts
@@ -187,23 +223,31 @@ onMounted(function () {
   axiosApi.get("personnel").then((response) => {
     personnels.value = response.data._embedded.personnel;
   });
+  axiosApi.get("cours").then((response) => {
+    cours.value = response.data._embedded.cours;
+    coursFiltre.value = [...cours.value];
+  });
 });
 
 //Afficher les semestres selon l'année choisie
-function afficherSemestres(e){
-  axiosApi.get("annee/" +selfLinkToId(ue.annee)+ "/semestre").then((response) => {
-    console.log(ue.annee);
-    semestres.value = response.data._embedded.semestre;
-  });
+function afficherSemestres(e) {
+  axiosApi
+    .get("annee/" + selfLinkToId(ue.annee) + "/semestre")
+    .then((response) => {
+      console.log(ue.annee);
+      semestres.value = response.data._embedded.semestre;
+    });
 }
 
 //Choisir le statut selon l'année choisie
-function choisirLeStatut(e){
-  axiosApi.get("annee/" +selfLinkToId(ue.annee)+ "/statut").then((response) => {
-    console.log(response);
-    ue.statut = response.data;
-    console.log(ue.statut);
-  });
+function choisirLeStatut(e) {
+  axiosApi
+    .get("annee/" + selfLinkToId(ue.annee) + "/statut")
+    .then((response) => {
+      console.log(response);
+      ue.statut = response.data;
+      console.log(ue.statut);
+    });
 }
 /**
  * fonction pour ajouter un UE et affichage de la popup de success ou erreur
