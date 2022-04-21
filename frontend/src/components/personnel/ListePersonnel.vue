@@ -41,6 +41,21 @@
               Modifier
             </button>
           </router-link>
+
+          <button
+            type="button"
+            class="btn btn-success"
+            data-bs-toggle="modal"
+            data-bs-target="#test"
+            @click="
+              () => {
+                resiliserMdp(personnel.id);
+              }
+            "
+          >
+            <i class="bi bi-trash-fill"></i>
+            Résilier mot de passe
+          </button>
         </td>
       </tr>
     </tbody>
@@ -65,6 +80,20 @@ onMounted(function () {
 
 function setCurrent(id) {
   current = id;
+}
+
+function resiliserMdp(id) {
+  axiosApi
+    .post(`resilier-mdp?id=${id}`)
+    .then((response) => {
+      console.log(response);
+      toast.success(response.data.message, {
+        timeout: 5000,
+      });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 }
 
 function recupererPersonnels() {
