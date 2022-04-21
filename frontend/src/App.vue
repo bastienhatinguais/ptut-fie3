@@ -1,18 +1,18 @@
 <template>
   <div id="tout">
-  <NavBar></NavBar>
-  <div class="mt-5">
-    <router-view></router-view>
-  </div>
+    <NavBar></NavBar>
+    <div class="mt-5">
+      <router-view></router-view>
+    </div>
   </div>
   <Footer></Footer>
 </template>
 
 <style scoped>
-     #tout {
-       /* on règle la taille de manière à ce que le footer soit affiché en bas et ne remonte pas*/
-        min-height: calc(100vh - 80px);
-    }
+#tout {
+  /* on règle la taille de manière à ce que le footer soit affiché en bas et ne remonte pas*/
+  min-height: calc(100vh - 80px);
+}
 </style>
 <script setup>
 import NavBar from "@/components/NavBar.vue";
@@ -58,11 +58,17 @@ router.beforeEach(async (to, from) => {
     // make sure the user is authenticated
     !auth.getEstConnecté() &&
     // ❗️ Avoid an infinite redirect
-    to.path !== "/" &&
-    to.path !== "/inscription"
+    to.path !== "/"
   ) {
     // redirect the user to the login page
     return { path: "/" };
+  } else {
+    if (
+      auth.getUtilisateur().premiereConnexion &&
+      to.path !== "/premiere-connexion"
+    ) {
+      return { path: "/premiere-connexion" };
+    }
   }
 });
 </script>

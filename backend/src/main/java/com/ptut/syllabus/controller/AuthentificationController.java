@@ -2,6 +2,7 @@ package com.ptut.syllabus.controller;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ import com.ptut.syllabus.entity.Personnel;
 import com.ptut.syllabus.entity.Role;
 import com.ptut.syllabus.payload.request.ConnexionRequest;
 import com.ptut.syllabus.payload.request.InscriptionRequest;
+import com.ptut.syllabus.payload.request.PremiereConnexionRequest;
 import com.ptut.syllabus.payload.response.JwtResponse;
 import com.ptut.syllabus.payload.response.MessageResponse;
 import com.ptut.syllabus.dao.PersonnelRepository;
@@ -63,7 +65,9 @@ public class AuthentificationController {
                 userDetails.getUsername(),
                 userDetails.getEmail(),
                 userDetails.getNom(),
-                roles));
+                userDetails.getPrenom(),
+                roles,
+                userDetails.getPremiereConnexion()));
     }
 
     @PostMapping("/inscription")
@@ -85,12 +89,12 @@ public class AuthentificationController {
             personnel = new Personnel(signUpRequest.getNom(), signUpRequest.getPrenom(),
                     signUpRequest.getPseudo(),
                     signUpRequest.getEmail(),
-                    encoder.encode(signUpRequest.getMotDePasse()));
+                    encoder.encode(signUpRequest.getMotDePasse()), false);
         } else {
             personnel = new Personnel(signUpRequest.getNom(), signUpRequest.getPrenom(),
                     signUpRequest.getPseudo(),
                     signUpRequest.getEmail(),
-                    encoder.encode(motDePasseDefaut));
+                    encoder.encode(motDePasseDefaut), true);
         }
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
@@ -121,5 +125,27 @@ public class AuthentificationController {
         personnel.setRoles(roles);
         Personnel p = personnelRepository.save(personnel);
         return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès !", p.getId()));
+    }
+
+    @PostMapping("/premiere-connexion")
+    public ResponseEntity<?> premiereConnexion(@Valid @RequestBody PremiereConnexionRequest premiereConnexionRequest) {
+        Optional<Personnel> personnel = personnelRepository.findById(premiereConnexionRequest.getId());
+
+        if (!personnel.isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Erreur: Cet utilisateur n'est pas connu."));
+        }
+        Personnel p = personnel.get();
+        if (!p.getPremiereConnexion()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Erreur: Ce n'est pas votre première connexion !"));
+        }
+
+        p.setMotDePasse(encoder.encode(premiereConnexionRequest.getMotDePasse()));
+        p.setPremiereConnexion(false);
+        personnelRepository.save(p);
+        return ResponseEntity.ok(new MessageResponse("Le mot de passe a bien été changé !", null));
     }
 }
