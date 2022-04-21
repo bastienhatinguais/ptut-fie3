@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -66,8 +65,8 @@ public class Cours {
     @JsonIgnoreProperties({ "donneLesCours" })
     private Set<Personnel> intervenants;
 
-    @ManyToMany
+    @ManyToOne
     @JsonIgnoreProperties({ "cours" })
-    private Set<UE> ue;
+    private UE ue;
 
 }

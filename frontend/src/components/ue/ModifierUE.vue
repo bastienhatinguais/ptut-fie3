@@ -126,35 +126,6 @@
       </select>
     </div>
 
-    <!-- COURS-->
-    <div class="form-group">
-      <label class="form-label">Cours :</label>
-      <form class="d-flex">
-        <input
-          class="form-control me-2 mb-2"
-          type="search"
-          placeholder="Filtre..."
-          aria-label="Search"
-          v-model="recherche"
-        />
-      </form>
-      <div class="list-group" v-if="cours">
-        <label
-          class="list-group-item"
-          v-for="(c, index) in coursFiltre"
-          :key="index"
-        >
-          <input
-            class="form-check-input me-1"
-            type="checkbox"
-            v-if="c._links"
-            :value="c._links.self.href"
-            v-model="ue.cours"
-          />
-          {{ c.titre }}
-        </label>
-      </div>
-    </div>
     <!-- BOUTON MODIFIER -->
     <div class="col-12 mx-auto">
       <button
@@ -191,9 +162,6 @@ let annees = ref([]);
 let semestres = ref([]);
 let statuts = ref([]);
 let responsables = ref([]);
-let cours = ref([]);
-let coursFiltre = ref([]);
-let recherche = ref("");
 
 //let dureeAlerte = 5000;
 let ajoutEnCours = ref(false);
@@ -201,28 +169,13 @@ let modificationEnCours = ref(false);
 const toast = useToast();
 const route = useRoute();
 
-watch(recherche, () => {
-  coursFiltre.value = cours.value.filter((c) =>
-    c.titre.includes(recherche.value)
-  );
-});
 onMounted(function () {
   console.log(route.params.id);
 
   axiosApi.get("ueAnneeSemestre/" + route.params.id).then((response) => {
-    axiosApi.get("cours").then((response) => {
-      cours.value = response.data._embedded.cours;
-      coursFiltre.value = [...cours.value];
-    });
-
     delete response.data.cours;
+
     Object.assign(ue, response.data);
-    ue.cours = [];
-    axiosApi.get("ue/" + route.params.id + "/cours").then((result) => {
-      for (const [key, value] of Object.entries(result.data._embedded.cours)) {
-        ue.cours.push(value._links.self.href);
-      }
-    });
 
     ue.annee = response.data.semestre.annee;
     //récupérer l'adresse de l'année

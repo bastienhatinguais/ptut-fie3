@@ -48,7 +48,7 @@ public class UE {
     @JsonIgnoreProperties({ "ue" })
     private Semestre semestre;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "ue")
     @JsonIgnoreProperties({ "ue" })
     private Set<Cours> cours;
 
