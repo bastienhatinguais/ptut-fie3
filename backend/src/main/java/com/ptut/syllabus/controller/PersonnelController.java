@@ -47,6 +47,7 @@ public class PersonnelController {
         if (personnel.isPresent()) {
             Personnel p = personnel.get();
             p.setMotDePasse(encoder.encode(motDePasseDefaut));
+            p.setPremiereConnexion(true);
             personnelDao.save(p);
             return ResponseEntity
                     .ok(new MessageResponse("Le mot de passe a été réinitialisé avec succès !"));

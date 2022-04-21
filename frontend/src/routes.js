@@ -11,6 +11,7 @@ import CoursAffichage from "@/views/cours/Affichage.vue";
 import AjoutPersonnel from "./views/personnel/AjoutPersonnel";
 import ListePersonnel from "./views/personnel/ListePersonnel.vue";
 import ModifierPersonnel from "./views/personnel/ModificationPersonnel";
+import PremiereConnexion from "./views/personnel/PremiereConnexion";
 
 export default [
     { path: "/", component: Annees },
@@ -67,9 +68,15 @@ export default [
         component: AjoutPersonnel,
     },
 
-    {
-        path: "/personnel/:id/modifier",
-        component: ModifierPersonnel,
-        props: true,
-    },
+  {
+    path: "/personnel/:id/modifier",
+    component: ModifierPersonnel,
+    props: true,
+  },
+
+  {
+    path: "/premiere-connexion",
+    component: PremiereConnexion,
+  },
 ];
+
