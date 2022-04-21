@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="tout">
   <NavBar></NavBar>
   <div class="mt-5">
     <router-view></router-view>
@@ -8,6 +8,12 @@
   <Footer></Footer>
 </template>
 
+<style scoped>
+     #tout {
+       /* on règle la taille de manière à ce que le footer soit affiché en bas et ne remonte pas*/
+        min-height: calc(100vh - 80px);
+    }
+</style>
 <script setup>
 import NavBar from "@/components/NavBar.vue";
 import Footer from "@/components/Footer.vue";
