@@ -119,7 +119,8 @@ button {
   background-color: #039be5;
   border-color: #039be5;
 }
-button:hover {
+button:hover,
+#boutonmdp:hover {
   background-color: #ff8183 !important;
   border-color: #ff8183 !important;
 }

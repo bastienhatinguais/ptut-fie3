@@ -1,5 +1,6 @@
 <template>
   <div id="tableau">
+    <h1>Liste du personnel</h1>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -76,7 +77,7 @@
 
 <style scoped>
 #tableau {
-  margin: 20px !important;
+  margin: 60px !important;
 }
 
 button#modif {

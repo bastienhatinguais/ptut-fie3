@@ -1,7 +1,8 @@
 <template>
   <!-- AFFICHAGE LISTE DES UE -->
   <div class="container">
-    <table class="table table-hover">
+    <h1>Liste des UE</h1>
+    <table class="table table-striped">
       <thead>
         <tr>
           <th>Code</th>
@@ -32,10 +33,12 @@
           <td>
             <!-- BOUTON SUPPRIMER -->
             <button
+              id="suppr"
               type="button"
               class="btn btn-danger"
               data-bs-toggle="modal"
               data-bs-target="#test"
+              
               @click="
                 () => {
                   setCurrent(selfLinkToId(ue._links.self.href));
@@ -46,8 +49,6 @@
               <i class="bi bi-trash-fill"></i>
               Supprimer
             </button>
-          </td>
-          <td>
             <!-- BOUTON MODIFIER -->
             <router-link
               :to="{
@@ -56,6 +57,7 @@
               }"
             >
               <button
+                id="modif"
                 type="button"
                 class="btn btn-primary"
                 @click="
@@ -64,27 +66,36 @@
                   }
                 "
               >
-                <i class="bi bi-pencil-square"></i>
+                <i class="bi bi-pencil-fill"></i>
                 Modifier
               </button>
             </router-link>
           </td>
         </tr>
-        <tr
-          v-for="(cours, id) in lesCours"
-          :key="id"
-          id="accordion"
-          class="collapse"
-        >
-          <td id="titre">{{ cours.titre }}</td>
-        </tr>
       </tbody>
     </table>
-    <router-link to="/ue/ajouter">
-      <button type="button" class="btn btn-success">Ajouter UE</button>
-    </router-link>
   </div>
 </template>
+
+<style scoped>
+button {
+  margin : 4px ; 
+}
+#modif {
+  background-color: #039BE5 ;
+  border-color: #039BE5 ;
+}
+
+#suppr {
+  background-color: #283593 ;
+  border-color: #283593 ;
+}
+
+button:hover{
+  background-color: #FF8183 !important;
+  border-color: #FF8183 !important;
+}
+</style>
 
 <script setup>
 import { axiosApi } from "@/api/api.js";

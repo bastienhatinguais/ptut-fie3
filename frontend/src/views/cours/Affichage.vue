@@ -54,7 +54,7 @@
                 <span v-if="index != Object.keys(cours.intervenants).length - 1"
                   >,
                 </span>
-                <span v-else>. </span>
+                <span v-else> </span>
               </router-link>
             </h6>
             <hr />
@@ -143,6 +143,10 @@ h4 {
 a,
 h5 {
   color: #283593;
+}
+
+.lien {
+  text-decoration: none;
 }
 a.lien:hover {
   color: #ff8183;

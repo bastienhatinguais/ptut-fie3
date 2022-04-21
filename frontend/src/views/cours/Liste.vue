@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h1>Liste des cours</h1>
     <Liste></Liste>
   </div>
 </template>

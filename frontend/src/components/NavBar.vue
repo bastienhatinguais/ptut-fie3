@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-custom navbar-expand-lg border-bottom border-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="https://isis.univ-jfc.fr/" target="_blank">
+      <a class="navbar-brand" href="/">
         <img
           src="@/assets/logo.png"
           alt=""
@@ -14,16 +14,34 @@
         <li class="nav-item">
           <router-link class="nav-link light" to="/annee">Accueil</router-link>
         </li>
-        <li class="nav-item">
-          <!--<router-link class="nav-link" to="/personnel">Personnel</router-link>-->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Cours
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/cours">Liste des cours</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/cours/ajouter">Ajouter un cours</a></li>
+          </ul>
         </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/personnel">Personnel</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/personnel/ajouter"
-            >Ajouter personnel</router-link
-          >
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            UE
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/ue">Liste des UE</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/ue/ajouter">Ajouter une UE</a></li>
+          </ul>
+        </li><li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Personnel
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/personnel">Liste du personnel</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/personnel/ajouter">Ajouter un membre</a></li>
+          </ul>
         </li>
       </ul>
       <div>
