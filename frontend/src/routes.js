@@ -9,6 +9,8 @@ import Inscription from "./views/Inscription.vue";
 import Annees from "@/views/Annee.vue";
 import ListeUEParSemestre from "@/views/ue/ListeUEParSemestre.vue";
 import CoursAffichage from "@/views/cours/Affichage.vue";
+import Personnel from "./views/Personnel.vue";
+import ListePersonnel from "./views/ListePersonnel.vue";
 
 export default [
     { path: "/", component: Home },
@@ -57,4 +59,18 @@ export default [
     component: Annees,
     name: 'annee',
   },
+  {
+    path: "/personnel",
+    component: Personnel,
+    name: 'personnel'
+  },
+  {
+    path: "/listePersonnel",
+    component: ListePersonnel,
+    name: 'listePersonnel'
+  },
+  {
+    path:"/personnel/:id/modifier",
+    component: modifierPersonnel
+  }
 ];
