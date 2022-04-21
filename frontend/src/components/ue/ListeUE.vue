@@ -38,6 +38,7 @@
               class="btn btn-danger"
               data-bs-toggle="modal"
               data-bs-target="#test"
+              
               @click="
                 () => {
                   setCurrent(selfLinkToId(ue._links.self.href));
@@ -78,7 +79,7 @@
 
 <style scoped>
 button {
-  margin : 4px ;
+  margin : 4px ; 
 }
 #modif {
   background-color: #039BE5 ;
