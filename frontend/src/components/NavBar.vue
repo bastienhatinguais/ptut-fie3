@@ -21,16 +21,19 @@
           <router-link class="nav-link" to="/personnel">Personnel</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/listePersonnel">Affichage Personnel</router-link>
+          <router-link class="nav-link" to="/personnel/ajouter"
+            >Ajouter personnel</router-link
+          >
         </li>
       </ul>
       <div>
-        <img src="@/assets/image-ISIS.png"
-          top="-100"          
+        <img
+          src="@/assets/image-ISIS.png"
+          top="-100"
           width="110"
           height="70"
           class="d-inline-block align-text-top"
-          />
+        />
       </div>
       <ConnexionButton v-if="!auth.getEstConnecté()"></ConnexionButton>
       <div class="nav-item dropdown me-3" v-else>
@@ -56,7 +59,6 @@
         </ul>
       </div>
     </div>
-    
   </nav>
 </template>
 
@@ -74,23 +76,22 @@ console.log(auth.getUtilisateur());
 .navbar-expand-lg .navbar-nav {
   flex-direction: row;
 }
-.navbar-custom{
+.navbar-custom {
   background-color: #283593;
 }
 li {
-  padding : 4px;
+  padding: 4px;
 }
 
 /* Modify brand and text color */
 .navbar-custom .navbar-brand,
-.navbar-custom .navbar-text, 
-.navbar-custom .nav-link{
-    color: white;
+.navbar-custom .navbar-text,
+.navbar-custom .nav-link {
+  color: white;
 }
 
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
-    color: #FF8183 ;
+  color: #ff8183;
 }
-
 </style>

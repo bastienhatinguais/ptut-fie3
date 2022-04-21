@@ -10,13 +10,13 @@ import lombok.Setter;
 public class JwtResponse {
     private String token;
     private String type = "Bearer";
-    private Long id;
+    private Integer id;
     private String pseudo;
     private String email;
     private String nom;
     private List<String> roles;
 
-    public JwtResponse(String accessToken, Long id, String pseudo, String email, String nom, List<String> roles) {
+    public JwtResponse(String accessToken, Integer id, String pseudo, String email, String nom, List<String> roles) {
         this.token = accessToken;
         this.id = id;
         this.pseudo = pseudo;

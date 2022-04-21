@@ -5,31 +5,29 @@ import UE from "@/views/UE.vue";
 import UEAjouter from "@/views/ue/AjoutUE.vue";
 import UEModifier from "@/views/ue/ModificationUE.vue";
 import CoursModifier from "@/views/cours/Modifier.vue";
-import Inscription from "./views/Inscription.vue";
 import Annees from "@/views/Annee.vue";
 import ListeUEParSemestre from "@/views/ue/ListeUEParSemestre.vue";
 import CoursAffichage from "@/views/cours/Affichage.vue";
-import Personnel from "./views/Personnel.vue";
-import ListePersonnel from "./views/ListePersonnel.vue";
-import ModifierPersonnel from "./components/personnel/FormulaireModification.vue";
+import AjoutPersonnel from "./views/personnel/AjoutPersonnel";
+import ListePersonnel from "./views/personnel/ListePersonnel.vue";
+import ModifierPersonnel from "./views/personnel/ModificationPersonnel";
 
 export default [
-    { path: "/", component: Home },
-    { path: "/inscription", component: Inscription },
+  { path: "/", component: Home },
 
   {
     path: "/cours",
     component: CoursListe,
-    name : "cours",
+    name: "cours",
   },
   {
     path: "/cours/ajouter",
     component: CoursAjouter,
   },
-  { 
-    path: "/cours/:id", 
-    component: CoursAffichage, 
-    props: true 
+  {
+    path: "/cours/:id",
+    component: CoursAffichage,
+    props: true,
   },
   {
     path: "/ue",
@@ -38,19 +36,19 @@ export default [
   {
     path: "/ue/:statut/:id",
     component: ListeUEParSemestre,
-    name: 'listeParSemestre',
+    name: "listeParSemestre",
   },
   {
     path: "/ue/ajouter",
     component: UEAjouter,
   },
-  
+
   {
     path: "/ue/modifier/:id",
     component: UEModifier,
     name: "modifier",
   },
-{
+  {
     path: "/cours/:id/modifier",
     component: CoursModifier,
     props: true,
@@ -58,22 +56,20 @@ export default [
   {
     path: "/annee",
     component: Annees,
-    name: 'annee',
+    name: "annee",
   },
   {
     path: "/personnel",
-    component: Personnel,
-    name: 'personnel'
-  },
-  {
-    path: "/listePersonnel",
     component: ListePersonnel,
-    name: 'listePersonnel'
   },
   {
-    path:"/personnel/:id/modifier",
+    path: "/personnel/ajouter",
+    component: AjoutPersonnel,
+  },
+
+  {
+    path: "/personnel/:id/modifier",
     component: ModifierPersonnel,
     props: true,
-    name: 'ModifierPersonnel'
-  }
+  },
 ];

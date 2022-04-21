@@ -1,9 +1,7 @@
-INSERT INTO personnel (nom, prenom) VALUES
+INSERT INTO personnels(nom, prenom, email, mot_de_passe, pseudo) VALUES
+  ('Man','Root', 'root@gmail.com', '$2a$12$.LSB3wXmFcWAVKPDlzewAO9RSL2u9.d4BHexa/xgtg/qpkch3kts2', 'root'),
+  ('Defossez', 'Adrien', 'adrien.defossez@gmail.com', '$2a$12$.LSB3wXmFcWAVKPDlzewAO9RSL2u9.d4BHexa/xgtg/qpkch3kts2', 'defossez');
 
-  ('Faux', 'Francis'),
-  ('Defossez', 'Adrien'), 
-  ('Bastide', 'Rémi'), 
-  ('Dalce', 'Rejane');
 
 INSERT INTO statut (intitule) VALUES
 ('apprenti'),
@@ -78,9 +76,7 @@ INSERT INTO roles(nom) VALUES
   ('ROLE_ADMIN');
 
 
-INSERT INTO utilisateurs(nom, email, mot_de_passe, pseudo) VALUES
-  ('RootMan', 'root@gmail.com', '$2a$12$.LSB3wXmFcWAVKPDlzewAO9RSL2u9.d4BHexa/xgtg/qpkch3kts2', 'root');
 
-INSERT INTO cours_intervenants(donne_les_cours_code, intervenants_code) VALUES
+INSERT INTO cours_intervenants(donne_les_cours_code, intervenants_id) VALUES
  ('1', '1');
 

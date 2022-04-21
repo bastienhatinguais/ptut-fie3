@@ -14,7 +14,7 @@
     "
     @submit="ajouterPersonnel"
   >
-  <h3>Ajout d'un personnel</h3>
+    <h3>Ajout d'un personnel</h3>
     <!-- NOM -->
     <div>
       <label for="validationNom" class="form-label">Nom</label>
@@ -39,74 +39,50 @@
       />
     </div>
 
-
-    <!--estDirecteur-->
+    <!-- PSEUDO -->
     <div>
-        <label for="validationDirecteur" class="form-label">Est le directeur</label>
-        <!--<input
-            type="radio"
+      <label for="pseudo" class="form-label">Pseudo</label>
+      <input
+        type="text"
+        class="form-control"
+        id="pseudo"
+        v-model="personnel.pseudo"
+        required
+      />
+    </div>
+
+    <!--EMAIL-->
+    <div>
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        v-model="personnel.email"
+        required
+      />
+    </div>
+
+    <!--MOT DE PASSE-->
+    <div>
+      <label for="motDePasse" class="form-label">Mot de Passe</label>
+      <div class="row g-2">
+        <div class="col-10">
+          <input
+            type="text"
             class="form-control"
-            id="validationDirecteur"
-            value="true"
-            v-model="personnel.estDirecteur"
-            required
-        />-->
-        <select
-        class="form-select"
-        aria-label="Le personnel est-il directeur ?"
-        v-model="personnel.estDirecteur"
-      >
-        <option :value="true"> oui</option>
-        <option :value="false">non </option> 
-      </select>
+            id="motDePasse"
+            :disabled="!mdpPerso"
+            v-model="personnel.motDePasse"
+          />
+        </div>
+        <i class="btn btn-primary col-2" @click="mdpPerso = !mdpPerso">
+          <i class="bi bi-lock-fill"></i>
+        </i>
+      </div>
     </div>
 
-    <!-- RESPONSABLE -->
-    <div>
-      <label class="form-label">Responsable des cours :</label>
-      <select
-        class="form-select"
-        aria-label="Choisissez les cours associés au personnel :"
-        v-model="personnel.responsableDesCours"
-        multiple = "true"
-      >
-        <option
-          v-for="(cour, index) in cours"
-          :key="index"
-          :ref="cour.ref"
-          :value="cour._links.self.href"
-        >
-          {{ cour.titre }}
-        </option>
-      </select>
-    </div>
-
-    <!-- DONNE LES COURS -->
-    <div>
-      <label class="form-label">Dispense les cours :</label>
-      <select
-        class="form-select"
-        aria-label="Choisissez les cours dispensés par le personnel :"
-        v-model="personnel.donneLesCours"
-        
-        multiple
-        style =""
-      >
-      
-
-        <option
-          v-for="(cour, index) in cours"
-          :key="index"
-          :ref="cour.ref"
-          :value="cour._links.self.href"
-        >
-          {{ cour.titre }}
-        </option>
-
-      
-      </select>
-    </div>
-      <button class="btn btn-primary" type="submit">Ajouter</button>
+    <button class="btn btn-primary" type="submit">Ajouter</button>
   </form>
 </template>
 
@@ -124,39 +100,34 @@ button:hover {
 
 <script setup>
 import { axiosApi } from "@/api/api";
-import { ref, reactive, onMounted, setup } from "vue";
+import router from "@/router";
+import { ref, reactive, onMounted, inject } from "vue";
 import { useToast } from "vue-toastification";
 
-
+let auth = inject("auth");
 
 const personnelInitial = {
   nom: "",
   prenom: "",
-  estDirecteur: false,
-  responsableDesCours: [],
-  donneLesCours: [],
+  pseudo: "",
+  email: "",
+  motDePasse: "ptut2022",
 };
 
 let personnel = reactive({ ...personnelInitial });
 
-let cours = ref([]);
-let personnels = ref([]);
 let afficherAlerte = ref(false);
-let dureeAlerte = 5000;
 let ajoutEnCours = ref(false);
+let mdpPerso = ref(false);
 const toast = useToast();
-
-onMounted(function () {
-  axiosApi.get("cours").then((response) => {
-    cours.value = response.data._embedded.cours;
-  });
-});
 
 function ajouterPersonnel(e) {
   e.preventDefault();
   ajoutEnCours.value = true;
-  axiosApi
-    .post("personnel", personnel)
+
+  //ajout des informations personnelles du personnel qu'on ajoute
+  auth
+    .inscription(personnel)
     .then(function (response) {
       ajoutEnCours.value = false;
 
@@ -164,7 +135,7 @@ function ajouterPersonnel(e) {
       if (response.status == 201) {
         //reset valeurs du form
         Object.assign(personnel, personnelInitial);
-
+        router.push("/personnel");
         afficherAlerte.value = true;
         toast.success("Le personnel a bien été ajouté !", {
           timeout: 5000,

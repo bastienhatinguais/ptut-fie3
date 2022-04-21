@@ -2,13 +2,7 @@ package com.ptut.syllabus.entity;
 
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -16,31 +10,52 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
 @Entity // Une entité JPA
+@Table(name = "personnels", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "pseudo" }),
+        @UniqueConstraint(columnNames = { "email" })
+})
+
 public class Personnel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer code;
+    private Integer id;
 
-    @ColumnDefault("false")
-    private boolean estDirecteur;
-
+    @NonNull
     private String nom;
 
+    @NonNull
     private String prenom;
 
-    @OneToMany(mappedBy = "responsable")
+    @NonNull
+    private String pseudo;
 
+    @NonNull
+    private String email;
+
+    @NonNull
+    @JsonIgnore
+    private String motDePasse;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "personnel_roles", joinColumns = @JoinColumn(name = "personnel_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles;
+
+    @OneToMany(mappedBy = "responsable")
     @JsonIgnoreProperties({ "responsable", "cours" })
     @JsonIgnore
     private Set<Cours> responsableDesCours;

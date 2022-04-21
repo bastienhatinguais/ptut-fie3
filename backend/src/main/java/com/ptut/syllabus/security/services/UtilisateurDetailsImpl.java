@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.ptut.syllabus.entity.Utilisateur;
+import com.ptut.syllabus.entity.Personnel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UtilisateurDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
-    private Long id;
+    private Integer id;
     private String pseudo;
     private String email;
     private String nom;
@@ -20,7 +20,7 @@ public class UtilisateurDetailsImpl implements UserDetails {
     private String motDePasse;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UtilisateurDetailsImpl(Long id, String pseudo, String email, String nom, String motDePasse,
+    public UtilisateurDetailsImpl(Integer id, String pseudo, String email, String nom, String motDePasse,
             Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.pseudo = pseudo;
@@ -30,7 +30,7 @@ public class UtilisateurDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UtilisateurDetailsImpl build(Utilisateur user) {
+    public static UtilisateurDetailsImpl build(Personnel user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getNom().name()))
                 .collect(Collectors.toList());
@@ -48,7 +48,7 @@ public class UtilisateurDetailsImpl implements UserDetails {
         return authorities;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

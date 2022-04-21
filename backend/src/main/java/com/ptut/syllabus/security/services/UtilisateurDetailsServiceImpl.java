@@ -6,19 +6,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.ptut.syllabus.entity.Utilisateur;
-import com.ptut.syllabus.dao.UtilisateurRepository;
+import com.ptut.syllabus.entity.Personnel;
+import com.ptut.syllabus.dao.PersonnelRepository;
 
 @Service
 public class UtilisateurDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    UtilisateurRepository userRepository;
+    PersonnelRepository personnelRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String pseudo) throws UsernameNotFoundException {
-        Utilisateur user = userRepository.findByPseudo(pseudo)
-                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec le pseudo : " + pseudo));
+        Personnel user = personnelRepository.findByPseudo(pseudo)
+                .orElseThrow(() -> new UsernameNotFoundException("Peronnel non trouvé avec le pseudo : " + pseudo));
         return UtilisateurDetailsImpl.build(user);
     }
 }

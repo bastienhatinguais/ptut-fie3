@@ -14,6 +14,10 @@ public class InscriptionRequest {
     private String nom;
 
     @NotBlank
+    @Size(min = 2, max = 40)
+    private String prenom;
+
+    @NotBlank
     @Size(min = 3, max = 20)
     private String pseudo;
 
