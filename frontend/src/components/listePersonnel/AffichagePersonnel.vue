@@ -32,10 +32,10 @@
 
           <router-link
               :to="{
-                name: 'modifierPersonnel',
+                name: 'ModifierPersonnel',
                 params: { id: selfLinkToId(ue._links.self.href) },
               }"
-            >
+            ></router-link>
           <button
             type="button"
             class="btn btn-warning text-white"

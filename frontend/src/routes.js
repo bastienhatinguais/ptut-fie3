@@ -11,6 +11,7 @@ import ListeUEParSemestre from "@/views/ue/ListeUEParSemestre.vue";
 import CoursAffichage from "@/views/cours/Affichage.vue";
 import Personnel from "./views/Personnel.vue";
 import ListePersonnel from "./views/ListePersonnel.vue";
+import ModifierPersonnel from "./components/personnel/FormulaireModification.vue";
 
 export default [
     { path: "/", component: Home },
@@ -71,6 +72,7 @@ export default [
   },
   {
     path:"/personnel/:id/modifier",
-    component: modifierPersonnel
+    component: ModifierPersonnel,
+    name: 'ModifierPersonnel'
   }
 ];

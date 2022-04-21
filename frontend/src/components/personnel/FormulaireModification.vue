@@ -145,10 +145,9 @@ const personnelInitial = {
   donneLesCours: [],
 };
 
-
+let personnel = reactive({});
 const props = defineProps({ id: Number });
-let cours = reactive({ ...coursInitial });
-let personnels = ref([]);
+let personnels = reactive({ ...personnelInitial });
 let responsable = ref(null);
 let modificationEnCours = ref(false);
 const toast = useToast();
@@ -159,15 +158,6 @@ let self = getCurrentInstance();
 onMounted(function () {
   axiosApi.get("personnel/" + route.params.id).then((response) => {
     Object.assign(personnel, response.data);
-    let responsableLink = response.data._links.responsable.href;
-    //Récupération du responsable du cours
-    axiosApi
-      .get(trimLink(responsableLink))
-      .then((res) => {
-        console.log(res);
-        cours.responsable = res.data._links.self.href;
-      })
-      .catch((e) => console.log(e));
   });
   axiosApi
     .get("personnel")
@@ -177,22 +167,22 @@ onMounted(function () {
     })
     .catch((e) => console.log(e));
 });
-function modifierCours(e) {
+function modifierPersonnel(e) {
   e.preventDefault();
   modificationEnCours.value = true;
   axiosApi
-    .put("cours/" + route.params.id, cours)
+    .put("personnel/" + route.params.id, personnel)
     .then(function (response) {
       modificationEnCours.value = false;
       console.log(response);
       //succès
       if (response.status == 200) {
         //reset valeurs du form
-        Object.assign(cours, coursInitial);
-        toast.success("Le cours a bien été modifié !", {
+        Object.assign(personnel, personnelInitial);
+        toast.success("Le personnel a bien été modifié !", {
           timeout: 5000,
         });
-        router.push("/cours");
+        router.push("/personnel");
       }
     })
     .catch(function (error) {
