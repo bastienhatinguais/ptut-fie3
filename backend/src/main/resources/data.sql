@@ -42,6 +42,7 @@ INSERT INTO semestre (titre, annee_id) VALUES
 INSERT INTO ue (code, titre, semestre_id, responsable_id) VALUES
 ('INFO2', 'Informatique', SELECT id FROM semestre WHERE titre = '3', 1),
 ('COMM3', 'Communication & Santé', SELECT id FROM semestre WHERE titre = '3', 2),
+('COMM3', 'Communication & Santé', SELECT id FROM semestre WHERE titre = '3', 2),
 ('PHYB4', 'Physique & biologie', SELECT id FROM semestre WHERE titre = '2', 5);
 
 

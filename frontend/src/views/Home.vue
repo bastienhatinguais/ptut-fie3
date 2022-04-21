@@ -1,6 +1,6 @@
 <template>
   <div v-if="auth.getEstConnecté()">
-    <h2>Bienvenue</h2>
+    <Annee></Annee>
   </div>
   <div v-else>
     <h1 class="text-center font-weight-bold">Syllabus et maquettes</h1>
