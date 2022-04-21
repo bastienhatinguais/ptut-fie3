@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-custom navbar-expand-lg border-bottom border-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="https://isis.univ-jfc.fr/" target="_blank">
         <img
           src="@/assets/logo.png"
           alt=""
@@ -87,7 +87,7 @@ console.log(auth.getUtilisateur());
 
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
-    color: #FF8183;
+    color: #FF8183 ;
 }
 
 </style>
