@@ -1,11 +1,11 @@
 <!-- AFFICHAGE DES ANNEES -->
 
 <template>
-  <div class="container border border-dark" id="tout">
+  <div class="container" id="tout">
     <div class="row">
       <div class="m-3 col">
         <h4>Cycle Préparatoire</h4>
-        <div id="cyclePrépa" class="p-3 border border-dark">
+        <div id="cyclePrépa" class="p-3">
           <ul>
             <li class="listeAnnee">FIE1 - 1ère année</li>
             <ul>
@@ -60,7 +60,7 @@
     <div class="row">
       <div class="m-3 col">
         <h4>Cycle Etudiant</h4>
-        <div id="cycleEtud" class="p-3 border border-dark">
+        <div id="cycleEtud" class="p-3">
           <ul>
             <li class="listeAnnee">FIE3 - 3ème année</li>
             <ul>
@@ -136,7 +136,7 @@
       </div>
       <div class="m-3 col">
         <h4>Cycle Apprenti</h4>
-        <div id="cycleApp" class="p-3 border border-dark">
+        <div id="cycleApp" class="p-3">
           <ul>
             <li class="listeAnnee">FIA3 - 3ème année</li>
             <ul>
@@ -248,7 +248,7 @@ div {
 #cyclePrépa, 
 #cycleEtud {
   background-color: white ;
-  background: hsl(199, 98%, 89%, .3) ;
+  background: hsl(199, 98%, 89%, .2) ;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 
