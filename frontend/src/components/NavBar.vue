@@ -17,6 +17,12 @@
         <li class="nav-item">
           <!--<router-link class="nav-link" to="/personnel">Personnel</router-link>-->
         </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/personnel">Personnel</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/listePersonnel">Affichage Personnel</router-link>
+        </li>
       </ul>
       <div>
         <img src="@/assets/image-ISIS.png"

@@ -8,3 +8,4 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import router from "./router";
 
 createApp(App).use(router).use(Toast).mount("#app");
+

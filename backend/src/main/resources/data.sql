@@ -1,4 +1,5 @@
 INSERT INTO personnel (nom, prenom) VALUES
+
   ('Francis', 'Faux'),
   ('Adrien', 'Defossez');
 
@@ -58,3 +59,4 @@ INSERT INTO utilisateurs(nom, email, mot_de_passe, pseudo) VALUES
 
 INSERT INTO cours_intervenants(donne_les_cours_code, intervenants_code) VALUES
  ('1', '1');
+

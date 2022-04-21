@@ -6,6 +6,7 @@ export function selfLinkToId(selfLink) {
   let last = selfLink.lastIndexOf("/");
   let id = selfLink.substring(last + 1);
   return id;
+
 }
 
 /**
