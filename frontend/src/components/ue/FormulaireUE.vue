@@ -126,35 +126,6 @@
       </select>
     </div>
 
-    <!-- COURS-->
-    <div class="form-group">
-      <label class="form-label">Cours :</label>
-      <form class="d-flex">
-        <input
-          class="form-control me-2 mb-2"
-          type="search"
-          placeholder="Filtre..."
-          aria-label="Search"
-          v-model="recherche"
-        />
-      </form>
-      <div class="list-group" v-if="cours">
-        <label
-          class="list-group-item"
-          v-for="(c, index) in coursFiltre"
-          :key="index"
-        >
-          <input
-            class="form-check-input me-1"
-            type="checkbox"
-            v-if="c._links"
-            :value="c._links.self.href"
-            v-model="ue.cours"
-          />
-          {{ c.titre }}
-        </label>
-      </div>
-    </div>
     <!-- BOUTON AJOUTER -->
     <div class="col-12 mx-auto">
       <button
@@ -192,7 +163,6 @@ const ueInitial = {
   semestre: "",
   statut: "",
   responsable: "",
-  cours: [],
 };
 
 let ue = reactive({ ...ueInitial });
@@ -201,17 +171,8 @@ let annees = ref([]);
 let semestres = ref([]);
 let statuts = ref([]);
 let personnels = ref([]);
-let cours = ref([]);
-let coursFiltre = ref([]);
-let recherche = ref("");
 let ajoutEnCours = ref(false);
 const toast = useToast();
-
-watch(recherche, () => {
-  coursFiltre.value = cours.value.filter((c) =>
-    c.titre.includes(recherche.value)
-  );
-});
 
 /**
  * Au chargerment de la page on récupère les années et les statuts
@@ -222,10 +183,6 @@ onMounted(function () {
   });
   axiosApi.get("personnel").then((response) => {
     personnels.value = response.data._embedded.personnel;
-  });
-  axiosApi.get("cours").then((response) => {
-    cours.value = response.data._embedded.cours;
-    coursFiltre.value = [...cours.value];
   });
 });
 
