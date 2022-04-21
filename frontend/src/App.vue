@@ -5,10 +5,12 @@
     <router-view></router-view>
   </div>
   </div>
+  <Footer></Footer>
 </template>
 
 <script setup>
 import NavBar from "@/components/NavBar.vue";
+import Footer from "@/components/Footer.vue";
 import Auth from "@/Auth";
 import { reactive } from "@vue/reactivity";
 import { provide } from "@vue/runtime-core";
