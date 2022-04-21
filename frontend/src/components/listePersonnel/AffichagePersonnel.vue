@@ -17,12 +17,9 @@
           <button
             type="button"
             class="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#test"
             @click="
               () => {
-                setCurrent(selfLinkToId(i._links.self.href));
-                supprimer()
+                
               }
             "
           >
@@ -33,23 +30,23 @@
           <router-link
               :to="{
                 name: 'ModifierPersonnel',
-                params: { id: selfLinkToId(ue._links.self.href) },
+                params: { id: selfLinkToId(i._links.self.href) },
               }"
-            ></router-link>
-          <button
-            type="button"
-            class="btn btn-warning text-white"
-            data-bs-toggle="modal"
-            data-bs-target="#test"
-            @click="
-              () => {
-                setCurrent(selfLinkToId(i._links.self.href));
-              }
-            "
-          >
-            <i class="bi bi-pencil-fill"></i>
-            Modifier
-          </button>
+            >
+
+            <button
+              type="button"
+              class="btn btn-warning text-white"
+              @click="
+                () => {
+                  setCurrent(selfLinkToId(i._links.self.href));
+                }
+                ">
+
+              <i class="bi bi-pencil-fill"></i>
+                Modifier
+              </button>
+            </router-link>
         </td>
       </tr>
     </tbody>
@@ -63,6 +60,7 @@ import { axiosApi } from "@/api/api";
 import { onMounted, ref } from "@vue/runtime-core";
 import { selfLinkToId } from "@/utils";
 import { useToast } from "vue-toastification";
+import router from "@/router";
 
 const toast = useToast();
 let personnel = ref([]);
@@ -71,6 +69,7 @@ let current = null;
 onMounted(function () {
   recupererPersonnels();
 });
+
 function setCurrent(id) {
   current = id;
   console.log(current);

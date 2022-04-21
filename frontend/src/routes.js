@@ -73,6 +73,7 @@ export default [
   {
     path:"/personnel/:id/modifier",
     component: ModifierPersonnel,
+    props: true,
     name: 'ModifierPersonnel'
   }
 ];
