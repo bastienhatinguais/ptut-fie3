@@ -111,7 +111,12 @@
 </template>
 
 
-
+<style>
+button {
+  background-color: #283593 !important;
+  border-color: #283593 !important;
+}
+</style>
 
 <script setup>
 import { axiosApi } from "@/api/api";
