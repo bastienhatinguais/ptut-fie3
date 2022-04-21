@@ -36,16 +36,32 @@
             <h4 id="item-1">Points clefs</h4>
             <h5 v-if="cours.responsable" style="color: black">
               Professeur en charge :
-              <router-link id="lien" to="personnel">
+              <router-link class="lien" to="personnel">
                 {{ cours.responsable.prenom }}
                 {{ cours.responsable.nom }}
               </router-link>
             </h5>
+            <h6 v-if="cours.intervenants" style="color: black">
+              Intervenants :
+              <router-link
+                class="lien"
+                to="personnel"
+                v-for="(intervenant, index) in cours.intervenants"
+                :key="index"
+              >
+                {{ intervenant.prenom }}
+                {{ intervenant.nom }}
+                <span v-if="index != Object.keys(cours.intervenants).length - 1"
+                  >,
+                </span>
+                <span v-else>. </span>
+              </router-link>
+            </h6>
             <hr />
 
             <h6 v-if="cours.ue && cours.ue.semestre">
               <router-link
-                id="lien"
+                class="lien"
                 :to="{
                   name: 'listeParSemestre',
                   params: {
@@ -128,7 +144,7 @@ a,
 h5 {
   color: #283593;
 }
-a#lien:hover {
+a.lien:hover {
   color: #ff8183;
 }
 

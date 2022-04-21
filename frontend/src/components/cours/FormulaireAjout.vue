@@ -23,7 +23,6 @@
         type="text"
         id="validationTitre"
         v-model="cours.titre"
-
       />
     </div>
 
@@ -63,6 +62,36 @@
           {{ personnel.nom }} {{ personnel.prenom }}
         </option>
       </select>
+    </div>
+
+    <!-- INTERVENANTS -->
+    <div class="form-group">
+      <label class="form-label">Intervenants :</label>
+      <form class="d-flex">
+        <input
+          class="form-control me-2 mb-2"
+          type="search"
+          placeholder="Filtre..."
+          aria-label="Search"
+          v-model="recherche"
+        />
+      </form>
+      <div class="list-group personnels" v-if="personnels">
+        <label
+          class="list-group-item"
+          v-for="(p, index) in personnelsFiltre"
+          :key="index"
+        >
+          <input
+            class="form-check-input me-1"
+            type="checkbox"
+            v-if="p._links"
+            :value="p._links.self.href"
+            v-model="cours.intervenants"
+          />
+          {{ p.nom }} {{ p.prenom }}
+        </label>
+      </div>
     </div>
 
     <!-- DESCRIPTION -->
@@ -162,6 +191,7 @@
         v-model="cours.planDuCours"
       ></textarea>
     </div>
+
     <div class="col-12 mx-auto">
       <button
         v-if="ajoutEnCours"
@@ -182,39 +212,38 @@
 </template>
 
 <style scoped>
-
 button {
-  background-color: #283593 ;
-  border-color: #283593 ;
-  width:100%;
+  background-color: #283593;
+  border-color: #283593;
+  width: 100%;
 }
 button:hover {
-  background-color: #FF8183 !important;
-  border-color: #FF8183 !important;
+  background-color: #ff8183 !important;
+  border-color: #ff8183 !important;
 }
-
 </style>
 
 <script setup>
-import { ref, reactive, onMounted, inject } from "vue";
+import { ref, reactive, onMounted, inject, watch } from "vue";
 import { useToast } from "vue-toastification";
 import router from "@/router";
 import { axiosApi } from "@/api/api";
 
 const coursInitial = {
   titre: "",
-  ue:"",
+  ue: "",
   responsable: 0,
   description: "",
   modalitesEvaluation: "",
   nbHeureCM: 0,
   nbHeureTD: 0,
   nbHeureTP: 0,
-  nbHeureFOAD : 0,
+  nbHeureFOAD: 0,
   objectifs: "",
-  planDuCours : "",
+  planDuCours: "",
   prerequis: "",
-  competences : "" ,
+  competences: "",
+  intervenants: [],
 };
 
 let cours = reactive({ ...coursInitial });
@@ -223,11 +252,22 @@ let lesUE = ref([]);
 let personnels = ref([]);
 let ajoutEnCours = ref(false);
 const toast = useToast();
+let recherche = ref("");
+let personnelsFiltre = ref([]);
+
+watch(recherche, () => {
+  personnelsFiltre.value = personnels.value.filter(function (p) {
+    let nom = p.nom.toLowerCase();
+    let prenom = p.prenom.toLowerCase();
+    return nom.includes(recherche.value) || prenom.includes(recherche.value);
+  });
+});
 
 onMounted(function () {
   console.log("get personnel");
   axiosApi.get("personnel").then((response) => {
     personnels.value = response.data._embedded.personnel;
+    personnelsFiltre.value = response.data._embedded.personnel;
   });
   axiosApi.get("ue").then((response) => {
     lesUE.value = response.data._embedded.ue;
@@ -265,3 +305,10 @@ function ajouterCours(e) {
     });
 }
 </script>
+
+<style scoped>
+.personnels {
+  height: 200px;
+  overflow: auto;
+}
+</style>
