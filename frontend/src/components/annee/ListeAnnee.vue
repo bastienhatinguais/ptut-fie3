@@ -7,7 +7,7 @@
         <h4>Cycle Préparatoire</h4>
         <div id="cyclePrépa" class="p-3 border border-dark">
           <ul>
-            <li class="listeAnnee">FIE1, 1ère année</li>
+            <li class="listeAnnee">FIE1 - 1ère année</li>
             <ul>
               <li>
                 <router-link
@@ -30,7 +30,7 @@
                 >
               </li>
             </ul>
-            <li class="listeAnnee">FIE2, 2ème année</li>
+            <li class="listeAnnee">FIE2 - 2ème année</li>
             <ul>
               <li>
                 <router-link
@@ -62,7 +62,7 @@
         <h4>Cycle Etudiant</h4>
         <div id="cycleEtud" class="p-3 border border-dark">
           <ul>
-            <li class="listeAnnee">FIE3, 3ème année</li>
+            <li class="listeAnnee">FIE3 - 3ème année</li>
             <ul>
               <li>
                 <router-link
@@ -85,7 +85,7 @@
                 >
               </li>
             </ul>
-            <li class="listeAnnee">FIE4, 4ème année</li>
+            <li class="listeAnnee">FIE4 - 4ème année</li>
             <ul>
               <li>
                 <router-link
@@ -108,7 +108,7 @@
                 >
               </li>
             </ul>
-            <li class="listeAnnee">FIE5, 5ème année</li>
+            <li class="listeAnnee">FIE5 - 5ème année</li>
             <ul>
               <li>
                 <router-link
@@ -138,7 +138,7 @@
         <h4>Cycle Apprenti</h4>
         <div id="cycleApp" class="p-3 border border-dark">
           <ul>
-            <li class="listeAnnee">FIA3, 3ème année</li>
+            <li class="listeAnnee">FIA3 - 3ème année</li>
             <ul>
               <li>
                 <router-link
@@ -161,7 +161,7 @@
                 >
               </li>
             </ul>
-            <li class="listeAnnee">FIA4, 4ème année</li>
+            <li class="listeAnnee">FIA4 - 4ème année</li>
             <ul>
               <li>
                 <router-link
@@ -184,7 +184,7 @@
                 >
               </li>
             </ul>
-            <li class="listeAnnee">FIA5, 5ème année</li>
+            <li class="listeAnnee">FIA5 - 5ème année</li>
             <ul>
               <li>
                 <router-link
@@ -219,12 +219,20 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+h4 {
+  color:#039BE5;
+}
+
+.link-dark {
+  color:#283593 ;
+}
+
 li {
-  list-style-image: url(@/assets/fleche1.svg);
+  list-style-image: url(@/assets/fleche3.svg);
   
 }
 .listeAnnee {
-  list-style-image: url(@/assets/fleche2.svg);
+  list-style-image: url(@/assets/fleche4.svg);
 }
 
 div {
@@ -239,7 +247,7 @@ div {
 #cyclePrépa, 
 #cycleEtud {
   background-color: white ;
-  background: hsl(199, 98%, 89%, .4) ;
+  background: hsl(199, 98%, 89%, .3) ;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 

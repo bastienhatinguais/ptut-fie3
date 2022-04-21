@@ -15,7 +15,7 @@
         <td>{{ i.prenom }}</td>
         <td>{{ i.estDirecteur }}</td>
         <td class="d-flex justify-content-center gap-3">
-          <button
+          <button id="suppr"
             type="button"
             class="btn btn-danger"
             @click="
@@ -35,7 +35,7 @@
               }"
             >
 
-            <button
+            <button id="modif"
               type="button"
               class="btn btn-warning text-white"
               @click="
@@ -59,6 +59,19 @@
 <style>
 #tableau {
   margin: 20px !important;
+}
+
+button#modif {
+  background-color: #039BE5 ;
+  border-color: #039BE5 ;
+}
+button#suppr {
+  background-color: #283593 ;
+  border-color: #283593 ;
+}
+button:hover {
+  background-color: #FF8183 !important;
+  border-color: #FF8183 !important;
 }
 </style>
 

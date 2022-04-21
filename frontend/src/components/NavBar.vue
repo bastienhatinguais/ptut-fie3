@@ -77,6 +77,9 @@ console.log(auth.getUtilisateur());
 .navbar-custom{
   background-color: #283593;
 }
+li {
+  padding : 4px;
+}
 
 /* Modify brand and text color */
 .navbar-custom .navbar-brand,

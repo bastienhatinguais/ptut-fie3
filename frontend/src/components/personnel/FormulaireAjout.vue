@@ -111,10 +111,14 @@
 </template>
 
 
-<style>
+<style scoped>
 button {
-  background-color: #283593 !important;
-  border-color: #283593 !important;
+  background-color: #283593 ;
+  border-color: #283593 ;
+}
+button:hover {
+  background-color: #FF8183 !important;
+  border-color: #FF8183 !important;
 }
 </style>
 

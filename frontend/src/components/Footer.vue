@@ -11,7 +11,7 @@
         height="24"/>
         <svg class="bi" width="10" height="24"></svg>
       </a>
-      <span class="text-muted" style="color:white !important" >PTUT FIE3 2022 - Projet Syllabus</span>
+      <span class="text-muted" style="color:white !important; width:300px" >PTUT FIE3 2022 - Projet Syllabus</span>
     </div>
 
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
@@ -35,4 +35,5 @@
     color:white !important;
     font-size: 15px;
 }
+
 </style>
