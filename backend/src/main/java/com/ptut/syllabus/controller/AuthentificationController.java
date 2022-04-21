@@ -123,6 +123,8 @@ public class AuthentificationController {
             });
         }
         personnel.setRoles(roles);
+        personnel.setPremiereConnexion(true);
+
         Personnel p = personnelRepository.save(personnel);
         return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès !", p.getId()));
     }

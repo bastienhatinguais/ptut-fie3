@@ -51,7 +51,7 @@ public class Personnel {
     private String motDePasse;
 
     @NonNull
-    @ColumnDefault("true")
+    @Column(columnDefinition = "tinyint(1) default 1")
     private Boolean premiereConnexion;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
