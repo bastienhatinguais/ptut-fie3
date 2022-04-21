@@ -16,10 +16,4 @@ public class Role {
 	@Column(length = 30)
 	private ERole nom;
 
-	// facultatif
-	private Integer responsableAnneeId;
-
-	// facultatif
-	private Integer responsableUeId;
-
 }

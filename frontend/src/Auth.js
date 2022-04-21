@@ -79,7 +79,7 @@ export default class Auth {
         prenom: utilisateur.prenom,
         pseudo: utilisateur.pseudo,
         motDePasse: utilisateur.motDePasse,
-        roles: utilisateur.roles,
+        role: utilisateur.role,
       })
       .then((response) => {
         console.log(response);

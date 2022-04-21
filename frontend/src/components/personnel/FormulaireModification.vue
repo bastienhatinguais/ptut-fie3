@@ -63,6 +63,26 @@
       />
     </div>
 
+    <!-- ROLES -->
+    <div class="list-group">
+      <label class="form-label">Roles</label>
+
+      <label
+        class="list-group-item"
+        v-for="(role, index) in roles"
+        :key="index"
+      >
+        <input
+          class="form-check-input me-1"
+          type="checkbox"
+          v-if="role._links"
+          :value="role._links.self.href"
+          v-model="personnel.roles"
+        />
+        {{ role.nom }}
+      </label>
+    </div>
+
     <div class="col-12 mx-auto">
       <button
         v-if="modificationEnCours"
@@ -97,9 +117,10 @@ const personnelInitial = {
   prenom: "",
   email: "",
   pseudo: "",
+  roles: [],
 };
 
-let cours = ref([]);
+let roles = ref([]);
 const props = defineProps({ id: Number });
 let personnel = reactive({ ...personnelInitial });
 let modificationEnCours = ref(false);
@@ -109,6 +130,16 @@ const route = useRoute();
 onMounted(function () {
   axiosApi.get("personnel/" + route.params.id).then((response) => {
     Object.assign(personnel, response.data);
+    console.log(response.data);
+  });
+  axiosApi("personnel/" + route.params.id + "/roles").then((result) => {
+    console.log(result.data._embedded.roles);
+    for (const [key, value] of Object.entries(result.data._embedded.roles)) {
+      personnel.roles.push(value._links.self.href);
+    }
+  });
+  axiosApi("roles").then((result) => {
+    roles.value = result.data._embedded.roles;
   });
 });
 

@@ -7,6 +7,6 @@ import com.ptut.syllabus.entity.ERole;
 import com.ptut.syllabus.entity.Role;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
     Optional<Role> findByNom(ERole nom);
 }

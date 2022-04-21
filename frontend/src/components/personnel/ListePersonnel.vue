@@ -13,7 +13,16 @@
         <tr v-for="(personnel, index) in personnels" :key="index">
           <th scope="row">{{ personnel.nom }}</th>
           <td>{{ personnel.prenom }}</td>
-          <td>{{ personnel.role }}</td>
+          <td v-if="personnel.roles">
+            <span v-for="(role, index) in personnel.roles" :key="index"
+              >{{ role.nom }}
+              <span v-if="index != Object.keys(personnel.roles).length - 1"
+                >,
+              </span>
+              <span v-else>. </span></span
+            >
+          </td>
+          <td v-else>Aucun</td>
           <td class="d-flex justify-content-center gap-3">
             <button
               id="suppr"
@@ -43,7 +52,8 @@
               </button>
             </router-link>
 
-            <button id="res"
+            <button
+              id="res"
               type="button"
               class="btn btn-success"
               data-bs-toggle="modal"
@@ -70,12 +80,13 @@
 }
 
 button#modif {
-  background-color: #039be5 ;
-  border-color: #039be5 ;
+  background-color: #039be5;
+  border-color: #039be5;
 }
-button#suppr, button#res {
-  background-color: #283593 ;
-  border-color: #283593 ;
+button#suppr,
+button#res {
+  background-color: #283593;
+  border-color: #283593;
 }
 
 button:hover {

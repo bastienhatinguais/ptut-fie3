@@ -31,6 +31,8 @@ import com.ptut.syllabus.dao.PersonnelRepository;
 import com.ptut.syllabus.dao.RoleRepository;
 import com.ptut.syllabus.security.jwt.JwtUtils;
 import com.ptut.syllabus.security.services.UtilisateurDetailsImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -48,6 +50,7 @@ public class AuthentificationController {
     JwtUtils jwtUtils;
     @Value("${ptut.app.motDePasseDefaut}")
     private String motDePasseDefaut;
+    private static final Logger LOG = LoggerFactory.getLogger(BackendController.class);
 
     @PostMapping("/connexion")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody ConnexionRequest loginRequest) {
@@ -97,21 +100,27 @@ public class AuthentificationController {
                     encoder.encode(motDePasseDefaut), true);
         }
         Set<String> strRoles = signUpRequest.getRole();
+        LOG.info(signUpRequest.toString());
         Set<Role> roles = new HashSet<>();
         if (strRoles != null) {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "directeur_etude":
+                    case "ROLE_DIRECTEUR_ETUDES":
                         Role directeurEtudeRole = roleRepository.findByNom(ERole.ROLE_DIRECTEUR_ETUDES)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(directeurEtudeRole);
                         break;
-                    case "responsable_annee":
+                    case "ROLE_RESPONSABLE_ANNEE":
                         Role responsableAnneeRole = roleRepository.findByNom(ERole.ROLE_RESPONSABLE_ANNEE)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(responsableAnneeRole);
                         break;
-                    case "responsable_cours":
+                    case "ROLE_RESPONSABLE_UE":
+                        Role responsableUeRole = roleRepository.findByNom(ERole.ROLE_RESPONSABLE_UE)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(responsableUeRole);
+                        break;
+                    case "ROLE_RESPONSABLE_COURS":
                         Role responsableCoursRole = roleRepository.findByNom(ERole.ROLE_RESPONSABLE_COURS)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(responsableCoursRole);

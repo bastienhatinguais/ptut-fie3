@@ -76,12 +76,35 @@
             v-model="personnel.motDePasse"
           />
         </div>
-        <i id="boutonmdp" class="btn btn-primary col-2" @click="mdpPerso = !mdpPerso">
+        <i
+          id="boutonmdp"
+          class="btn btn-primary col-2"
+          @click="mdpPerso = !mdpPerso"
+        >
           <i class="bi bi-lock-fill"></i>
         </i>
       </div>
     </div>
 
+    <!-- ROLES -->
+    <div class="list-group">
+      <label class="form-label">Roles</label>
+
+      <label
+        class="list-group-item"
+        v-for="(role, index) in roles"
+        :key="index"
+      >
+        <input
+          class="form-check-input me-1"
+          type="checkbox"
+          v-if="role.nom"
+          :value="role.nom"
+          v-model="personnel.role"
+        />
+        {{ role.nom }}
+      </label>
+    </div>
     <button class="btn btn-primary" type="submit">Ajouter</button>
   </form>
 </template>
@@ -89,16 +112,16 @@
 
 <style scoped>
 button {
-  background-color: #283593 ;
-  border-color: #283593 ;
+  background-color: #283593;
+  border-color: #283593;
 }
 #boutonmdp {
-  background-color: #039BE5 ;
-  border-color: #039BE5 ;
+  background-color: #039be5;
+  border-color: #039be5;
 }
 button:hover {
-  background-color: #FF8183 !important;
-  border-color: #FF8183 !important;
+  background-color: #ff8183 !important;
+  border-color: #ff8183 !important;
 }
 </style>
 
@@ -116,6 +139,7 @@ const personnelInitial = {
   pseudo: "",
   email: "",
   motDePasse: "ptut2022",
+  role: [],
 };
 
 let personnel = reactive({ ...personnelInitial });
@@ -124,11 +148,17 @@ let afficherAlerte = ref(false);
 let ajoutEnCours = ref(false);
 let mdpPerso = ref(false);
 const toast = useToast();
+const roles = ref([]);
 
+onMounted(() => {
+  axiosApi("roles").then((result) => {
+    roles.value = result.data._embedded.roles;
+  });
+});
 function ajouterPersonnel(e) {
   e.preventDefault();
   ajoutEnCours.value = true;
-
+  console.log(personnel);
   //ajout des informations personnelles du personnel qu'on ajoute
   auth
     .inscription(personnel)
@@ -139,12 +169,12 @@ function ajouterPersonnel(e) {
       if (response.status == 201) {
         //reset valeurs du form
         Object.assign(personnel, personnelInitial);
-        router.push("/personnel");
         afficherAlerte.value = true;
         toast.success("Le personnel a bien été ajouté !", {
           timeout: 5000,
         });
       }
+      router.push("/personnel");
     })
     .catch((e) => {});
 }

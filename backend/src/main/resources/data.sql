@@ -94,6 +94,7 @@ INSERT INTO cours(titre,  nb_HeureCM, nb_HeureTD, nb_HeureTP, nb_HeureFOAD, desc
 INSERT INTO roles(nom) VALUES
   ('ROLE_DIRECTEUR_ETUDES'),
   ('ROLE_RESPONSABLE_ANNEE'),
+  ('ROLE_RESPONSABLE_UE'),
   ('ROLE_RESPONSABLE_COURS');
 
-INSERT INTO utilisateur_roles(utilisateur_id, role_id) VALUES (1,1);
+INSERT INTO personnel_roles(personnel_id, role_id) VALUES (1,1);
