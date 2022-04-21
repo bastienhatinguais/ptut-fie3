@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <table class="table table-striped table-bordered text-center">
+  <div id="tableau">
+    <table class="table table-striped">
       <thead>
         <tr>
           <th>Titre</th>
@@ -10,13 +10,14 @@
       <tbody>
         <tr v-for="(c, index) in cours" :key="index">
           <th scope="row">
-            <router-link :to="'/cours/' + selfLinkToId(c._links.self.href)">{{
+            <router-link id="titres" :to="'/cours/' + selfLinkToId(c._links.self.href)">{{
               c.titre
             }}</router-link>
           </th>
           
           <td class="d-flex justify-content-center gap-3">
             <button
+              id="suppr"
               type="button"
               class="btn btn-danger"
               data-bs-toggle="modal"
@@ -32,6 +33,7 @@
             </button>
 
             <button
+              id="modif"
               type="button"
               class="btn btn-warning text-white"
               @click="
@@ -55,7 +57,33 @@
   </div>
 </template>
 
+<style scoped>
+#titres:hover {
+  color:#FF8183;
+}
+#titres {
+  color:black;
+  text-decoration: none;
+}
+
+button#modif {
+  background-color: #039be5 ;
+  border-color: #039be5 ;
+}
+button#suppr {
+  background-color: #283593 ;
+  border-color: #283593 ;
+}
+
+button:hover {
+  background-color: #ff8183 !important;
+  border-color: #ff8183 !important;
+}
+
+</style>
+
 <script setup>
+
 import SupprimerModal from "@/components/modal/SupprimerModal.vue";
 
 import { axiosApi } from "@/api/api";
@@ -103,5 +131,3 @@ function supprimer() {
 }
 </script>
 
-<style>
-</style>

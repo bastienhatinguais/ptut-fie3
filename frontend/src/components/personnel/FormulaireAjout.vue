@@ -96,7 +96,7 @@ button {
   background-color: #039BE5 ;
   border-color: #039BE5 ;
 }
-button:hover {
+button:hover, #boutonmdp:hover {
   background-color: #FF8183 !important;
   border-color: #FF8183 !important;
 }

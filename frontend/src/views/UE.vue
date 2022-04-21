@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>UE</h1>
     <ListeUE></ListeUE>
   </div>
 </template>

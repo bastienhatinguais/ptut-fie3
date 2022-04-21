@@ -225,6 +225,7 @@ h4 {
 
 .link-dark {
   color:#283593 ;
+  text-decoration: none;
 }
 
 li {
