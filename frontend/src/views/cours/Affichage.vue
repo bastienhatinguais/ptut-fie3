@@ -32,7 +32,7 @@
             class="scrollspy-example-2"
             tabindex="0"
           >
-            <h4 id="item-1" style="color: #0d6efd">Points clefs</h4>
+            <h4 id="item-1" style="color: #283593">Points clefs</h4>
             <h5 v-if="cours.responsable">
               Professeur en charge : {{ cours.responsable.nom }}
               {{ cours.responsable.prenom }}
@@ -40,7 +40,7 @@
             <hr />
             
               <h6 v-if="cours.ue && cours.ue.semestre">
-                <router-link class="link-dark" 
+                <router-link id="lien"
                 :to="{
                     name: 'listeParSemestre',
                     params: { id: cours.ue.semestre.id, 
@@ -87,14 +87,14 @@
               </tbody>
             </table>
             <hr />
-            <h4 id="item-2" style="color: #0d6efd">Objectifs</h4>
+            <h4 id="item-2" style="color: #283593">Objectifs</h4>
             <p>{{ cours.objectifs }}</p>
 
             <!-- demande de defossez : doit pouvoir etre cache -->
             <h4>Competences visées</h4>
             <p>{{ cours.competences }}</p>
             <hr />
-            <h4 id="item-3" style="color: #0d6efd">Description</h4>
+            <h4 id="item-3" style="color: #283593">Description</h4>
             <p>{{ cours.description }}</p>
 
             <!-- demande de defossez : doit pouvoir etre cache -->
@@ -126,3 +126,12 @@ onMounted(function () {
   });
 });
 </script>
+
+<style scoped>
+a{
+  color : #283593;
+}
+a#lien{
+  color : #FF8183;
+}
+</style>
