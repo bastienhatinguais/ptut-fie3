@@ -12,7 +12,7 @@
       bg-body
       rounded
     "
-    @submit="ajouterPersonnel"
+    @submit="modifierPersonnel"
   >
   <h3>Ajout d'un personnel</h3>
     <!-- NOM -->
@@ -137,6 +137,8 @@ import { useRoute } from "vue-router";
 import { selfLinkToId, trimLink } from "@/utils";
 
 
+let personnel = reactive({});
+let personnels = reactive({ ...personnelInitial });
 const personnelInitial = {
   nom: "",
   prenom: "",
@@ -145,14 +147,14 @@ const personnelInitial = {
   donneLesCours: [],
 };
 
-let personnel = reactive({});
+let cours = ref([]);
 const props = defineProps({ id: Number });
-let personnels = reactive({ ...personnelInitial });
 let responsable = ref(null);
 let modificationEnCours = ref(false);
 const toast = useToast();
 const route = useRoute();
 let self = getCurrentInstance();
+
 
 
 onMounted(function () {
@@ -166,7 +168,12 @@ onMounted(function () {
       personnels.value = response.data._embedded.personnel;
     })
     .catch((e) => console.log(e));
+  });
+  axiosApi.get("cours").then((response) => {
+    cours.value = response.data._embedded.cours;
 });
+
+
 function modifierPersonnel(e) {
   e.preventDefault();
   modificationEnCours.value = true;
