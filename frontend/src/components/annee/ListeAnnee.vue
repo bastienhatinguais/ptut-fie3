@@ -239,7 +239,8 @@ div {
 #cyclePrépa, 
 #cycleEtud {
   background-color: white ;
-  background: hsl(199, 98%, 89%, .4);
+  background: hsl(199, 98%, 89%, .4) ;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 
 #tout {

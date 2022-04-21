@@ -5,7 +5,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <router-link
+          <router-link id="lienAccueil"
             :to="{
               name: 'annee',
             }"
@@ -43,7 +43,7 @@
         >
           <div class="accordion-body">
             <ul class="list-group list-group-flush">
-              <li
+              <li id="coursBouton"
                 class="list-group-item list-group-item-action"
                 @click="$router.push('/cours/' + cours.code)"
                 v-for="cours in ue.cours"
@@ -58,6 +58,28 @@
     </div>
   </div>
 </template>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.list-group-item-action {
+  cursor: pointer;
+}
+.accordion-button{
+  color:white !important;
+}
+.accordion-button:hover{
+  color: #FF8183 !important;
+}
+
+#coursBouton:hover {
+  background: hsl(199, 98%, 89%, .4);
+}
+
+#lienAccueil:hover {
+  color:#FF8183 ;
+}
+
+</style>
 
 <script setup>
 import { axiosApi } from "@/api/api";
@@ -83,9 +105,3 @@ function chercherUE() {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.list-group-item-action {
-  cursor: pointer;
-}
-</style>

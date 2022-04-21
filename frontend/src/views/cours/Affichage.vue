@@ -18,7 +18,7 @@
           >
             <a class="navbar-brand" href="#">Sommaire</a>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link active" href="#item-1">Points clefs</a>
+              <a class="nav-link" href="#item-1">Points clefs</a>
               <a class="nav-link" href="#item-2">Objectifs</a>
               <a class="nav-link" href="#item-3">Description</a>
             </nav>
@@ -111,6 +111,30 @@
   </div>
 </template>
 
+<style scoped>
+
+h1 {
+  color:#039BE5;
+}
+a{
+  color : #283593;
+}
+a#lien:hover{
+  color : #FF8183;
+}
+
+#navbar-example3 {
+  top:20px;
+  border-radius : 6px;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+a.nav-link:hover {
+  background-color : #039BE5 ;
+  color : white ;
+}
+
+</style>
+
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import { axiosApi } from "@/api/api";
@@ -127,11 +151,3 @@ onMounted(function () {
 });
 </script>
 
-<style scoped>
-a{
-  color : #283593;
-}
-a#lien{
-  color : #FF8183;
-}
-</style>

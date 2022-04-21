@@ -1,9 +1,10 @@
 <template>
+<div id="tableau">
   <table class="table table-striped">
     <thead>
       <tr>
         <th>Nom</th>
-        <th>Prenom</th>
+        <th>Prénom</th>
         <th>Directeur</th>
         <th></th>
       </tr>
@@ -54,8 +55,15 @@
       </tr>
     </tbody>
   </table>
+</div>
   <!--<SupprimerModal id="test" @supprimer="supprimer">test</SupprimerModal>-->
 </template>
+
+<style>
+#tableau {
+  margin: 20px !important;
+}
+</style>
 
 <script setup>
 //import SupprimerModal from "@/components/modal/SupprimerModal.vue";
@@ -103,5 +111,3 @@ function supprimer() {
 }
 </script>
 
-<style>
-</style>
