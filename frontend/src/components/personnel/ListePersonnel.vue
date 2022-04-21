@@ -4,15 +4,15 @@
       <tr>
         <th>Nom</th>
         <th>Prenom</th>
-        <th>Directeur</th>
+        <th>Role</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(i, index) in personnel" :key="index">
-        <th scope="row">{{ i.nom }}</th>
-        <td>{{ i.prenom }}</td>
-        <td>{{ i.estDirecteur }}</td>
+      <tr v-for="(personnel, index) in personnels" :key="index">
+        <th scope="row">{{ personnel.nom }}</th>
+        <td>{{ personnel.prenom }}</td>
+        <td>{{ personnel.role }}</td>
         <td class="d-flex justify-content-center gap-3">
           <button
             type="button"
@@ -21,8 +21,8 @@
             data-bs-target="#test"
             @click="
               () => {
-                setCurrent(selfLinkToId(i._links.self.href));
-                supprimer()
+                setCurrent(personnel.id);
+                supprimer();
               }
             "
           >
@@ -30,26 +30,17 @@
             Supprimer
           </button>
 
-          <router-link
-              :to="{
-                name: 'ModifierPersonnel',
-                params: { id: selfLinkToId(ue._links.self.href) },
-              }"
-            ></router-link>
-          <button
-            type="button"
-            class="btn btn-warning text-white"
-            data-bs-toggle="modal"
-            data-bs-target="#test"
-            @click="
-              () => {
-                setCurrent(selfLinkToId(i._links.self.href));
-              }
-            "
-          >
-            <i class="bi bi-pencil-fill"></i>
-            Modifier
-          </button>
+          <router-link :to="`/personnel/${personnel.id}/modifier`">
+            <button
+              type="button"
+              class="btn btn-warning text-white"
+              data-bs-toggle="modal"
+              data-bs-target="#test"
+            >
+              <i class="bi bi-pencil-fill"></i>
+              Modifier
+            </button>
+          </router-link>
         </td>
       </tr>
     </tbody>
@@ -65,23 +56,23 @@ import { selfLinkToId } from "@/utils";
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
-let personnel = ref([]);
+let personnels = ref([]);
 let current = null;
 
 onMounted(function () {
   recupererPersonnels();
 });
+
 function setCurrent(id) {
   current = id;
-  console.log(current);
 }
 
 function recupererPersonnels() {
   axiosApi
-    .get("personnel")
+    .get("personnel-detail/")
     .then((response) => {
-      personnel.value = response.data._embedded.personnel;
-      console.log(personnel.value);
+      personnels.value = response.data;
+      console.log(personnels.value);
     })
     .catch((e) => {
       console.log(e);

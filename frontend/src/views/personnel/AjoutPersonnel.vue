@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import FormulaireAjout from "@/components/personnel/FormulaireAjout.vue";
+import FormulaireAjout from "@/components/personnel/FormulaireAjout";
 </script>

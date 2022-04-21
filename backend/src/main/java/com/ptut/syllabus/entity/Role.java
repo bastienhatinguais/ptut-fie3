@@ -15,4 +15,11 @@ public class Role {
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
 	private ERole nom;
+
+	// facultatif
+	private Integer responsableAnneeId;
+
+	// facultatif
+	private Integer responsableUeId;
+
 }
