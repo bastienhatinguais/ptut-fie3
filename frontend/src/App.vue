@@ -1,12 +1,22 @@
 <template>
-  <NavBar></NavBar>
-  <div class="mt-4">
-    <router-view></router-view>
+  <div id="tout">
+    <NavBar></NavBar>
+    <div class="mt-5">
+      <router-view></router-view>
+    </div>
   </div>
+  <Footer></Footer>
 </template>
 
+<style scoped>
+#tout {
+  /* on règle la taille de manière à ce que le footer soit affiché en bas et ne remonte pas*/
+  min-height: calc(100vh - 80px);
+}
+</style>
 <script setup>
 import NavBar from "@/components/NavBar.vue";
+import Footer from "@/components/Footer.vue";
 import Auth from "@/Auth";
 import { reactive } from "@vue/reactivity";
 import { provide } from "@vue/runtime-core";
@@ -42,6 +52,7 @@ function getAuthorization() {
   return {};
 }
 
+/**
 const PATHS_VISITEUR = ["/", "/api"];
 const PATHS_DIRECTEUR_ETUDES = ["/inscription"];
 
@@ -58,6 +69,22 @@ router.beforeEach(async function (to, from) {
       !rolesUtilisateur.includes("ROLE_DIRECTEUR_ETUDES")
     ) {
       return { path: "/non-autorise" };
+ */
+router.beforeEach(async (to, from) => {
+  if (
+    // make sure the user is authenticated
+    !auth.getEstConnecté() &&
+    // ❗️ Avoid an infinite redirect
+    to.path !== "/"
+  ) {
+    // redirect the user to the login page
+    return { path: "/" };
+  } else {
+    if (
+      auth.getUtilisateur().premiereConnexion &&
+      to.path !== "/premiere-connexion"
+    ) {
+      return { path: "/premiere-connexion" };
     }
   }
 });

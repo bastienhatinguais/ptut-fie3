@@ -76,6 +76,7 @@ export default class Auth {
       .post("auth/inscription", {
         email: utilisateur.email,
         nom: utilisateur.nom,
+        prenom: utilisateur.prenom,
         pseudo: utilisateur.pseudo,
         motDePasse: utilisateur.motDePasse,
         roles: utilisateur.roles,

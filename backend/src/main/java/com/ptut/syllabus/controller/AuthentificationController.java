@@ -2,10 +2,12 @@ package com.ptut.syllabus.controller;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,14 +20,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ptut.syllabus.entity.ERole;
+import com.ptut.syllabus.entity.Personnel;
 import com.ptut.syllabus.entity.Role;
-import com.ptut.syllabus.entity.Utilisateur;
 import com.ptut.syllabus.payload.request.ConnexionRequest;
 import com.ptut.syllabus.payload.request.InscriptionRequest;
+import com.ptut.syllabus.payload.request.PremiereConnexionRequest;
 import com.ptut.syllabus.payload.response.JwtResponse;
 import com.ptut.syllabus.payload.response.MessageResponse;
+import com.ptut.syllabus.dao.PersonnelRepository;
 import com.ptut.syllabus.dao.RoleRepository;
-import com.ptut.syllabus.dao.UtilisateurRepository;
 import com.ptut.syllabus.security.jwt.JwtUtils;
 import com.ptut.syllabus.security.services.UtilisateurDetailsImpl;
 
@@ -36,13 +39,15 @@ public class AuthentificationController {
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
-    UtilisateurRepository userRepository;
+    PersonnelRepository personnelRepository;
     @Autowired
     RoleRepository roleRepository;
     @Autowired
     PasswordEncoder encoder;
     @Autowired
     JwtUtils jwtUtils;
+    @Value("${ptut.app.motDePasseDefaut}")
+    private String motDePasseDefaut;
 
     @PostMapping("/connexion")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody ConnexionRequest loginRequest) {
@@ -60,26 +65,37 @@ public class AuthentificationController {
                 userDetails.getUsername(),
                 userDetails.getEmail(),
                 userDetails.getNom(),
-                roles));
+                userDetails.getPrenom(),
+                roles,
+                userDetails.getPremiereConnexion()));
     }
 
     @PostMapping("/inscription")
     public ResponseEntity<?> registerUser(@Valid @RequestBody InscriptionRequest signUpRequest) {
-        if (userRepository.existsByPseudo(signUpRequest.getPseudo())) {
+        if (personnelRepository.existsByPseudo(signUpRequest.getPseudo())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Erreur: Ce pseudo est déjà pris !"));
         }
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (personnelRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Erreur: Cet email est déjà utilisé !"));
         }
 
-        // Create new user's account
-        Utilisateur user = new Utilisateur(signUpRequest.getNom(), signUpRequest.getPseudo(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getMotDePasse()));
+        // Create new personnel's account
+        Personnel personnel;
+        if (signUpRequest.getMotDePasse() != null) {
+            personnel = new Personnel(signUpRequest.getNom(), signUpRequest.getPrenom(),
+                    signUpRequest.getPseudo(),
+                    signUpRequest.getEmail(),
+                    encoder.encode(signUpRequest.getMotDePasse()), false);
+        } else {
+            personnel = new Personnel(signUpRequest.getNom(), signUpRequest.getPrenom(),
+                    signUpRequest.getPseudo(),
+                    signUpRequest.getEmail(),
+                    encoder.encode(motDePasseDefaut), true);
+        }
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
         if (strRoles != null) {
@@ -105,8 +121,32 @@ public class AuthentificationController {
                 }
             });
         }
-        user.setRoles(roles);
-        userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès !"));
+        personnel.setRoles(roles);
+        personnel.setPremiereConnexion(true);
+
+        Personnel p = personnelRepository.save(personnel);
+        return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès !", p.getId()));
+    }
+
+    @PostMapping("/premiere-connexion")
+    public ResponseEntity<?> premiereConnexion(@Valid @RequestBody PremiereConnexionRequest premiereConnexionRequest) {
+        Optional<Personnel> personnel = personnelRepository.findById(premiereConnexionRequest.getId());
+
+        if (!personnel.isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Erreur: Cet utilisateur n'est pas connu."));
+        }
+        Personnel p = personnel.get();
+        if (!p.getPremiereConnexion()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Erreur: Ce n'est pas votre première connexion !"));
+        }
+
+        p.setMotDePasse(encoder.encode(premiereConnexionRequest.getMotDePasse()));
+        p.setPremiereConnexion(false);
+        personnelRepository.save(p);
+        return ResponseEntity.ok(new MessageResponse("Le mot de passe a bien été changé !", null));
     }
 }

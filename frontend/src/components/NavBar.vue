@@ -1,55 +1,40 @@
 <template>
-  <nav class="navbar navbar-light bg-light navbar-expand-lg">
+  <nav class="navbar navbar-custom navbar-expand-lg border-bottom border-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="https://isis.univ-jfc.fr/" target="_blank">
         <img
           src="@/assets/logo.png"
           alt=""
-          width="30"
-          height="24"
+          width="70"
+          height="60"
           class="d-inline-block align-text-top"
         />
       </a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <router-link class="nav-link" to="/">Accueil</router-link>
+          <router-link class="nav-link light" to="/annee">Accueil</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/api">Api</router-link>
+          <!--<router-link class="nav-link" to="/personnel">Personnel</router-link>-->
         </li>
-        <li class="nav-item dropdown" v-if="auth.getEstConnecté()">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+        <li class="nav-item">
+          <router-link class="nav-link" to="/personnel">Personnel</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/personnel/ajouter"
+            >Ajouter personnel</router-link
           >
-            Cours
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li>
-              <router-link class="dropdown-item" to="/cours">Liste</router-link>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <router-link class="dropdown-item" to="/cours/ajouter"
-                >Ajouter</router-link
-              >
-            </li>
-          </ul>
         </li>
       </ul>
-      <form class="d-flex me-2">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
+      <div>
+        <img
+          src="@/assets/image-ISIS.png"
+          top="-100"
+          width="110"
+          height="70"
+          class="d-inline-block align-text-top"
         />
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      </div>
       <ConnexionButton v-if="!auth.getEstConnecté()"></ConnexionButton>
       <div class="nav-item dropdown me-3" v-else>
         <a
@@ -60,7 +45,7 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          <span class="text-primary me-2"
+          <span class="text-light me-2"
             ><i class="bi bi-person-circle"></i>
             {{ auth.getUtilisateur().nom }}</span
           >
@@ -87,8 +72,26 @@ let auth = reactive(inject("auth"));
 console.log(auth.getUtilisateur());
 </script>
 
-<style>
+<style scoped>
 .navbar-expand-lg .navbar-nav {
   flex-direction: row;
+}
+.navbar-custom {
+  background-color: #283593;
+}
+li {
+  padding: 4px;
+}
+
+/* Modify brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text,
+.navbar-custom .nav-link {
+  color: white;
+}
+
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+  color: #ff8183;
 }
 </style>

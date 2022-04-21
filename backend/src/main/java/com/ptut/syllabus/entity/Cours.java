@@ -8,7 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -18,7 +19,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.Builder.Default;
 
 @Getter
 @Setter
@@ -34,9 +34,6 @@ public class Cours {
     @NonNull
     private String titre;
 
-    @NonNull
-    private int creditsEcts;
-
     @ColumnDefault("0")
     private int nbHeureCM;
 
@@ -46,11 +43,14 @@ public class Cours {
     @ColumnDefault("0")
     private int nbHeureTP;
 
+    @ColumnDefault("0")
+    private int nbHeureFOAD;
+
     private String description;
 
     private String objectifs;
 
-    private String prerequis;
+    private String planDuCours;
 
     private String competences;
 
@@ -58,8 +58,15 @@ public class Cours {
 
     @ManyToOne
     @NonNull
+    @JsonIgnoreProperties({ "responsableDesCours" })
     private Personnel responsable;
 
     @ManyToMany
+    @JsonIgnoreProperties({ "donneLesCours" })
     private Set<Personnel> intervenants;
+
+    @ManyToOne
+    @JsonIgnoreProperties({ "cours" })
+    private UE ue;
+
 }
