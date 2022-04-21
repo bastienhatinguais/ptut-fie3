@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <h1>{{ cours.titre }}</h1> <br>
+    <h1>{{ cours.titre }}</h1>
+    <br />
     <div class="bd-example">
       <div class="row">
         <div class="col-4">
@@ -33,34 +34,33 @@
             tabindex="0"
           >
             <h4 id="item-1">Points clefs</h4>
-            <h5 v-if="cours.responsable" style="color:black">Professeur en charge : 
-                <router-link id="lien"
-                :to="{
-                    name: 'listePersonnel',
-                    params: {}
-                  }"
-                  >
+            <h5 v-if="cours.responsable" style="color: black">
+              Professeur en charge :
+              <router-link id="lien" to="personnel">
                 {{ cours.responsable.prenom }}
-              {{ cours.responsable.nom }}
-                </router-link>
-              </h5>
+                {{ cours.responsable.nom }}
+              </router-link>
+            </h5>
             <hr />
-            
-              <h6 v-if="cours.ue && cours.ue.semestre">
-                <router-link id="lien"
+
+            <h6 v-if="cours.ue && cours.ue.semestre">
+              <router-link
+                id="lien"
                 :to="{
-                    name: 'listeParSemestre',
-                    params: { id: cours.ue.semestre.id, 
-                    statut: cours.ue.semestre.annee.statut.intitule, 
-                    annee: cours.ue.semestre.annee.intitule },
-                  }"
-                  >
+                  name: 'listeParSemestre',
+                  params: {
+                    id: cours.ue.semestre.id,
+                    statut: cours.ue.semestre.annee.statut.intitule,
+                    annee: cours.ue.semestre.annee.intitule,
+                  },
+                }"
+              >
                 {{ cours.ue.semestre.annee.intitule }}
                 , semestre
                 {{ cours.ue.semestre.titre }}
-                </router-link>
-              </h6>
-            
+              </router-link>
+            </h6>
+
             <h6 v-if="cours.ue">
               UE : {{ cours.ue.titre }} ({{ cours.ue.code }})
             </h6>
@@ -119,28 +119,28 @@
 </template>
 
 <style scoped>
-
-h1, h4 {
-  color:#039BE5;
+h1,
+h4 {
+  color: #039be5;
 }
 
-a, h5{
-  color : #283593;
+a,
+h5 {
+  color: #283593;
 }
-a#lien:hover{
-  color : #FF8183;
+a#lien:hover {
+  color: #ff8183;
 }
 
 #navbar-example3 {
-  top:20px;
-  border-radius : 6px;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  top: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 a.nav-link:hover {
-  background-color : #039BE5 ;
-  color : white ;
+  background-color: #039be5;
+  color: white;
 }
-
 </style>
 
 <script setup>
