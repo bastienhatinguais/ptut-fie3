@@ -32,6 +32,7 @@
 
             <router-link :to="`/personnel/${personnel.id}/modifier`">
               <button
+                id="modif"
                 type="button"
                 class="btn btn-warning text-white"
                 data-bs-toggle="modal"
@@ -42,7 +43,7 @@
               </button>
             </router-link>
 
-            <button
+            <button id="res"
               type="button"
               class="btn btn-success"
               data-bs-toggle="modal"
@@ -53,8 +54,8 @@
                 }
               "
             >
-              <i class="bi bi-trash-fill"></i>
-              Résilier mot de passe
+              <i class="bi bi-arrow-clockwise"></i>
+              Résilier le mot de passe
             </button>
           </td>
         </tr>
@@ -69,13 +70,14 @@
 }
 
 button#modif {
-  background-color: #039be5;
-  border-color: #039be5;
+  background-color: #039be5 ;
+  border-color: #039be5 ;
 }
-button#suppr {
-  background-color: #283593;
-  border-color: #283593;
+button#suppr, button#res {
+  background-color: #283593 ;
+  border-color: #283593 ;
 }
+
 button:hover {
   background-color: #ff8183 !important;
   border-color: #ff8183 !important;

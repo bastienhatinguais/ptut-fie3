@@ -14,59 +14,59 @@ import ModifierPersonnel from "./views/personnel/ModificationPersonnel";
 import PremiereConnexion from "./views/personnel/PremiereConnexion";
 
 export default [
-  { path: "/", component: Home },
+    { path: "/", component: Annees },
 
-  {
-    path: "/cours",
-    component: CoursListe,
-    name: "cours",
-  },
-  {
-    path: "/cours/ajouter",
-    component: CoursAjouter,
-  },
-  {
-    path: "/cours/:id",
-    component: CoursAffichage,
-    props: true,
-  },
-  {
-    path: "/ue",
-    component: UE,
-  },
-  {
-    path: "/ue/:statut/:id",
-    component: ListeUEParSemestre,
-    name: "listeParSemestre",
-  },
-  {
-    path: "/ue/ajouter",
-    component: UEAjouter,
-  },
+    {
+        path: "/cours",
+        component: CoursListe,
+        name: "cours",
+    },
+    {
+        path: "/cours/ajouter",
+        component: CoursAjouter,
+    },
+    {
+        path: "/cours/:id",
+        component: CoursAffichage,
+        props: true,
+    },
+    {
+        path: "/ue",
+        component: UE,
+    },
+    {
+        path: "/ue/:statut/:id",
+        component: ListeUEParSemestre,
+        name: "listeParSemestre",
+    },
+    {
+        path: "/ue/ajouter",
+        component: UEAjouter,
+    },
 
-  {
-    path: "/ue/modifier/:id",
-    component: UEModifier,
-    name: "modifier",
-  },
-  {
-    path: "/cours/:id/modifier",
-    component: CoursModifier,
-    props: true,
-  },
-  {
-    path: "/annee",
-    component: Annees,
-    name: "annee",
-  },
-  {
-    path: "/personnel",
-    component: ListePersonnel,
-  },
-  {
-    path: "/personnel/ajouter",
-    component: AjoutPersonnel,
-  },
+    {
+        path: "/ue/modifier/:id",
+        component: UEModifier,
+        name: "modifier",
+    },
+    {
+        path: "/cours/:id/modifier",
+        component: CoursModifier,
+        props: true,
+    },
+    {
+        path: "/annee",
+        component: Annees,
+        name: "annee",
+    },
+    {
+        path: "/personnel",
+        component: ListePersonnel,
+    },
+    {
+        path: "/personnel/ajouter",
+        component: AjoutPersonnel,
+    },
 
   {
     path: "/personnel/:id/modifier",
@@ -79,3 +79,4 @@ export default [
     component: PremiereConnexion,
   },
 ];
+

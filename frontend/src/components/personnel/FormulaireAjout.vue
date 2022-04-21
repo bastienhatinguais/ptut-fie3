@@ -76,7 +76,7 @@
             v-model="personnel.motDePasse"
           />
         </div>
-        <i class="btn btn-primary col-2" @click="mdpPerso = !mdpPerso">
+        <i id="boutonmdp" class="btn btn-primary col-2" @click="mdpPerso = !mdpPerso">
           <i class="bi bi-lock-fill"></i>
         </i>
       </div>
@@ -91,6 +91,10 @@
 button {
   background-color: #283593 ;
   border-color: #283593 ;
+}
+#boutonmdp {
+  background-color: #039BE5 ;
+  border-color: #039BE5 ;
 }
 button:hover {
   background-color: #FF8183 !important;
