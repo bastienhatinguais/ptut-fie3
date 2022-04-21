@@ -181,6 +181,20 @@
   </form>
 </template>
 
+<style scoped>
+
+button {
+  background-color: #283593 ;
+  border-color: #283593 ;
+  width:100%;
+}
+button:hover {
+  background-color: #FF8183 !important;
+  border-color: #FF8183 !important;
+}
+
+</style>
+
 <script setup>
 import { ref, reactive, onMounted, inject } from "vue";
 import { useToast } from "vue-toastification";

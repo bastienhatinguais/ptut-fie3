@@ -70,7 +70,7 @@ let auth = reactive(inject("auth"));
 console.log(auth.getUtilisateur());
 </script>
 
-<style>
+<style scoped>
 .navbar-expand-lg .navbar-nav {
   flex-direction: row;
 }

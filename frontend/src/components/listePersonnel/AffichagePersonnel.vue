@@ -56,7 +56,7 @@
   <!--<SupprimerModal id="test" @supprimer="supprimer">test</SupprimerModal>-->
 </template>
 
-<style>
+<style scoped>
 #tableau {
   margin: 20px !important;
 }

@@ -66,9 +66,11 @@
 }
 .accordion-button{
   color:white !important;
+  background-color:#039BE5 !important ;
 }
 .accordion-button:hover{
   color: #FF8183 !important;
+  background-color: #283593 !important;
 }
 
 #coursBouton:hover {

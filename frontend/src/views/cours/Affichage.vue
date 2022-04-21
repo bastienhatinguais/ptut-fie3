@@ -32,11 +32,18 @@
             class="scrollspy-example-2"
             tabindex="0"
           >
-            <h4 id="item-1" style="color: #283593">Points clefs</h4>
-            <h5 v-if="cours.responsable">
-              Professeur en charge : {{ cours.responsable.nom }}
+            <h4 id="item-1">Points clefs</h4>
+            <h5 v-if="cours.responsable" style="color:black">Professeur en charge : 
+                <router-link id="lien"
+                :to="{
+                    name: 'listePersonnel',
+                    params: {}
+                  }"
+                  >
+                {{ cours.responsable.nom }}
               {{ cours.responsable.prenom }}
-            </h5>
+                </router-link>
+              </h5>
             <hr />
             
               <h6 v-if="cours.ue && cours.ue.semestre">
@@ -87,22 +94,22 @@
               </tbody>
             </table>
             <hr />
-            <h4 id="item-2" style="color: #283593">Objectifs</h4>
+            <h4 id="item-2">Objectifs</h4>
             <p>{{ cours.objectifs }}</p>
 
             <!-- demande de defossez : doit pouvoir etre cache -->
-            <h4>Competences visées</h4>
+            <h5>Competences visées</h5>
             <p>{{ cours.competences }}</p>
             <hr />
-            <h4 id="item-3" style="color: #283593">Description</h4>
+            <h4 id="item-3">Description</h4>
             <p>{{ cours.description }}</p>
 
             <!-- demande de defossez : doit pouvoir etre cache -->
-            <h4>Plan du cours</h4>
+            <h5>Plan du cours</h5>
             <p>{{ cours.planDuCours }}</p>
 
             <!-- demande de defossez : doit pouvoir etre cache -->
-            <h4>Modalites d'evaluation</h4>
+            <h5>Modalites d'evaluation</h5>
             <p>{{ cours.modalitesEvaluation }}</p>
           </div>
         </div>
@@ -113,10 +120,11 @@
 
 <style scoped>
 
-h1 {
+h1, h4 {
   color:#039BE5;
 }
-a{
+
+a, h5{
   color : #283593;
 }
 a#lien:hover{
