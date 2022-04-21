@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>{{ cours.titre }}</h1>
+    <h1>{{ cours.titre }}</h1> <br>
     <div class="bd-example">
       <div class="row">
         <div class="col-4">
@@ -40,8 +40,8 @@
                     params: {}
                   }"
                   >
-                {{ cours.responsable.nom }}
-              {{ cours.responsable.prenom }}
+                {{ cours.responsable.prenom }}
+              {{ cours.responsable.nom }}
                 </router-link>
               </h5>
             <hr />
