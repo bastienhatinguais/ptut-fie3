@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,6 +49,10 @@ public class Personnel {
     @NonNull
     @JsonIgnore
     private String motDePasse;
+
+    @NonNull
+    @Column(columnDefinition = "tinyint(1) default 1")
+    private Boolean premiereConnexion;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "personnel_roles", joinColumns = @JoinColumn(name = "personnel_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

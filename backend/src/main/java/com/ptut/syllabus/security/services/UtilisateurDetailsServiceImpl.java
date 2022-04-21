@@ -18,7 +18,7 @@ public class UtilisateurDetailsServiceImpl implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String pseudo) throws UsernameNotFoundException {
         Personnel user = personnelRepository.findByPseudo(pseudo)
-                .orElseThrow(() -> new UsernameNotFoundException("Peronnel non trouvé avec le pseudo : " + pseudo));
+                .orElseThrow(() -> new UsernameNotFoundException("Personnel non trouvé avec le pseudo : " + pseudo));
         return UtilisateurDetailsImpl.build(user);
     }
 }
