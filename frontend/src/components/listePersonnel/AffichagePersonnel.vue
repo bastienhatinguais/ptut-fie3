@@ -4,7 +4,7 @@
       <tr>
         <th>Nom</th>
         <th>Prenom</th>
-        <th>estDirecteur</th>
+        <th>Directeur</th>
         <th></th>
       </tr>
     </thead>
@@ -13,7 +13,7 @@
         <th scope="row">{{ i.nom }}</th>
         <td>{{ i.prenom }}</td>
         <td>{{ i.estDirecteur }}</td>
-        <td>
+        <td class="d-flex justify-content-center gap-3">
           <button
             type="button"
             class="btn btn-danger"
@@ -28,6 +28,27 @@
           >
             <i class="bi bi-trash-fill"></i>
             Supprimer
+          </button>
+
+          <router-link
+              :to="{
+                name: 'modifierPersonnel',
+                params: { id: selfLinkToId(ue._links.self.href) },
+              }"
+            >
+          <button
+            type="button"
+            class="btn btn-warning text-white"
+            data-bs-toggle="modal"
+            data-bs-target="#test"
+            @click="
+              () => {
+                setCurrent(selfLinkToId(i._links.self.href));
+              }
+            "
+          >
+            <i class="bi bi-pencil-fill"></i>
+            Modifier
           </button>
         </td>
       </tr>
