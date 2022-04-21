@@ -1,7 +1,8 @@
 INSERT INTO personnel (nom, prenom) VALUES
 
-  ('Francis', 'Faux'),
-  ('Adrien', 'Defossez');
+  ('Faux', 'Francis'),
+  ('Defossez', 'Adrien'), 
+  ('Bastide', 'Rémi');
 
 INSERT INTO statut (intitule) VALUES
 ('apprenti'),
@@ -42,7 +43,8 @@ INSERT INTO ue (code, titre, semestre_id, responsable_code) VALUES
 
 INSERT INTO cours(titre,  nb_HeureCM, nb_HeureTD, nb_HeureTP, nb_HeureFOAD, description, objectifs, plan_Du_Cours, competences, modalites_Evaluation, responsable_code, ue_id) VALUES
   ('maths', '4', '5', '5', '0', 'cours de maths trop super on adore ça en plus', 'le but c est de faire des maths youpi', '1 deux 3 quatre', 'le theoreme de pythagore c est deja pas mal', 'un qcm pitié', '2', 1),
-  ('chinois', '4', '5', '5', '0', 'Un jolie cours de chinois :)', 'Parler chinois', '1 deux 3 quatre', 'chinois', 'un qcm', '2', 1);
+  ('chinois', '4', '5', '5', '0', 'Un joli cours de chinois :)', 'Parler chinois', '1 deux 3 quatre', 'chinois', 'un qcm', '2', 1);
+  ('Technologies Web', '8', '10', '8', '0', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod neque ligula, eget mattis dolor hendrerit vel. Donec eleifend, diam et placerat lacinia, nibh dolor porta lacus, ac auctor nulla sapien ac diam. Phasellus faucibus ultricies urna, et venenatis nisi accumsan et. Cras posuere nibh sed justo aliquet, et pulvinar magna maximus. Donec nec lobortis tortor, elementum blandit arcu. Nullam eros libero, ornare non elit aliquet, tempus suscipit metus. Morbi ut massa velit. Praesent in placerat est. Pellentesque sit amet massa ligula. Morbi accumsan, turpis molestie pretium euismod, neque nisl lacinia nulla, commodo venenatis enim mi a mauris. In laoreet, nisl vel euismod cursus, nunc erat malesuada est, sed rutrum dui dolor ac nisi.', 'Phasellus vehicula malesuada luctus. Ut ullamcorper condimentum dolor, id viverra arcu luctus sodales. Fusce porttitor ligula eu elit hendrerit, ut egestas felis mattis. Aenean gravida interdum pulvinar. Nunc commodo rutrum commodo. Suspendisse a vestibulum dui. Quisque dolor nunc, vehicula eu urna a, suscipit viverra nulla. Integer odio tellus, feugiat in nibh id, volutpat tincidunt erat. Sed tempor ac leo vitae dapibus.', '1. Lorem, 2.Ipsum, 3.Dolor, 4.Sit', 'Nullam eget mollis lacus, quis lobortis quam. Cras id turpis dapibus, tempor ante in, mollis enim. Praesent hendrerit urna at rutrum tempor. Aliquam a est erat. Duis vehicula a libero et porta. Etiam sit amet dui placerat, vestibulum ex vitae, feugiat orci. Proin ac venenatis velit. Vivamus volutpat semper leo, sit amet consequat diam. Aliquam erat volutpat.', 'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...', '3', 1);
 
 INSERT INTO roles(nom) VALUES
   ('ROLE_USER'),
