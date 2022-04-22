@@ -10,37 +10,77 @@
           class="d-inline-block align-text-top"
         />
       </a>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul
+        class="navbar-nav me-auto mb-2 mb-lg-0"
+        v-if="
+          auth.getEstConnecté() &&
+          auth.getUtilisateur().roles.includes('ROLE_DIRECTEUR_ETUDES')
+        "
+      >
         <li class="nav-item">
           <router-link class="nav-link light" to="/annee">Accueil</router-link>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
             Cours
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="/cours">Liste des cours</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/cours/ajouter">Ajouter un cours</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="/cours/ajouter"
+                >Ajouter un cours</a
+              >
+            </li>
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
             UE
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="/ue">Liste des UE</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/ue/ajouter">Ajouter une UE</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="/ue/ajouter">Ajouter une UE</a>
+            </li>
           </ul>
-        </li><li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
             Personnel
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/personnel">Liste du personnel</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/personnel/ajouter">Ajouter un membre</a></li>
+            <li>
+              <a class="dropdown-item" href="/personnel">Liste du personnel</a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="/personnel/ajouter"
+                >Ajouter un membre</a
+              >
+            </li>
           </ul>
         </li>
       </ul>

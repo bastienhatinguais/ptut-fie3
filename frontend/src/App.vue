@@ -52,41 +52,64 @@ function getAuthorization() {
   return {};
 }
 
-/**
-const PATHS_VISITEUR = ["/", "/api"];
-const PATHS_DIRECTEUR_ETUDES = ["/inscription"];
+const PATHS_VISITEUR = ["/ue/etudiant/*", "ue/apprenti/*", "/cours/*"];
+const PATHS_DIRECTEUR_ETUDES = [
+  "/personnel",
+  "/personnel/ajouter",
+  "/personnel/*/modifier",
+  "/cours/ajouter",
+  "/cours",
+  "/ue",
+  "/ue/*/modifier",
+  "/ue/ajouter",
+];
 
 router.beforeEach(async function (to, from) {
-  console.log(auth.getEstConnecté());
+  //est connecté ?
   if (!auth.getEstConnecté()) {
-    if (!PATHS_VISITEUR.includes(to.path)) {
+    console.log(to.path);
+    if (!pathInAuthorizedPaths(to.path, PATHS_VISITEUR) && to.path !== "/") {
       return { path: "/" };
     }
   } else {
-    let rolesUtilisateur = auth.getUtilisateur().roles;
-    if (
-      PATHS_DIRECTEUR_ETUDES.includes(to.path) &&
-      !rolesUtilisateur.includes("ROLE_DIRECTEUR_ETUDES")
-    ) {
-      return { path: "/non-autorise" };
- */
-router.beforeEach(async (to, from) => {
-  if (
-    // make sure the user is authenticated
-    !auth.getEstConnecté() &&
-    // ❗️ Avoid an infinite redirect
-    to.path !== "/"
-  ) {
-    // redirect the user to the login page
-    return { path: "/" };
-  } else {
+    //premiere connexion ?
     if (
       auth.getUtilisateur().premiereConnexion &&
       to.path !== "/premiere-connexion"
     ) {
       return { path: "/premiere-connexion" };
     }
+    let rolesUtilisateur = auth.getUtilisateur().roles;
+    console.log(!rolesUtilisateur.includes("ROLE_DIRECTEUR_ETUDES"));
+    if (
+      !rolesUtilisateur.includes("ROLE_DIRECTEUR_ETUDES") ||
+      (!pathInAuthorizedPaths(
+        to.path,
+        PATHS_VISITEUR.concat(PATHS_DIRECTEUR_ETUDES)
+      ) &&
+        to.path !== "/")
+    ) {
+      return { path: "/" };
+    }
   }
 });
+
+function pathInAuthorizedPaths(path, paths) {
+  for (const p of paths) {
+    let splitPath = path.split("/");
+    let splitP = p.split("/");
+    if (splitPath.length == splitP.length) {
+      for (let i = 0; i < splitPath.length; i++) {
+        if (splitPath[i] != splitP[i]) {
+          if (splitP[i] != "*") break;
+        }
+        if (i == splitPath.length - 1) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
 </script>
 
