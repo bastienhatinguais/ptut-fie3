@@ -59,6 +59,7 @@ const PATHS_DIRECTEUR_ETUDES = [
   "/personnel/*/modifier",
   "/cours/ajouter",
   "/cours",
+  "/cours/*/modifier",
   "/ue",
   "/ue/*/modifier",
   "/ue/ajouter",
@@ -72,24 +73,26 @@ router.beforeEach(async function (to, from) {
       return { path: "/" };
     }
   } else {
+    console.log(auth.getUtilisateur().premiereConnexion);
     //premiere connexion ?
     if (
       auth.getUtilisateur().premiereConnexion &&
       to.path !== "/premiere-connexion"
     ) {
       return { path: "/premiere-connexion" };
-    }
-    let rolesUtilisateur = auth.getUtilisateur().roles;
-    console.log(!rolesUtilisateur.includes("ROLE_DIRECTEUR_ETUDES"));
-    if (
-      !rolesUtilisateur.includes("ROLE_DIRECTEUR_ETUDES") ||
-      (!pathInAuthorizedPaths(
-        to.path,
-        PATHS_VISITEUR.concat(PATHS_DIRECTEUR_ETUDES)
-      ) &&
-        to.path !== "/")
-    ) {
-      return { path: "/" };
+    } else if (to.path !== "/premiere-connexion") {
+      console.log("coucou");
+      let rolesUtilisateur = auth.getUtilisateur().roles;
+      if (
+        !rolesUtilisateur.includes("ROLE_DIRECTEUR_ETUDES") ||
+        (!pathInAuthorizedPaths(
+          to.path,
+          PATHS_VISITEUR.concat(PATHS_DIRECTEUR_ETUDES)
+        ) &&
+          to.path !== "/")
+      ) {
+        return { path: "/" };
+      }
     }
   }
 });
